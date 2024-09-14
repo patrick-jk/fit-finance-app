@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Fit Finance</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_home">Home</string>
+    <string name="title_finances">Finances</string>
+    <string name="title_investments">Investments</string>
+</resources>
