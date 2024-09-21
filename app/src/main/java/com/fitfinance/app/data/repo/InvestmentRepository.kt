@@ -3,52 +3,54 @@ package com.fitfinance.app.data.repo
 import com.fitfinance.app.data.remote.ApiService
 import com.fitfinance.app.domain.request.InvestmentPostRequest
 import com.fitfinance.app.domain.request.InvestmentPutRequest
+import com.fitfinance.app.util.throwRemoteException
+import com.fitfinance.app.util.toBearerToken
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 
 class InvestmentRepository(private val apiService: ApiService) {
     suspend fun getInvestmentsByUserId(apiToken: String) = flow {
         try {
-            val response = apiService.getInvestmentsByUserId(apiToken)
+            val response = apiService.getInvestmentsByUserId(apiToken.toBearerToken())
             emit(response)
         } catch (e: HttpException) {
-            emit(e)
+            e.throwRemoteException("Failed to get investments")
         }
     }
 
     suspend fun getInvestmentSummary(apiToken: String) = flow {
         try {
-            val response = apiService.getInvestmentSummary(apiToken)
+            val response = apiService.getInvestmentSummary(apiToken.toBearerToken())
             emit(response)
         } catch (e: HttpException) {
-            emit(e)
+            e.throwRemoteException("Failed to get investment summary")
         }
     }
 
     suspend fun createInvestment(investmentPostRequest: InvestmentPostRequest, apiToken: String) = flow {
         try {
-            val response = apiService.createInvestment(investmentPostRequest, apiToken)
+            val response = apiService.createInvestment(investmentPostRequest, apiToken.toBearerToken())
             emit(response)
         } catch (e: HttpException) {
-            emit(e)
+            e.throwRemoteException("Failed to create investment")
         }
     }
 
     suspend fun updateInvestment(investmentPutRequest: InvestmentPutRequest, apiToken: String) = flow {
         try {
-            val response = apiService.updateInvestment(investmentPutRequest, apiToken)
+            val response = apiService.updateInvestment(investmentPutRequest, apiToken.toBearerToken())
             emit(response)
         } catch (e: HttpException) {
-            emit(e)
+            e.throwRemoteException("Failed to update investment")
         }
     }
 
     suspend fun deleteInvestment(id: Long, apiToken: String) = flow {
         try {
-            val response = apiService.deleteInvestment(id, apiToken)
+            val response = apiService.deleteInvestment(id, apiToken.toBearerToken())
             emit(response)
         } catch (e: HttpException) {
-            emit(e)
+            e.throwRemoteException("Failed to delete investment")
         }
     }
 }

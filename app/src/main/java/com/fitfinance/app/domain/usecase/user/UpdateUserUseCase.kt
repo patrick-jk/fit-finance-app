@@ -2,7 +2,12 @@ package com.fitfinance.app.domain.usecase.user
 
 import com.fitfinance.app.data.repo.UserRepository
 import com.fitfinance.app.domain.request.UserPutRequest
+import com.fitfinance.app.util.UseCase
+import kotlinx.coroutines.flow.Flow
+import retrofit2.Call
 
-class UpdateUserUseCase(private val userRepository: UserRepository) {
-    suspend operator fun invoke(userPutRequest: UserPutRequest, apiToken: String) = userRepository.updateUser(userPutRequest, apiToken)
+class UpdateUserUseCase(private val userRepository: UserRepository): UseCase<Pair<UserPutRequest, String>, Call<Void>>() {
+    override suspend fun execute(param: Pair<UserPutRequest, String>): Flow<Call<Void>> {
+        return userRepository.updateUser(param.first, param.second)
+    }
 }

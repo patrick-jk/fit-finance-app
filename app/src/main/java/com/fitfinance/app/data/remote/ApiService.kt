@@ -45,40 +45,40 @@ interface ApiService {
 
     //Users Endpoints
     @PUT(BASE_USERS_PATH)
-    fun updateUser(@Body userPutRequest: UserPutRequest, @Header("Authorization") token: String): Void
+    fun updateUser(@Body userPutRequest: UserPutRequest, @Header("Authorization") token: String): Call<Void>
 
     @PATCH(BASE_USERS_PATH)
-    fun updatePassword(@Body changePasswordRequest: ChangePasswordRequest, @Header("Authorization") token: String): Void
+    fun updatePassword(@Body changePasswordRequest: ChangePasswordRequest, @Header("Authorization") token: String): Call<Void>
 
     //Finances Endpoints
     @GET("$BASE_FINANCES_PATH/by-user-id")
-    fun getFinancesByUserId(@Header("Authorization") token: String): List<FinanceGetResponse>
+    fun getFinancesByUserId(@Header("Authorization") token: String): Call<List<FinanceGetResponse>>
 
     @GET("$BASE_FINANCES_PATH/user-summary")
-    fun getUserSummary(@Header("Authorization") token: String): HomeSummaryResponse
+    fun getUserSummary(@Header("Authorization") token: String): Call<HomeSummaryResponse>
 
     @POST(BASE_FINANCES_PATH)
-    fun createFinance(@Body financePostRequest: FinancePostRequest, @Header("Authorization") token: String): FinancePostResponse
+    fun createFinance(@Body financePostRequest: FinancePostRequest, @Header("Authorization") token: String): Call<FinancePostResponse>
 
     @PUT(BASE_FINANCES_PATH)
-    fun updateFinance(@Body financePutRequest: FinancePutRequest, @Header("Authorization") token: String): Void
+    fun updateFinance(@Body financePutRequest: FinancePutRequest, @Header("Authorization") token: String): Call<Void>
 
     @DELETE("$BASE_FINANCES_PATH/{id}")
-    fun deleteFinance(@Path("id") id: Long, @Header("Authorization") token: String): Void
+    fun deleteFinance(@Path("id") id: Long, @Header("Authorization") token: String): Call<Void>
 
     //Investments Endpoints
     @GET("$BASE_INVESTMENTS_PATH/by-user-id")
-    fun getInvestmentsByUserId(@Header("Authorization") token: String): List<FinanceGetResponse>
+    fun getInvestmentsByUserId(@Header("Authorization") token: String): Call<List<FinanceGetResponse>>
 
     @GET("$BASE_INVESTMENTS_PATH/total-summary")
-    fun getInvestmentSummary(@Header("Authorization") token: String): InvestmentSummaryResponse
+    fun getInvestmentSummary(@Header("Authorization") token: String): Call<InvestmentSummaryResponse>
 
     @POST(BASE_INVESTMENTS_PATH)
-    fun createInvestment(@Body investmentPostRequest: InvestmentPostRequest, @Header("Authorization") token: String): InvestmentPostResponse
+    fun createInvestment(@Body investmentPostRequest: InvestmentPostRequest, @Header("Authorization") token: String): Call<InvestmentPostResponse>
 
     @PUT(BASE_INVESTMENTS_PATH)
-    fun updateInvestment(@Body investmentPutRequest: InvestmentPutRequest, @Header("Authorization") token: String): Void
+    fun updateInvestment(@Body investmentPutRequest: InvestmentPutRequest, @Header("Authorization") token: String): Call<Void>
 
     @DELETE("$BASE_INVESTMENTS_PATH/{id}")
-    fun deleteInvestment(@Path("id") id: Long, @Header("Authorization") token: String): Void
+    fun deleteInvestment(@Path("id") id: Long, @Header("Authorization") token: String): Call<Void>
 }
