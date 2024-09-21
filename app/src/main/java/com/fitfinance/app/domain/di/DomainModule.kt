@@ -1,6 +1,7 @@
 package com.fitfinance.app.domain.di
 
 import com.fitfinance.app.domain.usecase.auth.AuthenticateUserUseCase
+import com.fitfinance.app.domain.usecase.auth.RefreshTokenUseCase
 import com.fitfinance.app.domain.usecase.auth.RegisterUserUseCase
 import com.fitfinance.app.domain.usecase.finances.CreateFinanceUseCase
 import com.fitfinance.app.domain.usecase.finances.DeleteFinanceUseCase
@@ -26,6 +27,7 @@ object DomainModule {
     private fun useCaseModule(): Module = module {
         factory { RegisterUserUseCase(get()) }
         factory { AuthenticateUserUseCase(get()) }
+        factory { RefreshTokenUseCase(get()) }
 
         factory { CreateFinanceUseCase(get()) }
         factory { DeleteFinanceUseCase(get()) }

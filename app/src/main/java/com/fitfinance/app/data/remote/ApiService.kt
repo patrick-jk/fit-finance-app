@@ -14,7 +14,8 @@ import com.fitfinance.app.domain.response.FinancePostResponse
 import com.fitfinance.app.domain.response.HomeSummaryResponse
 import com.fitfinance.app.domain.response.InvestmentPostResponse
 import com.fitfinance.app.domain.response.InvestmentSummaryResponse
-import com.fitfinance.app.domain.response.UserGetResponse
+import com.fitfinance.app.domain.response.UserPostResponse
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -34,10 +35,13 @@ interface ApiService {
 
     //Auth Endpoints - No token required
     @POST("$BASE_AUTH_PATH/register")
-    fun registerUser(@Body registerRequest: RegisterRequest): UserGetResponse
+    fun registerUser(@Body registerRequest: RegisterRequest): Call<UserPostResponse>
 
     @POST("$BASE_AUTH_PATH/authenticate")
-    fun authenticateUser(@Body authenticationRequest: AuthenticationRequest): AuthenticationResponse
+    fun authenticateUser(@Body authenticationRequest: AuthenticationRequest): Call<AuthenticationResponse>
+
+    @POST("$BASE_AUTH_PATH/refresh-token")
+    fun refreshToken(@Header("Authorization") token: String): Call<AuthenticationResponse>
 
     //Users Endpoints
     @PUT(BASE_USERS_PATH)

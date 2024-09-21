@@ -7,8 +7,8 @@ import com.fitfinance.app.util.UseCase
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 
-class AuthenticateUserUseCase(private val authRepository: AuthRepository) : UseCase<AuthenticationRequest, Call<AuthenticationResponse>>() {
-    override suspend fun execute(param: AuthenticationRequest): Flow<Call<AuthenticationResponse>> {
-        return authRepository.authenticateUser(param)
+class RefreshTokenUseCase(private val authRepository: AuthRepository) : UseCase<String, Call<AuthenticationResponse>>() {
+    override suspend fun execute(param: String): Flow<Call<AuthenticationResponse>> {
+        return authRepository.refreshToken(param)
     }
 }

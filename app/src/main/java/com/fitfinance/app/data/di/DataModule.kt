@@ -14,7 +14,6 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.math.sin
 
 object DataModule {
     private const val OK_HTTP = "OkHttp"
@@ -46,7 +45,7 @@ object DataModule {
 
     private inline fun <reified T> createApiService(client: OkHttpClient, factory: GsonConverterFactory): T {
         return Retrofit.Builder()
-            .baseUrl("http://localhost:8080/v1/api/")
+            .baseUrl("http://10.0.2.2:8080/api/v1/")
             .client(client)
             .addConverterFactory(factory)
             .build().create(T::class.java)

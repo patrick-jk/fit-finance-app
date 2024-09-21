@@ -27,7 +27,7 @@ object PresentationModule {
         viewModel { HomeViewModel(get()) }
         viewModel { InvestmentDetailsViewModel(get(), get(), get()) }
         viewModel { InvestmentListViewModel(get()) }
-        viewModel { LoginViewModel(get()) }
-        viewModel { RegisterViewModel() }
+        viewModel { LoginViewModel(get(), get()) }
+        viewModel { RegisterViewModel(get()) }
     }
 }

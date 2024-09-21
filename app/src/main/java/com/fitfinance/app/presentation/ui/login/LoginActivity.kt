@@ -1,18 +1,159 @@
 package com.fitfinance.app.presentation.ui.login
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.ActivityLoginBinding
+import com.fitfinance.app.presentation.MainActivity
+import com.fitfinance.app.presentation.statepattern.State
+import com.fitfinance.app.presentation.ui.register.RegisterActivity
+import com.fitfinance.app.presentation.ui.register.RegisterActivity.Companion.EXTRA_USER_EMAIL
+import com.fitfinance.app.util.SHARED_PREF_NAME
+import com.fitfinance.app.util.ValidateInput
+import com.fitfinance.app.util.createDialog
+import com.fitfinance.app.util.getProgressDialog
+import com.fitfinance.app.util.text
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class LoginActivity : AppCompatActivity() {
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
+    private val viewModel by viewModel<LoginViewModel>()
+    private val sharedPreferences by lazy { getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE) }
+    private val dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+    private var progressDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        if (intent?.hasExtra(EXTRA_USER_EMAIL) != true) checkUserSession()
+        setupUi()
+    }
+
+    private fun setupUi() {
+        binding.apply {
+            if (intent?.hasExtra(EXTRA_USER_EMAIL) == true) {
+                tilEmail.text = intent?.getStringExtra(EXTRA_USER_EMAIL).toString()
+            }
+
+
+            btnRegister.setOnClickListener {
+                startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+            }
+
+            btnLogin.setOnClickListener {
+                if (!validateFields()) {
+                    return@setOnClickListener
+                }
+
+                sharedPreferences.edit().putBoolean(getString(R.string.pref_remember_me), cbRememberMe.isChecked).apply()
+                viewModel.authenticateUser(tilEmail.text, tilPassword.text)
+            }
+        }
+    }
+
+    private fun validateFields(): Boolean {
+        val isEmailValid = ValidateInput.validateInputText(binding.tilEmail) && ValidateInput.validateEmail(binding.tilEmail)
+        val isPasswordValid = ValidateInput.validateInputText(binding.tilPassword) && ValidateInput.validatePassword(binding.tilPassword)
+
+        return isEmailValid && isPasswordValid
+    }
+
+    private fun checkUserSession() {
+        val userToken = sharedPreferences.getString(getString(R.string.pref_user_token), null)
+        val refreshToken = sharedPreferences.getString(getString(R.string.pref_refresh_token), null)
+        val accessTime = sharedPreferences.getString(getString(R.string.pref_authentication_date_time), null)
+        val refreshTime = sharedPreferences.getString(getString(R.string.pref_refresh_date_time), null)
+        val rememberMe = sharedPreferences.getBoolean(getString(R.string.pref_remember_me), false)
+
+        if (userToken != null && accessTime != null && refreshToken != null && refreshTime != null) {
+            val loginDateTime = LocalDateTime.parse(accessTime, dateTimeFormatter)
+            val refreshDateTime = LocalDateTime.parse(refreshTime, dateTimeFormatter)
+            val currentDateTime = LocalDateTime.now()
+
+            if (currentDateTime.isAfter(loginDateTime.plusDays(1))) {
+                if (!rememberMe || currentDateTime.isAfter(refreshDateTime.plusDays(7))) {
+                    Log.i("LoginActivity", "Session Expired $rememberMe")
+                    createDialog {
+                        setTitle("Session Expired")
+                        setMessage("Your session has expired. Please log in again.")
+                        setPositiveButton(android.R.string.ok, null)
+                    }.show()
+                } else {
+                    viewModel.refreshToken(refreshToken)
+                }
+            } else {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.authenticationState.observe(this) { state ->
+            when (state) {
+                is State.Loading -> {
+                    progressDialog = getProgressDialog(state.loadingMessage)
+                    progressDialog?.show()
+                }
+
+                is State.Success -> {
+                    progressDialog?.dismiss()
+
+                    sharedPreferences.edit().apply {
+                        putString(getString(R.string.pref_user_token), state.info.accessToken)
+                        putString(getString(R.string.pref_refresh_token), state.info.refreshToken)
+                        putString(getString(R.string.pref_authentication_date_time), LocalDateTime.now().format(dateTimeFormatter))
+                        putString(getString(R.string.pref_refresh_date_time), LocalDateTime.now().format(dateTimeFormatter))
+                        apply()
+                    }
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+
+                is State.Error -> {
+                    progressDialog?.dismiss()
+
+                    createDialog {
+                        setTitle("Error")
+                        setMessage(state.error.message)
+                        setPositiveButton(android.R.string.ok, null)
+                    }.show()
+                    getProgressDialog().dismiss()
+                }
+            }
+        }
+
+        viewModel.refreshTokenState.observe(this) { state ->
+            when (state) {
+                is State.Loading -> {
+                    getProgressDialog("Validating refresh token...").show()
+                }
+
+                is State.Success -> {
+                    sharedPreferences.edit().apply {
+                        putString(getString(R.string.pref_user_token), state.info.accessToken)
+                        putString(getString(R.string.pref_refresh_token), state.info.refreshToken)
+                        apply()
+                    }
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+
+                is State.Error -> {
+                    createDialog {
+                        setTitle("Error")
+                        setMessage(state.error.message)
+                        setPositiveButton(android.R.string.ok, null)
+                    }.show()
+                    getProgressDialog().dismiss()
+                }
+            }
+        }
     }
 }
