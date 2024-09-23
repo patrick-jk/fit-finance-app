@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  fit-finance-backend:
+    image: patrickviolin/fit-finance-backend:latest
+    container_name: fit-finance-api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://www.thyagoquintas.com.br:3306/engenharia_11
+      SPRING_DATASOURCE_USERNAME: engenharia_11
+      SPRING_DATASOURCE_PASSWORD: cachalote
+   
+volumes:
+  fit-finance_data:
