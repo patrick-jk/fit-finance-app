@@ -1,5 +1,9 @@
 package com.fitfinance.app.domain.response
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class UserGetResponse(
     val id: Long,
     var name: String,
@@ -8,4 +12,4 @@ data class UserGetResponse(
     var phone: String,
     var birthdate: String,
     var income: Double
-)
+) : Parcelable

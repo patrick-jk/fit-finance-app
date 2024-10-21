@@ -1,20 +1,30 @@
 package com.fitfinance.app.presentation.ui.financedashboard
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
+import com.fitfinance.app.R
 import com.fitfinance.app.databinding.FragmentFinanceDashboardBinding
-import com.fitfinance.app.databinding.FragmentFinanceListBinding
+import com.fitfinance.app.presentation.statepattern.State
+import com.fitfinance.app.presentation.ui.financedashboard.adapter.FinanceAdapter
+import com.fitfinance.app.util.SHARED_PREF_NAME
+import com.fitfinance.app.util.createDialog
+import com.fitfinance.app.util.getProgressDialog
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FinanceDashboardFragment : Fragment() {
 
     private var _binding: FragmentFinanceDashboardBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    private val viewModel by viewModel<FinanceDashboardViewModel>()
+    private val financeAdapter = FinanceAdapter()
+    private var progressDialog: AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,7 +34,39 @@ class FinanceDashboardFragment : Fragment() {
         _binding = FragmentFinanceDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        val sharedPreferences = requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        sharedPreferences.getString(getString(R.string.pref_user_token), "")?.let {
+            viewModel.getFinancesByUserId(it)
+        }
+
+        binding.rvFinanceList.adapter = financeAdapter
+
         return root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.financesList.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is State.Loading -> {
+                    progressDialog = requireContext().getProgressDialog(state.loadingMessage)
+                    progressDialog?.show()
+                }
+
+                is State.Success -> {
+                    progressDialog?.dismiss()
+                    financeAdapter.submitList(state.info)
+                }
+
+                is State.Error -> {
+                    progressDialog?.dismiss()
+                    requireContext().createDialog {
+                        setMessage(state.error.message.toString())
+                        setPositiveButton("OK", null)
+                    }.show()
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

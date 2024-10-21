@@ -57,7 +57,7 @@ class LoginViewModel(
         Log.i("LoginViewModel", "refreshToken")
         refreshTokenUseCase(token)
             .onStart {
-                _refreshTokenState.value = State.Loading("Refreshing token")
+                _refreshTokenState.value = State.Loading("")
             }
             .catch {
                 _refreshTokenState.value = State.Error(it)

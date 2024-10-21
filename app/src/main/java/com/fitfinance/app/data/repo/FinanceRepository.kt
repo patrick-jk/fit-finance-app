@@ -1,5 +1,6 @@
 package com.fitfinance.app.data.repo
 
+import android.util.Log
 import com.fitfinance.app.data.remote.ApiService
 import com.fitfinance.app.domain.request.FinancePostRequest
 import com.fitfinance.app.domain.request.FinancePutRequest

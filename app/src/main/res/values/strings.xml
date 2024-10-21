@@ -1,24 +1,23 @@
 <resources>
     <string name="app_name">Fit Finance</string>
-    <string name="title_activity_main2">MainActivity2</string>
-    <string name="title_home">Home</string>
+    <string name="title_home" translatable="false">Home</string>
     <string name="title_finances">Finances</string>
     <string name="title_investments">Investments</string>
-    <string name="txt_hint_email">E-mail</string>
+    <string name="txt_hint_email" translatable="false">E-mail</string>
     <string name="txt_hint_password">Password</string>
-    <string name="txt_login">Login</string>
+    <string name="txt_login" translatable="false">Login</string>
     <string name="txt_signin">Welcome to Fit Finance!</string>
     <string name="txt_forgot_password">Forgot your password?</string>
     <string name="txt_register">Register</string>
     <string name="pref_user_token">USER_TOKEN</string>
     <string name="pref_authentication_date_time">ACCESS_TIME</string>
     <string name="txt_remember_me">Remember me</string>
-    <string name="pref_refresh_token">REFRESH_TOKEN</string>
-    <string name="pref_refresh_date_time">REFRESH_TOKEN_DATE_TIME</string>
-    <string name="pref_remember_me">BOOL_REMEMBER_ME</string>
+    <string name="pref_refresh_token" translatable="false">REFRESH_TOKEN</string>
+    <string name="pref_refresh_date_time" translatable="false">REFRESH_TOKEN_DATE_TIME</string>
+    <string name="pref_remember_me" translatable="false">BOOL_REMEMBER_ME</string>
     <string name="txt_hint_name">Name</string>
     <string name="txt_already_have_an_account">Already have an account? Do login!</string>
-    <string name="txt_hint_cpf">CPF</string>
+    <string name="txt_hint_cpf" translatable="false">CPF</string>
     <string name="txt_hint_phone">Phone Number</string>
     <string name="txt_hint_birthdate">Birthdate</string>
     <string name="txt_hint_income">Income</string>
@@ -26,4 +25,8 @@
     <string name="txt_action_logout">Are you sure you want to logout?</string>
     <string name="txt_register_user">Register User</string>
     <string name="txt_register_success">User registered successfully!</string>
+    <string name="finance_view_details">View Details</string>
+    <string name="edit_finance">Edit Finance</string>
+    <string name="delete_finance">Delete Finance</string>
+    <string name="more_options">More options</string>
 </resources>

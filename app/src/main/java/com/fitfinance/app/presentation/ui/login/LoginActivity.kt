@@ -58,9 +58,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validateFields(): Boolean {
         val isEmailValid = ValidateInput.validateInputText(binding.tilEmail) && ValidateInput.validateEmail(binding.tilEmail)
-        val isPasswordValid = ValidateInput.validateInputText(binding.tilPassword) && ValidateInput.validatePassword(binding.tilPassword)
 
-        return isEmailValid && isPasswordValid
+        return isEmailValid
     }
 
     private fun checkUserSession() {
@@ -132,10 +131,13 @@ class LoginActivity : AppCompatActivity() {
         viewModel.refreshTokenState.observe(this) { state ->
             when (state) {
                 is State.Loading -> {
-                    getProgressDialog("Validating refresh token...").show()
+                    progressDialog = getProgressDialog(state.loadingMessage)
+                    progressDialog?.show()
                 }
 
                 is State.Success -> {
+                    progressDialog?.dismiss()
+
                     sharedPreferences.edit().apply {
                         putString(getString(R.string.pref_user_token), state.info.accessToken)
                         putString(getString(R.string.pref_refresh_token), state.info.refreshToken)
@@ -146,6 +148,8 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 is State.Error -> {
+                    progressDialog?.dismiss()
+
                     createDialog {
                         setTitle("Error")
                         setMessage(state.error.message)
