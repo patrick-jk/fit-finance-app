@@ -8,6 +8,6 @@ data class FinancePostRequest(
     var value: Double,
     var type: FinanceType,
     var description: String,
-    var startDate: LocalDate,
-    var endDate: LocalDate
+    var startDate: String,
+    var endDate: String
 )

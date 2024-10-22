@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="@string/title_finances"
-        android:textSize="18sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,18 +22,20 @@
         android:id="@+id/tvFinanceDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/finance_view_details"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="@dimen/base_margin"
+        android:layout_marginBottom="8dp"
+        android:text="@string/txt_finance_description"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvFinanceName" />
+        app:layout_constraintTop_toBottomOf="@id/tvFinanceStartDate" />
 
     <TextView
         android:id="@+id/tvFinanceValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/finance_view_details"
+        android:text="@string/txt_finance_value"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvFinanceDescription" />
@@ -43,19 +45,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/finance_view_details"
+        android:text="@string/txt_finance_start_date"
         android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvFinanceValue" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFinanceName" />
 
     <TextView
         android:id="@+id/tvFinanceEndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/finance_view_details"
+        android:text="@string/txt_finance_end_date"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvFinanceStartDate" />
+        app:layout_constraintTop_toBottomOf="@id/tvFinanceValue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

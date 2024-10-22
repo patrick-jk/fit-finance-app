@@ -23,8 +23,8 @@ object PresentationModule {
     private fun viewModelModule(): Module = module {
         viewModel { AboutUsViewModel() }
         viewModel { ContactUsViewModel() }
-        viewModel { FinanceDashboardViewModel(get()) }
-        viewModel { FinanceDetailsViewModel(get(), get(), get()) }
+        viewModel { FinanceDashboardViewModel(get(), get(), get(), get()) }
+        viewModel { FinanceDetailsViewModel(get(), get()) }
         viewModel { FinanceListViewModel(get()) }
         viewModel { HomeViewModel(get()) }
         viewModel { InvestmentDetailsViewModel(get(), get(), get()) }

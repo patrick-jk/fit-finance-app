@@ -19,6 +19,16 @@ var TextInputLayout.text: String
 
 fun String.toBearerToken() = "Bearer $this"
 
+fun String.toLocalDateApiFormat(): String {
+    val date = this.split("/")
+    return "${date[2]}-${date[1]}-${date[0]}"
+}
+
+fun String.toLocalDateBrFormat(): String {
+    val date = this.split("-")
+    return "${date[2]}/${date[1]}/${date[0]}"
+}
+
 fun View.hideSoftKeyboard() {
     val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(windowToken, 0)

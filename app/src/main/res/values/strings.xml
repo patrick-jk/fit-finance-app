@@ -11,7 +11,7 @@
     <string name="txt_hint_email" translatable="false">E-mail</string>
     <string name="txt_hint_password">Password</string>
     <string name="txt_login" translatable="false">Login</string>
-    <string name="txt_signin">Welcome to Fit Finance!</string>
+    <string name="txt_sign_in">Welcome to Fit Finance!</string>
     <string name="txt_forgot_password">Forgot your password?</string>
     <string name="txt_register">Register</string>
     <string name="pref_user_token">USER_TOKEN</string>
@@ -41,4 +41,11 @@
     <string name="txt_hint_finance_end_date">End Date</string>
     <string name="txt_hint_finance_type">Type</string>
     <string name="txt_finance_save">Save</string>
+    <string name="txt_add_finance">Add Finance</string>
+    <string name="txt_finance_start_date">Created at: %s</string>
+    <string name="txt_finance_description">Description: %s</string>
+    <string name="txt_finance_value">Value: $%.2f</string>
+    <string name="txt_finance_end_date">End Date: %s</string>
+    <string name="txt_delete_finance_title">Delete Finance</string>
+    <string name="txt_delete_finance_message">Are you sure you want to delete this finance?</string>
 </resources>

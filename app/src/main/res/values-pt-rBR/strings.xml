@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <array name="finance_types">
+        <item>Receita</item>
+        <item>Despesa</item>
+    </array>
+
     <string name="app_name">Fit Finanças</string>
     <string name="title_finances">Finanças</string>
     <string name="title_investments">Investimentos</string>
     <string name="txt_hint_password">Senha</string>
-    <string name="txt_signin">Bem-vindo ao Fit Finanças!</string>
+    <string name="txt_sign_in">Bem-vindo ao Fit Finanças!</string>
     <string name="txt_forgot_password">Esqueceu sua senha?</string>
     <string name="txt_register">Cadastrar</string>
     <string name="pref_user_token">USER_TOKEN</string>
@@ -23,4 +28,18 @@
     <string name="edit_finance">Editar Finança</string>
     <string name="delete_finance">Deletar Finança</string>
     <string name="more_options">Mais Opções</string>
+    <string name="txt_hint_finance_name">Nome da Finança</string>
+    <string name="txt_hint_finance_description">Descrição</string>
+    <string name="txt_hint_finance_value">Valor</string>
+    <string name="txt_hint_finance_start_date">Data Inicial</string>
+    <string name="txt_hint_finance_end_date">Data Final</string>
+    <string name="txt_hint_finance_type">Tipo</string>
+    <string name="txt_finance_save">Salvar</string>
+    <string name="txt_add_finance">Adicionar Finança</string>
+    <string name="txt_finance_start_date">Criado em: %s</string>
+    <string name="txt_finance_description">Descrição: %s</string>
+    <string name="txt_finance_value">Valor: $%.2f</string>
+    <string name="txt_finance_end_date">Data Final: %s</string>
+    <string name="txt_delete_finance_title">Deletar Finança</string>
+    <string name="txt_delete_finance_message">Você tem certeza que quer excluir essa finança?</string>
 </resources>

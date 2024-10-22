@@ -2,7 +2,6 @@ package com.fitfinance.app.presentation.ui.financedashboard
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,18 +11,24 @@ import com.fitfinance.app.R
 import com.fitfinance.app.databinding.FragmentFinanceDashboardBinding
 import com.fitfinance.app.presentation.statepattern.State
 import com.fitfinance.app.presentation.ui.financedashboard.adapter.FinanceAdapter
+import com.fitfinance.app.presentation.ui.financedetails.FinanceDetailsFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
 import com.fitfinance.app.util.getProgressDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FinanceDashboardFragment : Fragment() {
-
     private var _binding: FragmentFinanceDashboardBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel by viewModel<FinanceDashboardViewModel>()
-    private val financeAdapter = FinanceAdapter()
+
+    private val sharedPreferences by lazy { requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE) }
+    private val financeAdapter by lazy {
+        FinanceAdapter(deleteListener = {
+            viewModel.deleteFinance(it, sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
+        })
+    }
     private var progressDialog: AlertDialog? = null
 
     override fun onCreateView(
@@ -39,9 +44,18 @@ class FinanceDashboardFragment : Fragment() {
             viewModel.getFinancesByUserId(it)
         }
 
+
+
         binding.rvFinanceList.adapter = financeAdapter
+        setupUi()
 
         return root
+    }
+
+    private fun setupUi() {
+        binding.fabAddFinance.setOnClickListener {
+            FinanceDetailsFragment.newInstance().show(parentFragmentManager, "FinanceDetailsFragment")
+        }
     }
 
     override fun onStart() {
@@ -58,6 +72,26 @@ class FinanceDashboardFragment : Fragment() {
                     financeAdapter.submitList(state.info)
                 }
 
+                is State.Error -> {
+                    progressDialog?.dismiss()
+                    requireContext().createDialog {
+                        setMessage(state.error.message.toString())
+                        setPositiveButton("OK", null)
+                    }.show()
+                }
+            }
+        }
+
+        viewModel.financeDeleteObserver.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is State.Loading -> {
+                    progressDialog = requireContext().getProgressDialog(state.loadingMessage)
+                    progressDialog?.show()
+                }
+                is State.Success -> {
+                    progressDialog?.dismiss()
+                    viewModel.getFinancesByUserId(sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
+                }
                 is State.Error -> {
                     progressDialog?.dismiss()
                     requireContext().createDialog {
