@@ -1,4 +1,9 @@
 <resources>
+    <array name="finance_types">
+        <item>Income</item>
+        <item>Expense</item>
+    </array>
+
     <string name="app_name">Fit Finance</string>
     <string name="title_home" translatable="false">Home</string>
     <string name="title_finances">Finances</string>
@@ -29,4 +34,11 @@
     <string name="edit_finance">Edit Finance</string>
     <string name="delete_finance">Delete Finance</string>
     <string name="more_options">More options</string>
+    <string name="txt_hint_finance_name">Finance Name</string>
+    <string name="txt_hint_finance_description">Description</string>
+    <string name="txt_hint_finance_value">Value</string>
+    <string name="txt_hint_finance_start_date">Start Date</string>
+    <string name="txt_hint_finance_end_date">End Date</string>
+    <string name="txt_hint_finance_type">Type</string>
+    <string name="txt_finance_save">Save</string>
 </resources>
