@@ -6,6 +6,7 @@ import com.fitfinance.app.domain.request.UserPutRequest
 import com.fitfinance.app.util.throwRemoteException
 import com.fitfinance.app.util.toBearerToken
 import kotlinx.coroutines.flow.flow
+import retrofit2.Call
 import retrofit2.HttpException
 
 class UserRepository(private val apiService: ApiService) {
@@ -18,7 +19,7 @@ class UserRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun updatePassword(changePasswordRequest: ChangePasswordRequest, apiToken: String) = flow {
+    suspend fun updatePassword(changePasswordRequest: ChangePasswordRequest, apiToken: String) = flow<Call<Unit>> {
         try {
             val response = apiService.updatePassword(changePasswordRequest, apiToken.toBearerToken())
             emit(response)

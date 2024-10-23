@@ -7,6 +7,7 @@ import com.fitfinance.app.domain.request.FinancePutRequest
 import com.fitfinance.app.util.throwRemoteException
 import com.fitfinance.app.util.toBearerToken
 import kotlinx.coroutines.flow.flow
+import retrofit2.Call
 import retrofit2.HttpException
 
 class FinanceRepository(private val apiService: ApiService) {

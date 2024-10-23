@@ -63,8 +63,8 @@ class FinanceDetailsViewModel(
                 _financePutLiveData.value = State.Error(it)
             }
             .collect {
-                it.enqueue(object : Callback<Void> {
-                    override fun onResponse(p0: Call<Void>, p1: Response<Void>) {
+                it.enqueue(object : Callback<Unit> {
+                    override fun onResponse(p0: Call<Unit>, p1: Response<Unit>) {
                         if (p1.isSuccessful) {
                             _financePutLiveData.value = State.Success(true)
                         } else {
@@ -72,7 +72,7 @@ class FinanceDetailsViewModel(
                         }
                     }
 
-                    override fun onFailure(p0: Call<Void>, p1: Throwable) {
+                    override fun onFailure(p0: Call<Unit>, p1: Throwable) {
                         _financePutLiveData.value = State.Error(p1)
                         Log.i("FinanceDashboardViewModel", p1.message.toString())
                     }

@@ -6,6 +6,7 @@ import com.fitfinance.app.domain.request.InvestmentPutRequest
 import com.fitfinance.app.util.throwRemoteException
 import com.fitfinance.app.util.toBearerToken
 import kotlinx.coroutines.flow.flow
+import retrofit2.Call
 import retrofit2.HttpException
 
 class InvestmentRepository(private val apiService: ApiService) {
@@ -36,7 +37,7 @@ class InvestmentRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun updateInvestment(investmentPutRequest: InvestmentPutRequest, apiToken: String) = flow {
+    suspend fun updateInvestment(investmentPutRequest: InvestmentPutRequest, apiToken: String) = flow<Call<Unit>> {
         try {
             val response = apiService.updateInvestment(investmentPutRequest, apiToken.toBearerToken())
             emit(response)
@@ -45,7 +46,7 @@ class InvestmentRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun deleteInvestment(id: Long, apiToken: String) = flow {
+    suspend fun deleteInvestment(id: Long, apiToken: String) = flow<Call<Unit>> {
         try {
             val response = apiService.deleteInvestment(id, apiToken.toBearerToken())
             emit(response)

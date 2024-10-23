@@ -39,6 +39,10 @@ class FinanceDashboardFragment : Fragment() {
         _binding = FragmentFinanceDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        requireActivity().supportFragmentManager.setFragmentResultListener("updateFinanceList", viewLifecycleOwner) { _, _ ->
+            viewModel.getFinancesByUserId(sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
+        }
+
         val sharedPreferences = requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         sharedPreferences.getString(getString(R.string.pref_user_token), "")?.let {
             viewModel.getFinancesByUserId(it)
@@ -63,7 +67,7 @@ class FinanceDashboardFragment : Fragment() {
         viewModel.financesList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is State.Loading -> {
-                    progressDialog = requireContext().getProgressDialog(state.loadingMessage)
+                    progressDialog = requireContext().getProgressDialog(resources.getString(R.string.txt_loading_finances))
                     progressDialog?.show()
                 }
 
@@ -85,13 +89,15 @@ class FinanceDashboardFragment : Fragment() {
         viewModel.financeDeleteObserver.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is State.Loading -> {
-                    progressDialog = requireContext().getProgressDialog(state.loadingMessage)
+                    progressDialog = requireContext().getProgressDialog(resources.getString(R.string.txt_deleting_finance))
                     progressDialog?.show()
                 }
+
                 is State.Success -> {
                     progressDialog?.dismiss()
-                    viewModel.getFinancesByUserId(sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
+                    requireActivity().supportFragmentManager.setFragmentResult("updateFinanceList", Bundle())
                 }
+
                 is State.Error -> {
                     progressDialog?.dismiss()
                     requireContext().createDialog {

@@ -17,6 +17,7 @@ import com.fitfinance.app.databinding.ActivityMainBinding
 import com.fitfinance.app.presentation.ui.login.LoginActivity
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
                     R.id.logout_account -> {
-                        AlertDialog.Builder(this@MainActivity)
+                        MaterialAlertDialogBuilder(this@MainActivity)
                             .setTitle(getString(R.string.menu_logout_app))
                             .setMessage(getString(R.string.txt_action_logout))
                             .setPositiveButton(android.R.string.ok) { _, _ ->

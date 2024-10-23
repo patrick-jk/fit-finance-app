@@ -78,8 +78,8 @@ class LoginActivity : AppCompatActivity() {
                 if (!rememberMe || currentDateTime.isAfter(refreshDateTime.plusDays(7))) {
                     Log.i("LoginActivity", "Session Expired $rememberMe")
                     createDialog {
-                        setTitle("Session Expired")
-                        setMessage("Your session has expired. Please log in again.")
+                        setTitle(getString(R.string.txt_session_expired))
+                        setMessage(getString(R.string.txt_session_expired_description))
                         setPositiveButton(android.R.string.ok, null)
                     }.show()
                 } else {
@@ -119,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
                     progressDialog?.dismiss()
 
                     createDialog {
-                        setTitle("Error")
+                        setTitle(getString(R.string.txt_error))
                         setMessage(state.error.message)
                         setPositiveButton(android.R.string.ok, null)
                     }.show()
@@ -151,7 +151,7 @@ class LoginActivity : AppCompatActivity() {
                     progressDialog?.dismiss()
 
                     createDialog {
-                        setTitle("Error")
+                        setTitle(getString(R.string.txt_error))
                         setMessage(state.error.message)
                         setPositiveButton(android.R.string.ok, null)
                     }.show()

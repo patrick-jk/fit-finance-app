@@ -3,6 +3,7 @@ package com.fitfinance.app.presentation.ui.financedetails
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +18,7 @@ import com.fitfinance.app.domain.request.FinancePostRequest
 import com.fitfinance.app.domain.request.FinancePutRequest
 import com.fitfinance.app.domain.response.FinanceGetResponse
 import com.fitfinance.app.presentation.statepattern.State
-import com.fitfinance.app.util.DatePickerFragment
-import com.fitfinance.app.util.SHARED_PREF_NAME
-import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getProgressDialog
-import com.fitfinance.app.util.text
-import com.fitfinance.app.util.toLocalDateApiFormat
+import com.fitfinance.app.util.*
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDate
@@ -43,8 +39,6 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
     private val sharedPreferences by lazy { requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE) }
     private var progressDialog: AlertDialog? = null
 
-    //TODO validate inputs
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -64,8 +58,6 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
         setupUi()
 
         arguments?.let {
-
-
             binding.tilFinanceName.text = finance.name
             binding.tilFinanceValue.text = finance.value.toString()
             binding.tilFinanceDescription.text = finance.description
@@ -79,6 +71,7 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
 
     private fun setupUi() {
         _binding?.tilFinanceStartDate?.editText?.setOnClickListener {
+            it.hideSoftKeyboard()
             try {
                 val date = LocalDate.parse(binding.tilFinanceStartDate.text, dateTimeFormatterBrFormat)
                 showDatePickerDialog("StartDate", date)
@@ -87,6 +80,7 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
             }
         }
         _binding?.tilFinanceEndDate?.editText?.setOnClickListener {
+            it.hideSoftKeyboard()
             try {
                 val date = LocalDate.parse(binding.tilFinanceEndDate.text, dateTimeFormatterBrFormat)
                 showDatePickerDialog("EndDate", date)
@@ -95,12 +89,17 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
             }
         }
 
+        binding.tilFinanceValue.editText?.addTextChangedListener(CurrencyTextWatcher(binding.tilFinanceValue))
+
         if (arguments == null) {
             binding.btnSaveFinance.setOnClickListener {
+                if (!validateFields()) {
+                    return@setOnClickListener
+                }
                 viewModel.createFinance(
                     FinancePostRequest(
                         name = binding.tilFinanceName.text,
-                        value = binding.tilFinanceValue.text.toDouble(),
+                        value = removeCurrencyFormatting(binding.tilFinanceValue.text).toDouble(),
                         description = binding.tilFinanceDescription.text,
                         startDate = binding.tilFinanceStartDate.text.toLocalDateApiFormat(),
                         endDate = binding.tilFinanceEndDate.text.toLocalDateApiFormat(),
@@ -110,11 +109,14 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
             }
         } else {
             binding.btnSaveFinance.setOnClickListener {
+                if (!validateFields()) {
+                    return@setOnClickListener
+                }
                 viewModel.updateFinance(
                     FinancePutRequest(
                         id = finance.id,
                         name = binding.tilFinanceName.text,
-                        value = binding.tilFinanceValue.text.toDouble(),
+                        value = removeCurrencyFormatting(binding.tilFinanceValue.text).toDouble(),
                         description = binding.tilFinanceDescription.text,
                         startDate = binding.tilFinanceStartDate.text.toLocalDateApiFormat(),
                         endDate = binding.tilFinanceEndDate.text.toLocalDateApiFormat(),
@@ -123,6 +125,17 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
                 )
             }
         }
+    }
+
+    private fun validateFields(): Boolean {
+        val isNameValid = ValidateInput.validateInputText(binding.tilFinanceName)
+        val isValueValid = ValidateInput.validateInputText(binding.tilFinanceValue)
+        val isDescriptionValid = ValidateInput.validateInputText(binding.tilFinanceDescription)
+        val isStartDateValid = ValidateInput.validateInputText(binding.tilFinanceStartDate)
+        val isEndDateValid = ValidateInput.validateInputText(binding.tilFinanceEndDate)
+        val isTypeValid = ValidateInput.validateInputText(binding.tilFinanceType)
+
+        return isNameValid && isValueValid && isDescriptionValid && isStartDateValid && isEndDateValid && isTypeValid
     }
 
     private fun convertFinanceTypeToUi(financeType: String): String {
@@ -149,11 +162,13 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
                     progressDialog = requireContext().getProgressDialog(state.loadingMessage)
                     progressDialog?.show()
                 }
+
                 is State.Success -> {
                     progressDialog?.dismiss()
-//                    viewModel.getFinancesByUserId(sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
+                    requireActivity().supportFragmentManager.setFragmentResult("updateFinanceList", Bundle())
                     dismiss()
                 }
+
                 is State.Error -> {
                     progressDialog?.dismiss()
                     requireContext().createDialog {
@@ -170,11 +185,14 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
                     progressDialog = requireContext().getProgressDialog(state.loadingMessage)
                     progressDialog?.show()
                 }
+
                 is State.Success -> {
                     progressDialog?.dismiss()
-//                    viewModel.getFinancesByUserId(sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
+                    Log.d("FinanceDetailsFragment", "Finance successfully updated or created")
+                    requireActivity().supportFragmentManager.setFragmentResult("updateFinanceList", Bundle())
                     dismiss()
                 }
+
                 is State.Error -> {
                     progressDialog?.dismiss()
                     requireContext().createDialog {

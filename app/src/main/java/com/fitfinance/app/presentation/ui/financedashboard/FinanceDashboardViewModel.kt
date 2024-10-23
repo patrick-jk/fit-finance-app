@@ -68,8 +68,8 @@ class FinanceDashboardViewModel(
                 _financesList.value = State.Error(it)
             }
             .collect {
-                it.enqueue(object : Callback<Void> {
-                    override fun onResponse(p0: Call<Void>, p1: Response<Void>) {
+                it.enqueue(object : Callback<Unit> {
+                    override fun onResponse(p0: Call<Unit>, p1: Response<Unit>) {
                         if (p1.isSuccessful) {
                             _financeDeleteObserver.value = State.Success(true)
                         } else {
@@ -77,7 +77,7 @@ class FinanceDashboardViewModel(
                         }
                     }
 
-                    override fun onFailure(p0: Call<Void>, p1: Throwable) {
+                    override fun onFailure(p0: Call<Unit>, p1: Throwable) {
                         _financesList.value = State.Error(p1)
                         Log.i("FinanceDashboardViewModel", p1.message.toString())
                     }

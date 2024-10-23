@@ -45,10 +45,10 @@ interface ApiService {
 
     //Users Endpoints
     @PUT(BASE_USERS_PATH)
-    fun updateUser(@Body userPutRequest: UserPutRequest, @Header("Authorization") token: String): Call<Void>
+    fun updateUser(@Body userPutRequest: UserPutRequest, @Header("Authorization") token: String): Call<Unit>
 
     @PATCH(BASE_USERS_PATH)
-    fun updatePassword(@Body changePasswordRequest: ChangePasswordRequest, @Header("Authorization") token: String): Call<Void>
+    fun updatePassword(@Body changePasswordRequest: ChangePasswordRequest, @Header("Authorization") token: String): Call<Unit>
 
     //Finances Endpoints
     @GET("$BASE_FINANCES_PATH/by-user-id")
@@ -61,10 +61,10 @@ interface ApiService {
     fun createFinance(@Body financePostRequest: FinancePostRequest, @Header("Authorization") token: String): Call<FinancePostResponse>
 
     @PUT(BASE_FINANCES_PATH)
-    fun updateFinance(@Body financePutRequest: FinancePutRequest, @Header("Authorization") token: String): Call<Void>
+    fun updateFinance(@Body financePutRequest: FinancePutRequest, @Header("Authorization") token: String): Call<Unit>
 
     @DELETE("$BASE_FINANCES_PATH/{id}")
-    fun deleteFinance(@Path("id") id: Long, @Header("Authorization") token: String): Call<Void>
+    fun deleteFinance(@Path("id") id: Long, @Header("Authorization") token: String): Call<Unit>
 
     //Investments Endpoints
     @GET("$BASE_INVESTMENTS_PATH/by-user-id")
@@ -77,8 +77,8 @@ interface ApiService {
     fun createInvestment(@Body investmentPostRequest: InvestmentPostRequest, @Header("Authorization") token: String): Call<InvestmentPostResponse>
 
     @PUT(BASE_INVESTMENTS_PATH)
-    fun updateInvestment(@Body investmentPutRequest: InvestmentPutRequest, @Header("Authorization") token: String): Call<Void>
+    fun updateInvestment(@Body investmentPutRequest: InvestmentPutRequest, @Header("Authorization") token: String): Call<Unit>
 
     @DELETE("$BASE_INVESTMENTS_PATH/{id}")
-    fun deleteInvestment(@Path("id") id: Long, @Header("Authorization") token: String): Call<Void>
+    fun deleteInvestment(@Path("id") id: Long, @Header("Authorization") token: String): Call<Unit>
 }

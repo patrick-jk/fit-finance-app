@@ -67,8 +67,8 @@ class RegisterActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
                 if (formattedBirthdate == null) {
                     createDialog {
-                        setTitle("Error")
-                        setMessage("Invalid birthdate format")
+                        setTitle(getString(R.string.txt_error))
+                        setMessage(getString(R.string.txt_invalid_birthdate_format))
                         setPositiveButton(android.R.string.ok, null)
                     }
                     return@setOnClickListener

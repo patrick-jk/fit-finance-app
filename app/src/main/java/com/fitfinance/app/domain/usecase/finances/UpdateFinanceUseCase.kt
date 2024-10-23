@@ -6,8 +6,8 @@ import com.fitfinance.app.util.UseCase
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 
-class UpdateFinanceUseCase(private val financeRepository: FinanceRepository): UseCase<Pair<FinancePutRequest, String>, Call<Void>>() {
-    override suspend fun execute(param: Pair<FinancePutRequest, String>): Flow<Call<Void>> {
+class UpdateFinanceUseCase(private val financeRepository: FinanceRepository): UseCase<Pair<FinancePutRequest, String>, Call<Unit>>() {
+    override suspend fun execute(param: Pair<FinancePutRequest, String>): Flow<Call<Unit>> {
         return financeRepository.updateFinance(param.first, param.second)
     }
 }
