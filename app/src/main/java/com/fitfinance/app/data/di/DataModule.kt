@@ -45,7 +45,7 @@ object DataModule {
 
     private inline fun <reified T> createApiService(client: OkHttpClient, factory: GsonConverterFactory): T {
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/api/v1/")
+            .baseUrl("https://fit-finance-backend.onrender.com/api/v1/")
             .client(client)
             .addConverterFactory(factory)
             .build().create(T::class.java)
@@ -65,9 +65,6 @@ object DataModule {
             single {
                 InvestmentRepository(get())
             }
-//            single {
-//                //UserPreferences(get())
-//            }
         }
     }
 }

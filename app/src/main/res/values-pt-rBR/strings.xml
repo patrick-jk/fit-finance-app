@@ -42,4 +42,10 @@
     <string name="txt_finance_end_date">Data Final: %s</string>
     <string name="txt_delete_finance_title">Deletar Finança</string>
     <string name="txt_delete_finance_message">Você tem certeza que quer excluir essa finança?</string>
+    <string name="txt_error">Erro</string>
+    <string name="txt_invalid_birthdate_format">Formato de data inválido</string>
+    <string name="txt_session_expired">Sessão Expirada</string>
+    <string name="txt_session_expired_description">Sua sessão expirou. Por favor, faça login novamente.</string>
+    <string name="txt_deleting_finance">Excluindo finança...</string>
+    <string name="txt_loading_finances">Carregando finanças...</string>
 </resources>
