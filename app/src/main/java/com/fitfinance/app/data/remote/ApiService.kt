@@ -12,6 +12,7 @@ import com.fitfinance.app.domain.response.AuthenticationResponse
 import com.fitfinance.app.domain.response.FinanceGetResponse
 import com.fitfinance.app.domain.response.FinancePostResponse
 import com.fitfinance.app.domain.response.HomeSummaryResponse
+import com.fitfinance.app.domain.response.InvestmentGetResponse
 import com.fitfinance.app.domain.response.InvestmentPostResponse
 import com.fitfinance.app.domain.response.InvestmentSummaryResponse
 import com.fitfinance.app.domain.response.UserPostResponse
@@ -68,7 +69,7 @@ interface ApiService {
 
     //Investments Endpoints
     @GET("$BASE_INVESTMENTS_PATH/by-user-id")
-    fun getInvestmentsByUserId(@Header("Authorization") token: String): Call<List<FinanceGetResponse>>
+    fun getInvestmentsByUserId(@Header("Authorization") token: String): Call<List<InvestmentGetResponse>>
 
     @GET("$BASE_INVESTMENTS_PATH/total-summary")
     fun getInvestmentSummary(@Header("Authorization") token: String): Call<InvestmentSummaryResponse>

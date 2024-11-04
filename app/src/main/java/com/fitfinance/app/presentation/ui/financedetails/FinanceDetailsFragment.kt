@@ -26,12 +26,14 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
 class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetListener {
+    private val brazilianDateFormat = "dd/MM/yyyy"
+
     private var _binding: FragmentFinanceDetailsBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var finance: FinanceGetResponse
     private lateinit var lastDatePickerTag: String
-    private val dateTimeFormatterBrFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    private val dateTimeFormatterBrFormat: DateTimeFormatter = DateTimeFormatter.ofPattern(brazilianDateFormat)
     private val dateTimeFormatterApiFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
     private val viewModel by viewModel<FinanceDetailsViewModel>()
@@ -61,8 +63,8 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
             binding.tilFinanceName.text = finance.name
             binding.tilFinanceValue.text = finance.value.toString()
             binding.tilFinanceDescription.text = finance.description
-            binding.tilFinanceStartDate.text = DateTimeFormatter.ofPattern("dd/MM/yyyy").format(dateTimeFormatterApiFormat.parse(finance.startDate))
-            binding.tilFinanceEndDate.text = DateTimeFormatter.ofPattern("dd/MM/yyyy").format(dateTimeFormatterApiFormat.parse(finance.endDate))
+            binding.tilFinanceStartDate.text = DateTimeFormatter.ofPattern(brazilianDateFormat).format(dateTimeFormatterApiFormat.parse(finance.startDate))
+            binding.tilFinanceEndDate.text = DateTimeFormatter.ofPattern(brazilianDateFormat).format(dateTimeFormatterApiFormat.parse(finance.endDate))
             binding.actFinanceType.setText(convertFinanceTypeToUi(finance.type.name), false)
         }
 

@@ -6,6 +6,7 @@ import com.fitfinance.app.presentation.ui.financedashboard.FinanceDashboardViewM
 import com.fitfinance.app.presentation.ui.financedetails.FinanceDetailsViewModel
 import com.fitfinance.app.presentation.ui.financelist.FinanceListViewModel
 import com.fitfinance.app.presentation.ui.home.HomeViewModel
+import com.fitfinance.app.presentation.ui.investmentdashboard.InvestmentDashboardViewModel
 import com.fitfinance.app.presentation.ui.investmentdetails.InvestmentDetailsViewModel
 import com.fitfinance.app.presentation.ui.investmentlist.InvestmentListViewModel
 import com.fitfinance.app.presentation.ui.login.LoginViewModel
@@ -27,7 +28,8 @@ object PresentationModule {
         viewModel { FinanceDetailsViewModel(get(), get()) }
         viewModel { FinanceListViewModel(get()) }
         viewModel { HomeViewModel(get()) }
-        viewModel { InvestmentDetailsViewModel(get(), get(), get()) }
+        viewModel { InvestmentDashboardViewModel(get(), get()) }
+        viewModel { InvestmentDetailsViewModel(get(), get()) }
         viewModel { InvestmentListViewModel(get()) }
         viewModel { LoginViewModel(get(), get()) }
         viewModel { RegisterViewModel(get()) }

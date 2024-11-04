@@ -5,6 +5,12 @@
         <item>Despesa</item>
     </array>
 
+    <array name="investment_types">
+        <item>Ações</item>
+        <item>FIIs</item>
+        <item>Renda Fixa</item>
+    </array>
+
     <string name="app_name">Fit Finanças</string>
     <string name="title_finances">Finanças</string>
     <string name="title_investments">Investimentos</string>
@@ -46,6 +52,19 @@
     <string name="txt_invalid_birthdate_format">Formato de data inválido</string>
     <string name="txt_session_expired">Sessão Expirada</string>
     <string name="txt_session_expired_description">Sua sessão expirou. Por favor, faça login novamente.</string>
-    <string name="txt_deleting_finance">Excluindo finança...</string>
-    <string name="txt_loading_finances">Carregando finanças...</string>
+    <string name="txt_deleting_finance">Excluindo finança…</string>
+    <string name="txt_loading_finances">Carregando finanças…</string>
+    <string name="txt_add_investment">Adicionar Investimento</string>
+    <string name="txt_loading_investments">Carregando investimentos…</string>
+    <string name="txt_deleting_investment">Excluindo investimento…</string>
+    <string name="txt_investment_cost">Preço: $%.2f</string>
+    <string name="txt_investment_quantity">Quantidade de Ativos: %d</string>
+    <string name="txt_delete_investment_title">Excluir investimento</string>
+    <string name="txt_delete_investment_message">Você tem certeza que quer excluir este investimento?</string>
+    <string name="txt_authenticating_user">Autenticando usuário…</string>
+    <string name="txt_refreshing_token">Validando login…</string>
+    <string name="txt_hint_investment_cost">Preço Unitário do Ativo</string>
+    <string name="txt_hint_investment_name">Nome do Investimento</string>
+    <string name="txt_hint_investment_quantity">Quantidade de Ativos</string>
+    <string name="txt_investment_type">Tipo do Investimento: %s</string>
 </resources>

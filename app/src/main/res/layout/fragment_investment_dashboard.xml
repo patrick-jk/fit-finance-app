@@ -3,6 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="80dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.ui.investmentlist.InvestmentListFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_investment_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_margin="@dimen/base_margin"
+        android:contentDescription="@string/txt_add_investment"
+        android:src="@drawable/ic_add_black_24dp"
+        android:id="@+id/fab_add_investment"
+        android:layout_width="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

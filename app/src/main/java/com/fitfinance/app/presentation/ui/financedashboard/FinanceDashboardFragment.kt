@@ -48,8 +48,6 @@ class FinanceDashboardFragment : Fragment() {
             viewModel.getFinancesByUserId(it)
         }
 
-
-
         binding.rvFinanceList.adapter = financeAdapter
         setupUi()
 

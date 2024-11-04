@@ -14,6 +14,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.Duration
 
 object DataModule {
     private const val OK_HTTP = "OkHttp"
@@ -35,6 +36,7 @@ object DataModule {
 
                 OkHttpClient.Builder()
                     .addInterceptor(interceptor)
+                    .callTimeout(Duration.ofSeconds(30))
                     .build()
             }
             single {
@@ -45,7 +47,7 @@ object DataModule {
 
     private inline fun <reified T> createApiService(client: OkHttpClient, factory: GsonConverterFactory): T {
         return Retrofit.Builder()
-            .baseUrl("https://fit-finance-backend.onrender.com/api/v1/")
+            .baseUrl("http://10.0.2.2:8080/api/v1/")
             .client(client)
             .addConverterFactory(factory)
             .build().create(T::class.java)

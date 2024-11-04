@@ -97,7 +97,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.authenticationState.observe(this) { state ->
             when (state) {
                 is State.Loading -> {
-                    progressDialog = getProgressDialog(state.loadingMessage)
+                    progressDialog = getProgressDialog(getString(R.string.txt_authenticating_user))
                     progressDialog?.show()
                 }
 
@@ -131,7 +131,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.refreshTokenState.observe(this) { state ->
             when (state) {
                 is State.Loading -> {
-                    progressDialog = getProgressDialog(state.loadingMessage)
+                    progressDialog = getProgressDialog(getString(R.string.txt_refreshing_token))
                     progressDialog?.show()
                 }
 

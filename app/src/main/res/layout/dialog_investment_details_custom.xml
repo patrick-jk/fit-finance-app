@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/base_margin"
-    android:layout_margin="@dimen/base_margin">
+    android:layout_margin="@dimen/base_margin"
+    android:padding="@dimen/base_margin">
 
     <TextView
-        android:id="@+id/tvFinanceName"
+        android:id="@+id/tvInvestmentName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/title_finances"
+        android:text="@string/title_investments"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvFinanceStartDate"
+        android:id="@+id/tvInvestmentStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -27,39 +27,50 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFinanceName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvInvestmentName" />
 
     <TextView
-        android:id="@+id/tvFinanceDescription"
+        android:id="@+id/tvInvestmentType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="@dimen/base_margin"
         android:layout_marginBottom="8dp"
-        android:text="@string/txt_finance_description"
+        android:text="@string/txt_investment_type"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvFinanceStartDate" />
+        app:layout_constraintTop_toBottomOf="@id/tvInvestmentStartDate" />
 
     <TextView
-        android:id="@+id/tvFinanceValue"
+        android:id="@+id/tvInvestmentQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/txt_finance_value"
+        android:text="@string/txt_investment_quantity"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvFinanceDescription" />
+        app:layout_constraintTop_toBottomOf="@id/tvInvestmentType" />
+
+    <TextView
+        android:id="@+id/tvInvestmentCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/txt_investment_cost"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvInvestmentQuantity" />
 
 
     <TextView
-        android:id="@+id/tvFinanceEndDate"
+        android:id="@+id/tvInvestmentEndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="@string/txt_finance_end_date"
         android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvFinanceValue" />
+        app:layout_constraintTop_toBottomOf="@id/tvInvestmentCost" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

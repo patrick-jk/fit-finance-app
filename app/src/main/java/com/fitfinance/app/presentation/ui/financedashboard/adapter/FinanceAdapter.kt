@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.DialogFinanceDetailsCustomBinding
-import com.fitfinance.app.databinding.ItemFinanceBinding
+import com.fitfinance.app.databinding.ItemRecyclerViewBinding
 import com.fitfinance.app.domain.model.FinanceType
 import com.fitfinance.app.domain.response.FinanceGetResponse
 import com.fitfinance.app.presentation.ui.financedetails.FinanceDetailsFragment
@@ -21,7 +21,7 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FinanceViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemFinanceBinding.inflate(inflater, parent, false)
+        val binding = ItemRecyclerViewBinding.inflate(inflater, parent, false)
         return FinanceViewHolder(binding)
     }
 
@@ -29,7 +29,7 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
         holder.bind(getItem(position))
     }
 
-    inner class FinanceViewHolder(private val binding: ItemFinanceBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class FinanceViewHolder(private val binding: ItemRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(finance: FinanceGetResponse) {
             binding.tvTitle.text = finance.name
             binding.mcvItemFinance.backgroundTintList = binding.root.context.getColorStateList(
@@ -54,7 +54,8 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
                         dialogView.tvFinanceValue.text = view.context.getString(R.string.txt_finance_value, finance.value)
                         dialogView.tvFinanceDescription.text = view.context.getString(R.string.txt_finance_description, finance.description)
                         dialogView.tvFinanceStartDate.text = view.context.getString(R.string.txt_finance_start_date, finance.startDate.toLocalDateBrFormat())
-                        dialogView.tvFinanceEndDate.text = view.context.getString(R.string.txt_finance_end_date, finance.endDate.toLocalDateBrFormat())
+
+                        dialogView.tvFinanceEndDate.visibility = if (finance.endDate != null) View.VISIBLE else View.GONE
 
                         val dialog = MaterialAlertDialogBuilder(view.context)
                             .setView(dialogView.root)

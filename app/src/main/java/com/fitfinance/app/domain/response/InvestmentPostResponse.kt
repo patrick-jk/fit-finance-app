@@ -2,7 +2,6 @@ package com.fitfinance.app.domain.response
 
 import com.fitfinance.app.domain.model.InvestmentType
 import com.google.gson.annotations.SerializedName
-import java.time.LocalDate
 
 data class InvestmentPostResponse(
     val id: Long,
@@ -11,6 +10,6 @@ data class InvestmentPostResponse(
     var type: InvestmentType,
     var quantity: Int,
     var description: String,
-    @SerializedName("start_date") var startDate: LocalDate,
-    @SerializedName("end_date") var endDate: LocalDate?
+    @SerializedName("start_date") var startDate: String,
+    @SerializedName("end_date") var endDate: String?
 )
