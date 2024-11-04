@@ -37,7 +37,7 @@ class InvestmentRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun updateInvestment(investmentPutRequest: InvestmentPutRequest, apiToken: String) = flow<Call<Unit>> {
+    fun updateInvestment(investmentPutRequest: InvestmentPutRequest, apiToken: String) = flow {
         try {
             val response = apiService.updateInvestment(investmentPutRequest, apiToken.toBearerToken())
             emit(response)
@@ -46,7 +46,7 @@ class InvestmentRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun deleteInvestment(id: Long, apiToken: String) = flow<Call<Unit>> {
+    fun deleteInvestment(id: Long, apiToken: String) = flow<Call<Unit>> {
         try {
             val response = apiService.deleteInvestment(id, apiToken.toBearerToken())
             emit(response)

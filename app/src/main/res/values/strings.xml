@@ -73,4 +73,6 @@
     <string name="txt_hint_investment_name">Investment Name</string>
     <string name="txt_hint_investment_quantity">Asset Quantity</string>
     <string name="txt_investment_type">Investment Type: %s</string>
+    <string name="creating_investment">Creating investment...</string>
+    <string name="updating_investment">Updating investment...</string>
 </resources>

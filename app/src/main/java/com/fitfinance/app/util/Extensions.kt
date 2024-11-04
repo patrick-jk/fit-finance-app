@@ -20,6 +20,8 @@ var TextInputLayout.text: String
 fun String.toBearerToken() = "Bearer $this"
 
 fun String.toLocalDateApiFormat(): String {
+    if (this.isEmpty()) return ""
+
     val date = this.split("/")
     return "${date[2]}-${date[1]}-${date[0]}"
 }

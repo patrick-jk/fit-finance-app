@@ -8,18 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.FragmentInvestmentDetailsBinding
 import com.fitfinance.app.domain.model.InvestmentType
-import com.fitfinance.app.domain.request.FinancePostRequest
 import com.fitfinance.app.domain.request.InvestmentPostRequest
 import com.fitfinance.app.domain.request.InvestmentPutRequest
 import com.fitfinance.app.domain.response.InvestmentGetResponse
+import com.fitfinance.app.presentation.statepattern.State
 import com.fitfinance.app.util.CurrencyTextWatcher
 import com.fitfinance.app.util.DatePickerFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.ValidateInput
+import com.fitfinance.app.util.createDialog
+import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.removeCurrencyFormatting
 import com.fitfinance.app.util.text
@@ -44,11 +47,12 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
     private val dateTimeFormatterApiFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
     private val sharedPreferences by lazy { requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE) }
+    private var progressDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            investment = BundleCompat.getParcelable(it, "finance", InvestmentGetResponse::class.java)!!
+            investment = BundleCompat.getParcelable(it, "investment", InvestmentGetResponse::class.java)!!
         }
     }
 
@@ -67,7 +71,8 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
             binding.tilInvestmentName.text = investment.name
             binding.tilInvestmentCost.text = investment.price.toString()
             binding.tilInvestmentStartDate.text = DateTimeFormatter.ofPattern(brazilianDateFormat).format(dateTimeFormatterApiFormat.parse(investment.startDate))
-            binding.tilInvestmentEndDate.text = DateTimeFormatter.ofPattern(brazilianDateFormat).format(dateTimeFormatterApiFormat.parse(investment.endDate))
+            if (investment.endDate != null) binding.tilInvestmentEndDate.text =
+                DateTimeFormatter.ofPattern(brazilianDateFormat).format(dateTimeFormatterApiFormat.parse(investment.endDate))
             binding.actInvestmentType.setText(convertInvestmentTypeToUi(investment.type.name), false)
         }
 
@@ -146,7 +151,6 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
         binding.tilInvestmentName.text = "Teste"
         binding.tilInvestmentCost.text = "10"
         binding.tilInvestmentStartDate.text = "01/01/2021"
-        binding.tilInvestmentEndDate.text = "01/01/2022"
         binding.tilInvestmentQuantity.text = "30"
     }
 
@@ -165,6 +169,54 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
             resources.getStringArray(R.array.investment_types)[1] -> InvestmentType.FII
             resources.getStringArray(R.array.investment_types)[2] -> InvestmentType.FIXED_INCOME
             else -> InvestmentType.STOCK
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.investmentPostResponse.observe(this) {
+            when (it) {
+                is State.Loading -> {
+                    progressDialog = requireContext().getProgressDialog(resources.getString(R.string.creating_investment))
+                    progressDialog?.show()
+                }
+
+                is State.Success -> {
+                    progressDialog?.dismiss()
+                    requireActivity().supportFragmentManager.setFragmentResult("updateInvestmentList", Bundle())
+                    dismiss()
+                }
+
+                is State.Error -> {
+                    progressDialog?.dismiss()
+                    requireContext().createDialog {
+                        setMessage(it.error.message.toString())
+                        setPositiveButton(android.R.string.ok, null)
+                    }.show()
+                }
+            }
+        }
+        viewModel.investmentPutResponse.observe(this) {
+            when (it) {
+                is State.Loading -> {
+                    progressDialog = requireContext().getProgressDialog(resources.getString(R.string.updating_investment))
+                    progressDialog?.show()
+                }
+
+                is State.Success -> {
+                    progressDialog?.dismiss()
+                    requireActivity().supportFragmentManager.setFragmentResult("updateInvestmentList", Bundle())
+                    dismiss()
+                }
+
+                is State.Error -> {
+                    progressDialog?.dismiss()
+                    requireContext().createDialog {
+                        setMessage(it.error.message.toString())
+                        setPositiveButton(android.R.string.ok, null)
+                    }.show()
+                }
+            }
         }
     }
 
