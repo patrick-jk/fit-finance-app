@@ -24,6 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
+import java.util.Locale
 
 class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetListener {
     private val brazilianDateFormat = "dd/MM/yyyy"
@@ -61,7 +62,7 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
 
         arguments?.let {
             binding.tilFinanceName.text = finance.name
-            binding.tilFinanceValue.text = finance.value.toString()
+            binding.tilFinanceValue.text = String.format(Locale.US, "%.2f", finance.value)
             binding.tilFinanceDescription.text = finance.description
             binding.tilFinanceStartDate.text = DateTimeFormatter.ofPattern(brazilianDateFormat).format(dateTimeFormatterApiFormat.parse(finance.startDate))
             binding.tilFinanceEndDate.text = DateTimeFormatter.ofPattern(brazilianDateFormat).format(dateTimeFormatterApiFormat.parse(finance.endDate))

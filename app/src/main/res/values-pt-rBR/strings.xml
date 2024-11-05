@@ -67,4 +67,8 @@
     <string name="txt_hint_investment_name">Nome do Investimento</string>
     <string name="txt_hint_investment_quantity">Quantidade de Ativos</string>
     <string name="txt_investment_type">Tipo do Investimento: %s</string>
+    <string name="creating_investment">Criando investimento...</string>
+    <string name="updating_investment">Atualizando investimento...</string>
+    <string name="txt_edit_investment">Editar Investimento</string>
+    <string name="txt_delete_investment">Excluir Investimento</string>
 </resources>

@@ -46,16 +46,17 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
             popupMenu.inflate(R.menu.item_finance_menu)
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.view_finance_details -> {
+                    R.id.view_item_details -> {
                         val inflater = LayoutInflater.from(view.context)
                         val dialogView = DialogFinanceDetailsCustomBinding.inflate(inflater, null, false)
+                        dialogView.tvFinanceEndDate.visibility = if (finance.endDate != null) View.VISIBLE else View.GONE
 
                         dialogView.tvFinanceName.text = finance.name
                         dialogView.tvFinanceValue.text = view.context.getString(R.string.txt_finance_value, finance.value)
                         dialogView.tvFinanceDescription.text = view.context.getString(R.string.txt_finance_description, finance.description)
                         dialogView.tvFinanceStartDate.text = view.context.getString(R.string.txt_finance_start_date, finance.startDate.toLocalDateBrFormat())
+                        dialogView.tvFinanceEndDate.text = view.context.getString(R.string.txt_finance_end_date, finance.endDate?.toLocalDateBrFormat())
 
-                        dialogView.tvFinanceEndDate.visibility = if (finance.endDate != null) View.VISIBLE else View.GONE
 
                         val dialog = MaterialAlertDialogBuilder(view.context)
                             .setView(dialogView.root)
@@ -67,12 +68,12 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
                         true
                     }
 
-                    R.id.edit_finance -> {
+                    R.id.edit_item -> {
                         openFinanceDetailsFragment(view, finance)
                         true
                     }
 
-                    R.id.delete_finance -> {
+                    R.id.delete_item -> {
                         MaterialAlertDialogBuilder(view.context)
                             .setTitle(R.string.txt_delete_finance_title)
                             .setMessage(R.string.txt_delete_finance_message)

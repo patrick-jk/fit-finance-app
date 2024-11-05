@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/view_finance_details"
+        android:id="@+id/view_item_details"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/finance_view_details" />
     <item
-        android:id="@+id/edit_finance"
+        android:id="@+id/edit_item"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/edit_finance" />
     <item
-        android:id="@+id/delete_finance"
+        android:id="@+id/delete_item"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/delete_finance" />
 </menu>

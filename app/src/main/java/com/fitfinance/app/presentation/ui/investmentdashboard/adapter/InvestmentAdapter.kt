@@ -48,9 +48,18 @@ class InvestmentAdapter(val deleteListener: (Long) -> Unit, val typeConverter: (
         private fun showPopupMenu(view: View, investment: InvestmentGetResponse) {
             val popupMenu = PopupMenu(view.context, view)
             popupMenu.inflate(R.menu.item_finance_menu)
+
+            val editInvestmentMenuItem = popupMenu.menu.findItem(R.id.edit_item)
+            editInvestmentMenuItem.title = view.context.getString(R.string.txt_edit_investment)
+
+            val deleteInvestmentMenuItem = popupMenu.menu.findItem(R.id.delete_item)
+            deleteInvestmentMenuItem.title = view.context.getString(R.string.txt_delete_investment)
+
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.view_finance_details -> {
+                    R.id.view_item_details -> {
+
+
                         val inflater = LayoutInflater.from(view.context)
                         val dialogView = DialogInvestmentDetailsCustomBinding.inflate(inflater, null, false)
 
@@ -76,12 +85,12 @@ class InvestmentAdapter(val deleteListener: (Long) -> Unit, val typeConverter: (
                         true
                     }
 
-                    R.id.edit_finance -> {
+                    R.id.edit_item -> {
                         openInvestmentDetailsFragment(view, investment)
                         true
                     }
 
-                    R.id.delete_finance -> {
+                    R.id.delete_item -> {
                         MaterialAlertDialogBuilder(view.context)
                             .setTitle(R.string.txt_delete_investment_title)
                             .setMessage(R.string.txt_delete_investment_message)
