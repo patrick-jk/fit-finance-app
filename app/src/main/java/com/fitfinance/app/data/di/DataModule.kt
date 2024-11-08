@@ -1,6 +1,9 @@
 package com.fitfinance.app.data.di
 
+import android.app.Application
 import android.util.Log
+import androidx.room.Room
+import com.fitfinance.app.data.local.AppDatabase
 import com.fitfinance.app.data.remote.ApiService
 import com.fitfinance.app.data.repo.AuthRepository
 import com.fitfinance.app.data.repo.FinanceRepository
@@ -20,7 +23,7 @@ object DataModule {
     private const val OK_HTTP = "OkHttp"
 
     fun load() {
-        loadKoinModules(apiModule() + repositoriesModule())
+        loadKoinModules(apiModule() + repositoriesModule() + localDatabaseModule())
     }
 
     private fun apiModule(): Module {
@@ -45,6 +48,24 @@ object DataModule {
         }
     }
 
+    private fun localDatabaseModule(): Module {
+        return module {
+            single {
+                createLocalDatabase(get())
+            }
+
+            single {
+                get<AppDatabase>().userDao()
+            }
+            single {
+                get<AppDatabase>().financeDao()
+            }
+            single {
+                get<AppDatabase>().investmentDao()
+            }
+        }
+    }
+
     private inline fun <reified T> createApiService(client: OkHttpClient, factory: GsonConverterFactory): T {
         return Retrofit.Builder()
             .baseUrl("http://10.0.2.2:8080/api/v1/")
@@ -59,14 +80,19 @@ object DataModule {
                 AuthRepository(get())
             }
             single {
-                UserRepository(get())
+                UserRepository(get(), get())
             }
             single {
-                FinanceRepository(get())
+                FinanceRepository(get(), get())
             }
             single {
-                InvestmentRepository(get())
+                InvestmentRepository(get(), get())
             }
         }
+    }
+
+    private fun createLocalDatabase(app: Application): AppDatabase {
+        return Room.databaseBuilder(app, AppDatabase::class.java, "fit-finance-app.db")
+            .build()
     }
 }

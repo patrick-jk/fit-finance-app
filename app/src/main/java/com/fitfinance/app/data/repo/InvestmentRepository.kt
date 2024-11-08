@@ -1,5 +1,6 @@
 package com.fitfinance.app.data.repo
 
+import com.fitfinance.app.data.local.dao.InvestmentDao
 import com.fitfinance.app.data.remote.ApiService
 import com.fitfinance.app.domain.request.InvestmentPostRequest
 import com.fitfinance.app.domain.request.InvestmentPutRequest
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.flow
 import retrofit2.Call
 import retrofit2.HttpException
 
-class InvestmentRepository(private val apiService: ApiService) {
+class InvestmentRepository(private val apiService: ApiService, private val investmentDao: InvestmentDao) {
     suspend fun getInvestmentsByUserId(apiToken: String) = flow {
         try {
             val response = apiService.getInvestmentsByUserId(apiToken.toBearerToken())

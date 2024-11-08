@@ -14,5 +14,5 @@ data class FinanceGetResponse(
     var description: String,
     @SerializedName("user") var userGetResponse: UserGetResponse,
     @SerializedName("start_date") var startDate: String,
-    @SerializedName("end_date") var endDate: String?
+    @SerializedName("end_date") var endDate: String
 ) : Parcelable

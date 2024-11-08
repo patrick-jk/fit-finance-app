@@ -81,7 +81,7 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
     }
 
     private fun setupUi() {
-        mockInputs()
+//        mockInputs()
         _binding?.tilInvestmentStartDate?.editText?.setOnClickListener {
             it.hideSoftKeyboard()
             try {
@@ -103,39 +103,39 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
 
         binding.tilInvestmentCost.editText?.addTextChangedListener(CurrencyTextWatcher(binding.tilInvestmentCost))
 
-        if (arguments == null) {
-            binding.btnSaveInvestment.setOnClickListener {
-                if (!validateFields()) {
-                    return@setOnClickListener
-                }
-                viewModel.createInvestment(
-                    InvestmentPostRequest(
-                        name = binding.tilInvestmentName.text,
-                        price = removeCurrencyFormatting(binding.tilInvestmentCost.text).toDouble(),
-                        startDate = binding.tilInvestmentStartDate.text.toLocalDateApiFormat(),
-                        endDate = binding.tilInvestmentEndDate.text.toLocalDateApiFormat(),
-                        quantity = binding.tilInvestmentQuantity.text.toInt(),
-                        type = convertInvestmentTypeToData(binding.actInvestmentType.text.toString()),
-                    ), sharedPreferences.getString(getString(R.string.pref_user_token), "")!!
+        binding.btnSaveInvestment.setOnClickListener {
+            if (!validateFields()) {
+                return@setOnClickListener
+            }
+            val investmentRequest: Any = if (arguments == null) {
+                InvestmentPostRequest(
+                    name = binding.tilInvestmentName.text,
+                    price = removeCurrencyFormatting(binding.tilInvestmentCost.text).toDouble(),
+                    startDate = binding.tilInvestmentStartDate.text.toLocalDateApiFormat(),
+                    endDate = binding.tilInvestmentEndDate.text.toLocalDateApiFormat(),
+                    quantity = binding.tilInvestmentQuantity.text.toInt(),
+                    type = convertInvestmentTypeToData(binding.actInvestmentType.text.toString())
+                )
+            } else {
+                InvestmentPutRequest(
+                    id = investment.id,
+                    name = binding.tilInvestmentName.text,
+                    price = removeCurrencyFormatting(binding.tilInvestmentCost.text).toDouble(),
+                    startDate = binding.tilInvestmentStartDate.text.toLocalDateApiFormat(),
+                    endDate = binding.tilInvestmentEndDate.text.toLocalDateApiFormat(),
+                    quantity = binding.tilInvestmentQuantity.text.toInt(),
+                    type = convertInvestmentTypeToData(binding.actInvestmentType.text.toString()),
                 )
             }
-        } else {
-            binding.btnSaveInvestment.setOnClickListener {
-                if (!validateFields()) {
-                    return@setOnClickListener
-                }
-                viewModel.updateInvestment(
-                    InvestmentPutRequest(
-                        id = investment.id,
-                        name = binding.tilInvestmentName.text,
-                        price = removeCurrencyFormatting(binding.tilInvestmentCost.text).toDouble(),
-                        startDate = binding.tilInvestmentStartDate.text.toLocalDateApiFormat(),
-                        endDate = binding.tilInvestmentEndDate.text.toLocalDateApiFormat(),
-                        quantity = binding.tilInvestmentQuantity.text.toInt(),
-                        type = convertInvestmentTypeToData(binding.actInvestmentType.text.toString()),
-                    ), sharedPreferences.getString(getString(R.string.pref_user_token), "")!!
-                )
-            }
+            createOrUpdateInvestment(investmentRequest, sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
+        }
+    }
+
+    private fun <T> createOrUpdateInvestment(request: T, token: String) {
+        if (request is InvestmentPostRequest) {
+            viewModel.createInvestment(request, token)
+        } else if (request is InvestmentPutRequest) {
+            viewModel.updateInvestment(request, token)
         }
     }
 
