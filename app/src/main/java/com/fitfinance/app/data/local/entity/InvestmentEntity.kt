@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.fitfinance.app.domain.model.InvestmentType
+import com.fitfinance.app.domain.response.InvestmentGetResponse
 import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "investment")
@@ -16,4 +17,9 @@ data class InvestmentEntity(
     var quantity: Int,
     var startDate: String,
     var endDate: String?
-) : Parcelable
+) : Parcelable {
+    fun toInvestmentGetResponse(): InvestmentGetResponse = InvestmentGetResponse(
+        id, name, price, type, quantity, startDate, endDate
+    )
+
+}

@@ -20,13 +20,10 @@ class AuthRepository(private val apiService: ApiService) {
     }
 
     suspend fun authenticateUser(authenticationRequest: AuthenticationRequest) = flow {
-        Log.i("AuthRepository", "authenticateUser: $authenticationRequest")
         try {
             val response = apiService.authenticateUser(authenticationRequest)
-            Log.i("AuthRepository", "inside try authenticateUser: $response")
             emit(response)
         } catch (e: HttpException) {
-            Log.e("AuthRepository", "authenticateUser: ${e.message()}")
             e.throwRemoteException("Error authenticating user")
         }
     }

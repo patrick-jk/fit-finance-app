@@ -16,9 +16,15 @@ interface InvestmentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertInvestment(investment: InvestmentEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllInvestments(investments: List<InvestmentEntity>)
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateInvestment(investment: InvestmentEntity)
 
     @Delete
     suspend fun deleteInvestment(investment: InvestmentEntity)
+
+    @Query("DELETE FROM investment")
+    suspend fun deleteAllInvestments()
 }

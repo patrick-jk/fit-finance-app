@@ -18,7 +18,17 @@ import com.fitfinance.app.domain.request.FinancePostRequest
 import com.fitfinance.app.domain.request.FinancePutRequest
 import com.fitfinance.app.domain.response.FinanceGetResponse
 import com.fitfinance.app.presentation.statepattern.State
-import com.fitfinance.app.util.*
+import com.fitfinance.app.util.CurrencyTextWatcher
+import com.fitfinance.app.util.DatePickerFragment
+import com.fitfinance.app.util.SHARED_PREF_NAME
+import com.fitfinance.app.util.ValidateInput
+import com.fitfinance.app.util.createDialog
+import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
+import com.fitfinance.app.util.getProgressDialog
+import com.fitfinance.app.util.hideSoftKeyboard
+import com.fitfinance.app.util.removeCurrencyFormatting
+import com.fitfinance.app.util.text
+import com.fitfinance.app.util.toLocalDateApiFormat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDate
@@ -159,10 +169,10 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
 
     override fun onStart() {
         super.onStart()
-        viewModel.financePostResponse.observe(viewLifecycleOwner) { state ->
-            when (state) {
+        viewModel.financePostResponse.observe(viewLifecycleOwner) {
+            when (it) {
                 is State.Loading -> {
-                    progressDialog = requireContext().getProgressDialog(state.loadingMessage)
+                    progressDialog = requireContext().getProgressDialog(it.loadingMessage)
                     progressDialog?.show()
                 }
 
@@ -175,17 +185,18 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
                 is State.Error -> {
                     progressDialog?.dismiss()
                     requireContext().createDialog {
-                        setMessage(state.error.message.toString())
+                        setTitle(resources.getString(R.string.txt_error))
+                        setMessage(requireContext().getNoConnectionErrorOrExceptionMessage(it.error))
                         setPositiveButton("OK", null)
                     }.show()
                 }
             }
         }
 
-        viewModel.financePutLiveData.observe(viewLifecycleOwner) { state ->
-            when (state) {
+        viewModel.financePutLiveData.observe(viewLifecycleOwner) {
+            when (it) {
                 is State.Loading -> {
-                    progressDialog = requireContext().getProgressDialog(state.loadingMessage)
+                    progressDialog = requireContext().getProgressDialog(it.loadingMessage)
                     progressDialog?.show()
                 }
 
@@ -199,7 +210,8 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
                 is State.Error -> {
                     progressDialog?.dismiss()
                     requireContext().createDialog {
-                        setMessage(state.error.message.toString())
+                        setTitle(resources.getString(R.string.txt_error))
+                        setMessage(requireContext().getNoConnectionErrorOrExceptionMessage(it.error))
                         setPositiveButton("OK", null)
                     }.show()
                 }

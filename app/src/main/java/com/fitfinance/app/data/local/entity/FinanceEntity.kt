@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.fitfinance.app.domain.model.FinanceType
+import com.fitfinance.app.domain.response.FinanceGetResponse
 import com.fitfinance.app.domain.response.UserGetResponse
 import kotlinx.parcelize.Parcelize
 
@@ -19,4 +20,14 @@ data class FinanceEntity(
     var startDate: String,
     var endDate: String
 ) : Parcelable {
+    fun toFinanceGetResponse() = FinanceGetResponse(
+        id = id,
+        name = name,
+        value = value,
+        type = type,
+        description = description,
+        userGetResponse = userGetResponse,
+        startDate = startDate,
+        endDate = endDate
+    )
 }

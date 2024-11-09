@@ -77,4 +77,6 @@
     <string name="updating_investment">Updating investment...</string>
     <string name="txt_edit_investment">Edit Investment</string>
     <string name="txt_delete_investment">Delete Investment</string>
+    <string name="error_no_internet_connection">Oops! It looks like you\'re not connected to the internet, please try again when your connection has been reestablished.</string>
+    <string name="error_unknown">Something went wrong. Please, try again later.</string>
 </resources>

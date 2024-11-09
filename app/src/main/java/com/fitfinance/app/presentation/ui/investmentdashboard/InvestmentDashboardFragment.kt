@@ -14,6 +14,7 @@ import com.fitfinance.app.presentation.ui.investmentdashboard.adapter.Investment
 import com.fitfinance.app.presentation.ui.investmentdetails.InvestmentDetailsFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
+import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
 import com.fitfinance.app.util.getProgressDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -63,7 +64,7 @@ class InvestmentDashboardFragment : Fragment() {
     private fun convertInvestmentTypeToUi(investmentType: String): String {
         return when (investmentType) {
             "STOCK" -> resources.getStringArray(R.array.investment_types)[0]
-            "FIIS" -> resources.getStringArray(R.array.investment_types)[1]
+            "FII" -> resources.getStringArray(R.array.investment_types)[1]
             "FIXED_INCOME" -> resources.getStringArray(R.array.investment_types)[2]
             else -> resources.getStringArray(R.array.investment_types)[0]
         }
@@ -109,7 +110,8 @@ class InvestmentDashboardFragment : Fragment() {
                 is State.Error -> {
                     progressDialog?.dismiss()
                     requireContext().createDialog {
-                        setMessage(it.error.message.toString())
+                        setTitle(resources.getString(R.string.txt_error))
+                        setMessage(requireContext().getNoConnectionErrorOrExceptionMessage(it.error))
                         setPositiveButton("OK", null)
                     }.show()
                 }

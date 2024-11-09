@@ -2,6 +2,8 @@ package com.fitfinance.app.util
 
 import android.app.Activity
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
@@ -56,6 +58,26 @@ fun Context.getProgressDialog(message: String = ""): AlertDialog {
     }
 }
 
+fun Context.isInternetAvailable(): Boolean {
+    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val network = connectivityManager.activeNetwork ?: return false
+    val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+    return when {
+        activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+        activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+        activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+        else -> false
+    }
+}
+
 fun HttpException.throwRemoteException(errorMessage: String) {
     throw RemoteException(this.message ?: errorMessage)
+}
+
+fun Context.getNoConnectionErrorOrExceptionMessage(throwable: Throwable): String {
+    return if (throwable.message?.contains("Failed to connect", true) == true) {
+        getString(R.string.error_no_internet_connection)
+    } else {
+        throwable.message ?: getString(R.string.error_unknown)
+    }
 }

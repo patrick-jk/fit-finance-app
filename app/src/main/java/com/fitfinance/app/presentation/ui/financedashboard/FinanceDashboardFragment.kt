@@ -14,6 +14,7 @@ import com.fitfinance.app.presentation.ui.financedashboard.adapter.FinanceAdapte
 import com.fitfinance.app.presentation.ui.financedetails.FinanceDetailsFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
+import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
 import com.fitfinance.app.util.getProgressDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -62,8 +63,8 @@ class FinanceDashboardFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.financesList.observe(viewLifecycleOwner) { state ->
-            when (state) {
+        viewModel.financesList.observe(viewLifecycleOwner) {
+            when (it) {
                 is State.Loading -> {
                     progressDialog = requireContext().getProgressDialog(resources.getString(R.string.txt_loading_finances))
                     progressDialog?.show()
@@ -71,21 +72,22 @@ class FinanceDashboardFragment : Fragment() {
 
                 is State.Success -> {
                     progressDialog?.dismiss()
-                    financeAdapter.submitList(state.info)
+                    financeAdapter.submitList(it.info)
                 }
 
                 is State.Error -> {
                     progressDialog?.dismiss()
                     requireContext().createDialog {
-                        setMessage(state.error.message.toString())
+                        setTitle(resources.getString(R.string.txt_error))
+                        setMessage(requireContext().getNoConnectionErrorOrExceptionMessage(it.error))
                         setPositiveButton("OK", null)
                     }.show()
                 }
             }
         }
 
-        viewModel.financeDeleteObserver.observe(viewLifecycleOwner) { state ->
-            when (state) {
+        viewModel.financeDeleteObserver.observe(viewLifecycleOwner) {
+            when (it) {
                 is State.Loading -> {
                     progressDialog = requireContext().getProgressDialog(resources.getString(R.string.txt_deleting_finance))
                     progressDialog?.show()
@@ -99,7 +101,8 @@ class FinanceDashboardFragment : Fragment() {
                 is State.Error -> {
                     progressDialog?.dismiss()
                     requireContext().createDialog {
-                        setMessage(state.error.message.toString())
+                        setTitle(resources.getString(R.string.txt_error))
+                        setMessage(requireContext().getNoConnectionErrorOrExceptionMessage(it.error))
                         setPositiveButton("OK", null)
                     }.show()
                 }

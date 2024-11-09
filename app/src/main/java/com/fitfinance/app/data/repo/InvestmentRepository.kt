@@ -1,37 +1,60 @@
 package com.fitfinance.app.data.repo
 
+import android.util.Log
 import com.fitfinance.app.data.local.dao.InvestmentDao
 import com.fitfinance.app.data.remote.ApiService
 import com.fitfinance.app.domain.request.InvestmentPostRequest
 import com.fitfinance.app.domain.request.InvestmentPutRequest
 import com.fitfinance.app.util.throwRemoteException
 import com.fitfinance.app.util.toBearerToken
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
-import retrofit2.Call
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 class InvestmentRepository(private val apiService: ApiService, private val investmentDao: InvestmentDao) {
-    suspend fun getInvestmentsByUserId(apiToken: String) = flow {
+    private var ioDispatcher = Dispatchers.IO
+
+    fun getInvestmentsByUserId(apiToken: String) = flow {
         try {
-            val response = apiService.getInvestmentsByUserId(apiToken.toBearerToken())
-            emit(response)
-        } catch (e: HttpException) {
-            e.throwRemoteException("Failed to get investments")
+            val response = suspendCancellableCoroutine {
+                apiService.getInvestmentsByUserId(apiToken.toBearerToken()).enqueue(ApiCallback(it))
+            }
+
+            val investments = withContext(ioDispatcher) {
+                investmentDao.deleteAllInvestments()
+                investmentDao.insertAllInvestments(response.map { it.toInvestmentEntity() })
+                Log.i("InvestmentRepository", "Investments saved to database")
+                investmentDao.getInvestments().map { it.toInvestmentGetResponse() }
+            }
+            emit(investments)
+
+        } catch (e: Exception) {
+            Log.i("InvestmentRepository", "Error getting investments from API, using local data")
+            val localInvestments = investmentDao.getInvestments().map { it.toInvestmentGetResponse() }
+            emit(localInvestments)
         }
     }
 
-    suspend fun getInvestmentSummary(apiToken: String) = flow {
+    fun getInvestmentSummary(apiToken: String) = flow {
         try {
-            val response = apiService.getInvestmentSummary(apiToken.toBearerToken())
+            val response = suspendCancellableCoroutine {
+                apiService.getInvestmentSummary(apiToken.toBearerToken()).enqueue(ApiCallback(it))
+            }
+
             emit(response)
         } catch (e: HttpException) {
             e.throwRemoteException("Failed to get investment summary")
         }
     }
 
-    suspend fun createInvestment(investmentPostRequest: InvestmentPostRequest, apiToken: String) = flow {
+    fun createInvestment(investmentPostRequest: InvestmentPostRequest, apiToken: String) = flow {
         try {
-            val response = apiService.createInvestment(investmentPostRequest, apiToken.toBearerToken())
+            val response = suspendCancellableCoroutine {
+                apiService.createInvestment(investmentPostRequest, apiToken.toBearerToken()).enqueue(ApiCallback(it))
+            }
+
             emit(response)
         } catch (e: HttpException) {
             e.throwRemoteException("Failed to create investment")
@@ -40,16 +63,21 @@ class InvestmentRepository(private val apiService: ApiService, private val inves
 
     fun updateInvestment(investmentPutRequest: InvestmentPutRequest, apiToken: String) = flow {
         try {
-            val response = apiService.updateInvestment(investmentPutRequest, apiToken.toBearerToken())
+            val response = suspendCancellableCoroutine {
+                apiService.updateInvestment(investmentPutRequest, apiToken.toBearerToken()).enqueue(ApiCallback(it))
+            }
             emit(response)
         } catch (e: HttpException) {
             e.throwRemoteException("Failed to update investment")
         }
     }
 
-    fun deleteInvestment(id: Long, apiToken: String) = flow<Call<Unit>> {
+    fun deleteInvestment(id: Long, apiToken: String) = flow {
         try {
-            val response = apiService.deleteInvestment(id, apiToken.toBearerToken())
+            val response = suspendCancellableCoroutine {
+                apiService.deleteInvestment(id, apiToken.toBearerToken()).enqueue(ApiCallback(it))
+            }
+
             emit(response)
         } catch (e: HttpException) {
             e.throwRemoteException("Failed to delete investment")

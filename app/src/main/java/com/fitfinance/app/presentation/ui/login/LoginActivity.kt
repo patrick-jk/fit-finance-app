@@ -15,6 +15,7 @@ import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.ValidateInput
 import com.fitfinance.app.util.createDialog
 import com.fitfinance.app.util.getProgressDialog
+import com.fitfinance.app.util.isInternetAvailable
 import com.fitfinance.app.util.text
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDateTime
@@ -39,7 +40,6 @@ class LoginActivity : AppCompatActivity() {
             if (intent?.hasExtra(EXTRA_USER_EMAIL) == true) {
                 tilEmail.text = intent?.getStringExtra(EXTRA_USER_EMAIL).toString()
             }
-
 
             btnRegister.setOnClickListener {
                 startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
@@ -74,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
             val refreshDateTime = LocalDateTime.parse(refreshTime, dateTimeFormatter)
             val currentDateTime = LocalDateTime.now()
 
-            if (currentDateTime.isAfter(loginDateTime.plusDays(1))) {
+            if (currentDateTime.isAfter(loginDateTime.plusDays(1)) && isInternetAvailable()) {
                 if (!rememberMe || currentDateTime.isAfter(refreshDateTime.plusDays(7))) {
                     Log.i("LoginActivity", "Session Expired $rememberMe")
                     createDialog {

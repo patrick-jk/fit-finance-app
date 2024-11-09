@@ -22,6 +22,7 @@ import com.fitfinance.app.util.DatePickerFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.ValidateInput
 import com.fitfinance.app.util.createDialog
+import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
 import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.removeCurrencyFormatting
@@ -71,6 +72,7 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
         arguments?.let {
             binding.tilInvestmentName.text = investment.name
             binding.tilInvestmentCost.text = String.format(Locale.US, "%.2f", investment.price)
+            binding.tilInvestmentQuantity.text = investment.quantity.toString()
             binding.tilInvestmentStartDate.text = DateTimeFormatter.ofPattern(brazilianDateFormat).format(dateTimeFormatterApiFormat.parse(investment.startDate))
             if (investment.endDate != null) binding.tilInvestmentEndDate.text =
                 DateTimeFormatter.ofPattern(brazilianDateFormat).format(dateTimeFormatterApiFormat.parse(investment.endDate))
@@ -81,7 +83,7 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
     }
 
     private fun setupUi() {
-//        mockInputs()
+        mockInputs()
         _binding?.tilInvestmentStartDate?.editText?.setOnClickListener {
             it.hideSoftKeyboard()
             try {
@@ -142,10 +144,11 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
     private fun validateFields(): Boolean {
         val isNameValid = ValidateInput.validateInputText(binding.tilInvestmentName)
         val isValueValid = ValidateInput.validateInputText(binding.tilInvestmentCost)
+        val isQuantityValid = ValidateInput.validateInputText(binding.tilInvestmentQuantity)
         val isStartDateValid = ValidateInput.validateInputText(binding.tilInvestmentStartDate)
         val isTypeValid = ValidateInput.validateInputText(binding.tilInvestmentType)
 
-        return isNameValid && isValueValid && isStartDateValid && isTypeValid
+        return isNameValid && isValueValid && isQuantityValid && isStartDateValid && isTypeValid
     }
 
     private fun mockInputs() {
@@ -158,7 +161,7 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
     private fun convertInvestmentTypeToUi(investmentType: String): String {
         return when (investmentType) {
             "STOCK" -> resources.getStringArray(R.array.investment_types)[0]
-            "FIIS" -> resources.getStringArray(R.array.investment_types)[1]
+            "FII" -> resources.getStringArray(R.array.investment_types)[1]
             "FIXED_INCOME" -> resources.getStringArray(R.array.investment_types)[2]
             else -> resources.getStringArray(R.array.investment_types)[0]
         }
@@ -191,7 +194,8 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
                 is State.Error -> {
                     progressDialog?.dismiss()
                     requireContext().createDialog {
-                        setMessage(it.error.message.toString())
+                        setTitle(resources.getString(R.string.txt_error))
+                        setMessage(requireContext().getNoConnectionErrorOrExceptionMessage(it.error))
                         setPositiveButton(android.R.string.ok, null)
                     }.show()
                 }
@@ -213,7 +217,8 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
                 is State.Error -> {
                     progressDialog?.dismiss()
                     requireContext().createDialog {
-                        setMessage(it.error.message.toString())
+                        setTitle(resources.getString(R.string.txt_error))
+                        setMessage(requireContext().getNoConnectionErrorOrExceptionMessage(it.error))
                         setPositiveButton(android.R.string.ok, null)
                     }.show()
                 }

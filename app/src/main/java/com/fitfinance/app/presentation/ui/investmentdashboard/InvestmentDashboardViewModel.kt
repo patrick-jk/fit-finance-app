@@ -1,6 +1,5 @@
 package com.fitfinance.app.presentation.ui.investmentdashboard
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,9 +11,6 @@ import com.fitfinance.app.presentation.statepattern.State
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class InvestmentDashboardViewModel(
     private val investmentsByUserIdUseCase: GetInvestmentsByUserIdUseCase,
@@ -35,20 +31,7 @@ class InvestmentDashboardViewModel(
                 _investmentsList.value = State.Error(it)
             }
             .collect {
-                it.enqueue(object : Callback<List<InvestmentGetResponse>> {
-                    override fun onResponse(p0: Call<List<InvestmentGetResponse>>, p1: Response<List<InvestmentGetResponse>>) {
-                        if (p1.isSuccessful) {
-                            _investmentsList.value = State.Success(p1.body()!!)
-                        } else {
-                            _investmentsList.value = State.Error(Throwable("Error getting investments"))
-                        }
-                    }
-
-                    override fun onFailure(p0: Call<List<InvestmentGetResponse>>, p1: Throwable) {
-                        _investmentsList.value = State.Error(p1)
-                        Log.i("InvestmentDashboardViewModel", p1.message.toString())
-                    }
-                })
+                _investmentsList.value = State.Success(it)
             }
     }
 
@@ -61,20 +44,7 @@ class InvestmentDashboardViewModel(
                 _investmentDeleteObserver.value = State.Error(it)
             }
             .collect {
-                it.enqueue(object : Callback<Unit> {
-                    override fun onResponse(p0: Call<Unit>, p1: Response<Unit>) {
-                        if (p1.isSuccessful) {
-                            _investmentDeleteObserver.value = State.Success(true)
-                        } else {
-                            _investmentDeleteObserver.value = State.Error(Throwable("Error deleting investment"))
-                        }
-                    }
-
-                    override fun onFailure(p0: Call<Unit>, p1: Throwable) {
-                        _investmentDeleteObserver.value = State.Error(p1)
-                        Log.i("InvestmentDashboardViewModel", p1.message.toString())
-                    }
-                })
+                _investmentDeleteObserver.value = State.Success(true)
             }
     }
 }

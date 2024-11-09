@@ -1,6 +1,7 @@
 package com.fitfinance.app.domain.response
 
 import android.os.Parcelable
+import com.fitfinance.app.data.local.entity.FinanceEntity
 import com.fitfinance.app.domain.model.FinanceType
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
@@ -15,4 +16,15 @@ data class FinanceGetResponse(
     @SerializedName("user") var userGetResponse: UserGetResponse,
     @SerializedName("start_date") var startDate: String,
     @SerializedName("end_date") var endDate: String
-) : Parcelable
+) : Parcelable {
+    fun toFinanceEntity() = FinanceEntity(
+        id = id,
+        name = name,
+        value = value,
+        type = type,
+        description = description,
+        userGetResponse = userGetResponse,
+        startDate = startDate,
+        endDate = endDate
+    )
+}
