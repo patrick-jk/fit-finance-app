@@ -1,6 +1,6 @@
 package com.fitfinance.app.presentation.di
 
-import com.fitfinance.app.presentation.ui.aboutus.AboutUsViewModel
+import com.fitfinance.app.presentation.ui.aboutus.UserProfileViewModel
 import com.fitfinance.app.presentation.ui.contact.ContactUsViewModel
 import com.fitfinance.app.presentation.ui.financedashboard.FinanceDashboardViewModel
 import com.fitfinance.app.presentation.ui.financedetails.FinanceDetailsViewModel
@@ -20,7 +20,7 @@ object PresentationModule {
     }
 
     private fun viewModelModule(): Module = module {
-        viewModel { AboutUsViewModel() }
+        viewModel { UserProfileViewModel() }
         viewModel { ContactUsViewModel() }
         viewModel { FinanceDashboardViewModel(get(), get()) }
         viewModel { FinanceDetailsViewModel(get(), get()) }

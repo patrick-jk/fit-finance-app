@@ -1,7 +1,6 @@
 package com.fitfinance.app.domain.request
 
 import com.fitfinance.app.domain.model.FinanceType
-import java.time.LocalDate
 
 data class FinancePostRequest(
     var name: String,

@@ -17,7 +17,8 @@ import com.fitfinance.app.presentation.ui.investmentdetails.InvestmentDetailsFra
 import com.fitfinance.app.util.toLocalDateBrFormat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class InvestmentAdapter(val deleteListener: (Long) -> Unit, val typeConverter: (String) -> String) : ListAdapter<InvestmentGetResponse, InvestmentAdapter.InvestmentViewHolder>(InvestmentAdapter) {
+class InvestmentAdapter(val deleteListener: (Long) -> Unit, val typeConverter: (String) -> String) :
+    ListAdapter<InvestmentGetResponse, InvestmentAdapter.InvestmentViewHolder>(InvestmentAdapter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InvestmentViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -47,7 +48,7 @@ class InvestmentAdapter(val deleteListener: (Long) -> Unit, val typeConverter: (
 
         private fun showPopupMenu(view: View, investment: InvestmentGetResponse) {
             val popupMenu = PopupMenu(view.context, view)
-            popupMenu.inflate(R.menu.item_finance_menu)
+            popupMenu.inflate(R.menu.adapter_item_menu)
 
             val editInvestmentMenuItem = popupMenu.menu.findItem(R.id.edit_item)
             editInvestmentMenuItem.title = view.context.getString(R.string.txt_edit_investment)

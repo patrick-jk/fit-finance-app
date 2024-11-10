@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.navigation.findNavController
@@ -14,6 +13,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.ActivityMainBinding
+import com.fitfinance.app.presentation.ui.aboutus.AboutUsActivity
+import com.fitfinance.app.presentation.ui.profile.UserProfileActivity
 import com.fitfinance.app.presentation.ui.login.LoginActivity
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
-                    R.id.logout_account -> {
+                    R.id.menu_logout_account -> {
                         MaterialAlertDialogBuilder(this@MainActivity)
                             .setTitle(getString(R.string.menu_logout_app))
                             .setMessage(getString(R.string.txt_action_logout))
@@ -62,6 +63,12 @@ class MainActivity : AppCompatActivity() {
                             .setNegativeButton(android.R.string.cancel) { dialog, _ ->
                                 dialog.dismiss()
                             }.show()
+                    }
+                    R.id.menu_user_profile -> {
+                        startActivity(Intent(this@MainActivity, UserProfileActivity::class.java))
+                    }
+                    R.id.menu_about_us -> {
+                        startActivity(Intent(this@MainActivity, AboutUsActivity::class.java))
                     }
                 }
                 return true

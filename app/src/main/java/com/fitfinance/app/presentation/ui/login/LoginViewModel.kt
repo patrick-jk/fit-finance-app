@@ -13,9 +13,6 @@ import com.fitfinance.app.presentation.statepattern.State
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class LoginViewModel(
     private val authenticateUserUseCase: AuthenticateUserUseCase,
@@ -37,19 +34,7 @@ class LoginViewModel(
                 _authenticationState.value = State.Error(it)
             }
             .collect {
-                it.enqueue(object : Callback<AuthenticationResponse> {
-                    override fun onResponse(p0: Call<AuthenticationResponse>, p1: Response<AuthenticationResponse>) {
-                        if (p1.isSuccessful) {
-                            _authenticationState.value = State.Success(p1.body()!!)
-                        } else {
-                            _authenticationState.value = State.Error(Throwable("Error authenticating user"))
-                        }
-                    }
-
-                    override fun onFailure(p0: Call<AuthenticationResponse>, p1: Throwable) {
-                        _authenticationState.value = State.Error(p1)
-                    }
-                })
+                _authenticationState.value = State.Success(it)
             }
     }
 
@@ -63,19 +48,7 @@ class LoginViewModel(
                 _refreshTokenState.value = State.Error(it)
             }
             .collect {
-                it.enqueue(object : Callback<AuthenticationResponse> {
-                    override fun onResponse(p0: Call<AuthenticationResponse>, p1: Response<AuthenticationResponse>) {
-                        if (p1.isSuccessful) {
-                            _refreshTokenState.value = State.Success(p1.body()!!)
-                        } else {
-                            _refreshTokenState.value = State.Error(Throwable("Error refreshing token"))
-                        }
-                    }
-
-                    override fun onFailure(p0: Call<AuthenticationResponse>, p1: Throwable) {
-                        _refreshTokenState.value = State.Error(p1)
-                    }
-                })
+                _refreshTokenState.value = State.Success(it)
             }
     }
 }

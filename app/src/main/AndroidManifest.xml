@@ -25,7 +25,12 @@
             android:name=".presentation.ui.contact.ContactActivity"
             android:exported="false" />
         <activity
+            android:name=".presentation.ui.profile.UserProfileActivity"
+            android:label="@string/menu_profile"
+            android:exported="false" />
+        <activity
             android:name=".presentation.ui.aboutus.AboutUsActivity"
+            android:label="@string/menu_about_us"
             android:exported="false" />
         <activity
             android:name=".presentation.ui.login.LoginActivity"

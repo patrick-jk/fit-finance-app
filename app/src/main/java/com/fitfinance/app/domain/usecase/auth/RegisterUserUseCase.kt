@@ -5,10 +5,9 @@ import com.fitfinance.app.domain.request.RegisterRequest
 import com.fitfinance.app.domain.response.UserPostResponse
 import com.fitfinance.app.util.UseCase
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Call
 
-class RegisterUserUseCase(private val authRepository: AuthRepository): UseCase<RegisterRequest, Call<UserPostResponse>>() {
-    override suspend fun execute(param: RegisterRequest): Flow<Call<UserPostResponse>> {
+class RegisterUserUseCase(private val authRepository: AuthRepository) : UseCase<RegisterRequest, UserPostResponse>() {
+    override suspend fun execute(param: RegisterRequest): Flow<UserPostResponse> {
         return authRepository.registerUser(param)
     }
 }

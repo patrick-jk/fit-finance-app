@@ -21,6 +21,7 @@ import com.fitfinance.app.util.PhoneTextWatcher
 import com.fitfinance.app.util.ValidateInput
 import com.fitfinance.app.util.convertDateFormat
 import com.fitfinance.app.util.createDialog
+import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
 import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.removeCpfFormatting
@@ -77,7 +78,6 @@ class RegisterActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 val rawCpf = removeCpfFormatting(tilRegisterCpf.text)
                 val rawPhone = removePhoneFormatting(tilRegisterPhone.text)
                 val rawIncome = removeCurrencyFormatting(tilRegisterIncome.text)
-                Log.i("RegisterActivity", "setupUi: $rawIncome")
 
                 viewModel.registerUser(
                     RegisterRequest(
@@ -137,7 +137,6 @@ class RegisterActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                     progressDialog?.dismiss()
 
                     val user = it.info
-
                     Toast.makeText(this, getString(R.string.txt_register_success), Toast.LENGTH_SHORT).show()
 
                     val intent = Intent(this, LoginActivity::class.java).apply {
@@ -150,8 +149,8 @@ class RegisterActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 is State.Error -> {
                     progressDialog?.dismiss()
                     createDialog {
-                        setTitle("Error")
-                        setMessage(it.error.message)
+                        setTitle(getString(R.string.txt_error))
+                        setMessage(getNoConnectionErrorOrExceptionMessage(it.error))
                         setPositiveButton(android.R.string.ok, null)
                     }
                 }

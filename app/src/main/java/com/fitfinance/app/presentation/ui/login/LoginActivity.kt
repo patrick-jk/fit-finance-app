@@ -14,6 +14,7 @@ import com.fitfinance.app.presentation.ui.register.RegisterActivity.Companion.EX
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.ValidateInput
 import com.fitfinance.app.util.createDialog
+import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
 import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.isInternetAvailable
 import com.fitfinance.app.util.text
@@ -120,7 +121,7 @@ class LoginActivity : AppCompatActivity() {
 
                     createDialog {
                         setTitle(getString(R.string.txt_error))
-                        setMessage(state.error.message)
+                        setMessage(getNoConnectionErrorOrExceptionMessage(state.error))
                         setPositiveButton(android.R.string.ok, null)
                     }.show()
                     getProgressDialog().dismiss()
@@ -152,7 +153,7 @@ class LoginActivity : AppCompatActivity() {
 
                     createDialog {
                         setTitle(getString(R.string.txt_error))
-                        setMessage(state.error.message)
+                        setMessage(getNoConnectionErrorOrExceptionMessage(state.error))
                         setPositiveButton(android.R.string.ok, null)
                     }.show()
                     getProgressDialog().dismiss()

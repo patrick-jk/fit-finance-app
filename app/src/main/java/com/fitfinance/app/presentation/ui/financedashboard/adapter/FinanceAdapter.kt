@@ -43,7 +43,7 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
 
         private fun showPopupMenu(view: View, finance: FinanceGetResponse) {
             val popupMenu = PopupMenu(view.context, view)
-            popupMenu.inflate(R.menu.item_finance_menu)
+            popupMenu.inflate(R.menu.adapter_item_menu)
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.view_item_details -> {
