@@ -8,6 +8,7 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
     android:backgroundTint="#ebecf4"
+    android:clickable="true"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout

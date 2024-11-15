@@ -2,11 +2,13 @@ package com.fitfinance.app.presentation.ui.financedashboard
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.FragmentFinanceDashboardBinding
 import com.fitfinance.app.presentation.statepattern.State
@@ -50,9 +52,22 @@ class FinanceDashboardFragment : Fragment() {
         }
 
         binding.rvFinanceList.adapter = financeAdapter
+        arguments?.getString("itemId")?.let {
+            Log.i("FinanceDashboardFragment", "itemId came as argument itemId: $it")
+            scrollToFinance(it)
+        }
+
         setupUi()
 
         return root
+    }
+
+    private fun scrollToFinance(itemId: String) {
+        val position = financeAdapter.getItemPositionById(itemId)
+        if (position != RecyclerView.NO_POSITION) {
+            binding.rvFinanceList.scrollToPosition(position)
+            //TODO Feedback when the item is found
+        }
     }
 
     private fun setupUi() {

@@ -81,4 +81,14 @@
     <string name="error_unknown">Something went wrong. Please, try again later.</string>
     <string name="menu_about_us">About Us</string>
     <string name="menu_profile">Profile</string>
+    <string name="txt_generic_decimal" translatable="false">%.2f</string>
+    <string name="txt_balance">Balance</string>
+    <string name="txt_biggest_expense">Biggest Expense</string>
+    <string name="txt_smallest_expense">Smallest Expense</string>
+    <string name="txt_biggest_investment">Biggest Investment</string>
+    <string name="txt_smallest_investment">Smallest Investment</string>
+    <string name="txt_loading_home_data">Loading user data…</string>
+    <string name="txt_details">Details</string>
+    <string name="txt_expense">Expense</string>
+    <string name="txt_balance_vs_expense">Balance vs Expense</string>
 </resources>

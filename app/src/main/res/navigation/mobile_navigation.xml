@@ -9,17 +9,32 @@
         android:id="@+id/navigation_home"
         android:name="com.fitfinance.app.presentation.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_finances"
+            app:destination="@id/navigation_finances" />
+        <action
+            android:id="@+id/action_navigation_home_to_investments"
+            app:destination="@id/navigation_investments" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_finances"
         android:name="com.fitfinance.app.presentation.ui.financedashboard.FinanceDashboardFragment"
         android:label="@string/title_finances"
-        tools:layout="@layout/fragment_finance_list" />
+        tools:layout="@layout/fragment_finance_list">
+        <argument
+            android:name="itemId"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_investments"
         android:name="com.fitfinance.app.presentation.ui.investmentdashboard.InvestmentDashboardFragment"
         android:label="@string/title_investments"
-        tools:layout="@layout/fragment_investment_list" />
+        tools:layout="@layout/fragment_investment_list">
+        <argument
+            android:name="itemId"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -156,7 +156,6 @@ class LoginActivity : AppCompatActivity() {
                         setMessage(getNoConnectionErrorOrExceptionMessage(state.error))
                         setPositiveButton(android.R.string.ok, null)
                     }.show()
-                    getProgressDialog().dismiss()
                 }
             }
         }

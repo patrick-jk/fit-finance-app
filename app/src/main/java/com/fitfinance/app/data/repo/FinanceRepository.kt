@@ -16,7 +16,7 @@ import retrofit2.HttpException
 class FinanceRepository(private val apiService: ApiService, private val financeDao: FinanceDao) {
     private var ioDispatcher = Dispatchers.IO
 
-    suspend fun getFinancesByUserId(apiToken: String) = flow {
+    fun getFinancesByUserId(apiToken: String) = flow {
         try {
             val response = suspendCancellableCoroutine {
                 apiService.getFinancesByUserId(apiToken.toBearerToken()).enqueue(ApiCallback(it))
@@ -39,7 +39,7 @@ class FinanceRepository(private val apiService: ApiService, private val financeD
     }
 
 
-    suspend fun getUserSummary(apiToken: String) = flow {
+    fun getUserSummary(apiToken: String) = flow {
         try {
             val response = suspendCancellableCoroutine {
                 apiService.getUserSummary(apiToken.toBearerToken()).enqueue(ApiCallback(it))
@@ -50,7 +50,7 @@ class FinanceRepository(private val apiService: ApiService, private val financeD
         }
     }
 
-    suspend fun createFinance(financePostRequest: FinancePostRequest, apiToken: String) = flow {
+    fun createFinance(financePostRequest: FinancePostRequest, apiToken: String) = flow {
         try {
             val response = suspendCancellableCoroutine {
                 apiService.createFinance(financePostRequest, apiToken.toBearerToken()).enqueue(ApiCallback(it))
@@ -61,10 +61,10 @@ class FinanceRepository(private val apiService: ApiService, private val financeD
         }
     }
 
-    suspend fun updateFinance(financePutRequest: FinancePutRequest, apiToken: String) = flow {
+    fun updateFinance(financePutRequest: FinancePutRequest, apiToken: String) = flow {
         try {
             val response = suspendCancellableCoroutine {
-                apiService.updateFinance(financePutRequest, apiToken.toBearerToken()).enqueue(ApiCallback(it))
+                apiService.updateFinance(financePutRequest, apiToken.toBearerToken()).enqueue(ApiCallback204Status(it))
             }
             emit(response)
         } catch (e: HttpException) {
@@ -72,10 +72,10 @@ class FinanceRepository(private val apiService: ApiService, private val financeD
         }
     }
 
-    suspend fun deleteFinance(financeId: Long, apiToken: String) = flow {
+    fun deleteFinance(financeId: Long, apiToken: String) = flow {
         try {
             val response = suspendCancellableCoroutine {
-                apiService.deleteFinance(financeId, apiToken.toBearerToken()).enqueue(ApiCallback(it))
+                apiService.deleteFinance(financeId, apiToken.toBearerToken()).enqueue(ApiCallback204Status(it))
             }
             emit(response)
         } catch (e: HttpException) {

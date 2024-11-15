@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_overview_card"
+    android:paddingBottom="@dimen/base_margin"
+    tools:context=".presentation.ui.home.HomeFragment">
+
+            <TextView
+                android:id="@+id/tv_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/txt_details"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_overview_biggest_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/txt_biggest_expense"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toStartOf="@+id/tv_balance"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_balance" />
+
+            <TextView
+                android:id="@+id/tv_overview_biggest_expense_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/bg_overview_items"
+                android:padding="8dp"
+                android:text="@string/txt_generic_decimal"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_overview_biggest_expense"
+                app:layout_constraintStart_toStartOf="@id/tv_overview_biggest_expense"
+                app:layout_constraintTop_toBottomOf="@id/tv_overview_biggest_expense"
+                tools:text="Adadadada" />
+
+            <TextView
+                android:id="@+id/tv_overview_smallest_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/txt_smallest_expense"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_balance"
+                app:layout_constraintTop_toBottomOf="@id/tv_balance" />
+
+            <TextView
+                android:id="@+id/tv_overview_smallest_expense_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/bg_overview_items"
+                android:padding="8dp"
+                android:text="@string/txt_generic_decimal"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_overview_smallest_expense"
+                app:layout_constraintStart_toStartOf="@+id/tv_overview_smallest_expense"
+                app:layout_constraintTop_toBottomOf="@id/tv_overview_smallest_expense"
+                tools:text="Adadadada" />
+
+            <TextView
+                android:id="@+id/tv_overview_biggest_investment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/txt_biggest_investment"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toStartOf="@+id/tv_balance"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_overview_biggest_expense_value" />
+
+            <TextView
+                android:id="@+id/tv_overview_biggest_investment_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/bg_overview_items"
+                android:padding="8dp"
+                android:text="@string/txt_generic_decimal"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_overview_biggest_investment"
+                app:layout_constraintStart_toStartOf="@id/tv_overview_biggest_investment"
+                app:layout_constraintTop_toBottomOf="@id/tv_overview_biggest_investment"
+                tools:text="Adadadada" />
+
+            <TextView
+                android:id="@+id/tv_overview_smallest_investment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/txt_smallest_investment"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_balance"
+                app:layout_constraintTop_toBottomOf="@id/tv_overview_smallest_expense_value" />
+
+            <TextView
+                android:id="@+id/tv_overview_smallest_investment_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/bg_overview_items"
+                android:padding="8dp"
+                android:text="@string/txt_generic_decimal"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_overview_smallest_investment"
+                app:layout_constraintStart_toStartOf="@+id/tv_overview_smallest_investment"
+                app:layout_constraintTop_toBottomOf="@id/tv_overview_smallest_investment"
+                tools:text="Adadadada" />
+</androidx.constraintlayout.widget.ConstraintLayout>

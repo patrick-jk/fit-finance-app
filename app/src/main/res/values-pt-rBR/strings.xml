@@ -71,4 +71,17 @@
     <string name="updating_investment">Atualizando investimento...</string>
     <string name="txt_edit_investment">Editar Investimento</string>
     <string name="txt_delete_investment">Excluir Investimento</string>
+    <string name="error_no_internet_connection">Oops! Parece que você não está conectado a internet, por favor, tente novamente quando a conexão tiver sido reestabelecida.</string>
+    <string name="error_unknown">Algo deu errado. Por favor, tente novamente mais tarde.</string>
+    <string name="menu_about_us">Quem Somos</string>
+    <string name="menu_profile">Perfil</string>
+    <string name="txt_balance">Saldo</string>
+    <string name="txt_biggest_expense">Maior Despesa</string>
+    <string name="txt_smallest_expense">Menor Despesa</string>
+    <string name="txt_biggest_investment">Maior Investimento</string>
+    <string name="txt_smallest_investment">Menor Investimento</string>
+    <string name="txt_loading_home_data">Carregando dados...</string>
+    <string name="txt_details">Detalhes</string>
+    <string name="txt_expense">Despesas</string>
+    <string name="txt_balance_vs_expense">Saldo vs Despesas</string>
 </resources>

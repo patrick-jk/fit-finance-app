@@ -29,6 +29,10 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
         holder.bind(getItem(position))
     }
 
+    fun getItemPositionById(itemId: String): Int {
+        return currentList.indexOfFirst { it.name == itemId }
+    }
+
     inner class FinanceViewHolder(private val binding: ItemRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(finance: FinanceGetResponse) {
             binding.tvTitle.text = finance.name

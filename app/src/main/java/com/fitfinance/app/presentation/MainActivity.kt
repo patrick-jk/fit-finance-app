@@ -14,8 +14,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.ActivityMainBinding
 import com.fitfinance.app.presentation.ui.aboutus.AboutUsActivity
-import com.fitfinance.app.presentation.ui.profile.UserProfileActivity
 import com.fitfinance.app.presentation.ui.login.LoginActivity
+import com.fitfinance.app.presentation.ui.profile.UserProfileActivity
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -64,9 +63,11 @@ class MainActivity : AppCompatActivity() {
                                 dialog.dismiss()
                             }.show()
                     }
+
                     R.id.menu_user_profile -> {
                         startActivity(Intent(this@MainActivity, UserProfileActivity::class.java))
                     }
+
                     R.id.menu_about_us -> {
                         startActivity(Intent(this@MainActivity, AboutUsActivity::class.java))
                     }

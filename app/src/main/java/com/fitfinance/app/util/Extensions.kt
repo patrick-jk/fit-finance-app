@@ -75,7 +75,7 @@ fun HttpException.throwRemoteException(errorMessage: String) {
 }
 
 fun Context.getNoConnectionErrorOrExceptionMessage(throwable: Throwable): String {
-    return if (throwable.message?.contains("Failed to connect", true) == true) {
+    return if (!isInternetAvailable()) {
         getString(R.string.error_no_internet_connection)
     } else {
         throwable.message ?: getString(R.string.error_unknown)

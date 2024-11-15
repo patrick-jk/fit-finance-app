@@ -64,7 +64,7 @@ class InvestmentRepository(private val apiService: ApiService, private val inves
     fun updateInvestment(investmentPutRequest: InvestmentPutRequest, apiToken: String) = flow {
         try {
             val response = suspendCancellableCoroutine {
-                apiService.updateInvestment(investmentPutRequest, apiToken.toBearerToken()).enqueue(ApiCallback(it))
+                apiService.updateInvestment(investmentPutRequest, apiToken.toBearerToken()).enqueue(ApiCallback204Status(it))
             }
             emit(response)
         } catch (e: HttpException) {
@@ -75,7 +75,7 @@ class InvestmentRepository(private val apiService: ApiService, private val inves
     fun deleteInvestment(id: Long, apiToken: String) = flow {
         try {
             val response = suspendCancellableCoroutine {
-                apiService.deleteInvestment(id, apiToken.toBearerToken()).enqueue(ApiCallback(it))
+                apiService.deleteInvestment(id, apiToken.toBearerToken()).enqueue(ApiCallback204Status(it))
             }
 
             emit(response)
