@@ -9,6 +9,10 @@
         android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/menu_about_us" />
     <item
+        android:id="@+id/menu_photo_gallery"
+        android:icon="@drawable/ic_camera_24dp"
+        android:title="@string/menu_photo_gallery" />
+    <item
         android:id="@+id/menu_logout_account"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/menu_logout_app" />

@@ -22,11 +22,7 @@
             android:exported="false"
             android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
         <activity
-            android:name=".presentation.ui.contact.ContactActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.ui.profile.UserProfileActivity"
-            android:label="@string/menu_profile"
+            android:name=".presentation.ui.photogallery.PhotoGalleryActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.ui.aboutus.AboutUsActivity"

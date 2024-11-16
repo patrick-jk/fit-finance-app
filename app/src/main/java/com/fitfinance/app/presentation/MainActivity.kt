@@ -1,11 +1,13 @@
 package com.fitfinance.app.presentation
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.view.MenuProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,7 +17,7 @@ import com.fitfinance.app.R
 import com.fitfinance.app.databinding.ActivityMainBinding
 import com.fitfinance.app.presentation.ui.aboutus.AboutUsActivity
 import com.fitfinance.app.presentation.ui.login.LoginActivity
-import com.fitfinance.app.presentation.ui.profile.UserProfileActivity
+import com.fitfinance.app.presentation.ui.profile.ProfileFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -44,7 +46,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupActionBar() {
         addMenuProvider(object : MenuProvider {
+            @SuppressLint("RestrictedApi")
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                if (menu is MenuBuilder) menu.setOptionalIconsVisible(true)
                 menuInflater.inflate(R.menu.activity_main_menu, menu)
             }
 
@@ -65,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     R.id.menu_user_profile -> {
-                        startActivity(Intent(this@MainActivity, UserProfileActivity::class.java))
+                        ProfileFragment.newInstance().show(supportFragmentManager, ProfileFragment::class.java.simpleName)
                     }
 
                     R.id.menu_about_us -> {

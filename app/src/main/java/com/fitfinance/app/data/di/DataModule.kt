@@ -40,6 +40,7 @@ object DataModule {
                 OkHttpClient.Builder()
                     .addInterceptor(interceptor)
                     .callTimeout(Duration.ofSeconds(30))
+                    .connectTimeout(Duration.ofSeconds(30))
                     .build()
             }
             single {

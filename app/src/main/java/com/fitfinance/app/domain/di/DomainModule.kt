@@ -13,6 +13,7 @@ import com.fitfinance.app.domain.usecase.investments.DeleteInvestmentUseCase
 import com.fitfinance.app.domain.usecase.investments.GetInvestmentSummaryUseCase
 import com.fitfinance.app.domain.usecase.investments.GetInvestmentsByUserIdUseCase
 import com.fitfinance.app.domain.usecase.investments.UpdateInvestmentUseCase
+import com.fitfinance.app.domain.usecase.user.GetUserInfoUseCase
 import com.fitfinance.app.domain.usecase.user.UpdatePasswordUseCase
 import com.fitfinance.app.domain.usecase.user.UpdateUserUseCase
 import org.koin.core.context.loadKoinModules
@@ -41,6 +42,7 @@ object DomainModule {
         factory { GetInvestmentSummaryUseCase(get()) }
         factory { UpdateInvestmentUseCase(get()) }
 
+        factory { GetUserInfoUseCase(get()) }
         factory { UpdateUserUseCase(get()) }
         factory { UpdatePasswordUseCase(get()) }
     }

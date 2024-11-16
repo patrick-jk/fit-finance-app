@@ -15,6 +15,7 @@ import com.fitfinance.app.domain.response.HomeSummaryResponse
 import com.fitfinance.app.domain.response.InvestmentGetResponse
 import com.fitfinance.app.domain.response.InvestmentPostResponse
 import com.fitfinance.app.domain.response.InvestmentSummaryResponse
+import com.fitfinance.app.domain.response.UserGetResponse
 import com.fitfinance.app.domain.response.UserPostResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -45,6 +46,9 @@ interface ApiService {
     fun refreshToken(@Header("Authorization") token: String): Call<AuthenticationResponse>
 
     //Users Endpoints
+    @GET("$BASE_USERS_PATH/me")
+    fun getUserInfo(@Header("Authorization") token: String): Call<UserGetResponse>
+
     @PUT(BASE_USERS_PATH)
     fun updateUser(@Body userPutRequest: UserPutRequest, @Header("Authorization") token: String): Call<Unit>
 

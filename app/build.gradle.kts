@@ -33,9 +33,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    viewBinding {
-        enable = true
-    }
     buildFeatures {
         viewBinding = true
     }
@@ -47,6 +44,7 @@ dependencies {
     val roomVersion = "2.6.1"
     val navigationVersion = "2.8.4"
     val anyChartVersion = "1.1.5"
+    val coilVersion = "3.0.3"
 
     //Core
     implementation("androidx.core:core-ktx:1.15.0")
@@ -77,6 +75,10 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.fragment:fragment-ktx:1.8.5")
+
+    //Coil - Image Loader
+    implementation("io.coil-kt.coil3:coil:$coilVersion")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:$coilVersion")
 
     //Room Database
     implementation("androidx.room:room-runtime:$roomVersion")
