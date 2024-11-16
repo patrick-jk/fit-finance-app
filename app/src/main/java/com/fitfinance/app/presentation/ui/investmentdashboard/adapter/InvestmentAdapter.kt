@@ -13,12 +13,13 @@ import com.fitfinance.app.databinding.DialogInvestmentDetailsCustomBinding
 import com.fitfinance.app.databinding.ItemRecyclerViewBinding
 import com.fitfinance.app.domain.model.InvestmentType
 import com.fitfinance.app.domain.response.InvestmentGetResponse
+import com.fitfinance.app.presentation.ui.adapter.ItemPositionProvider
 import com.fitfinance.app.presentation.ui.investmentdetails.InvestmentDetailsFragment
 import com.fitfinance.app.util.toLocalDateBrFormat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class InvestmentAdapter(val deleteListener: (Long) -> Unit, val typeConverter: (String) -> String) :
-    ListAdapter<InvestmentGetResponse, InvestmentAdapter.InvestmentViewHolder>(InvestmentAdapter) {
+    ListAdapter<InvestmentGetResponse, InvestmentAdapter.InvestmentViewHolder>(InvestmentAdapter), ItemPositionProvider {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InvestmentViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -30,16 +31,25 @@ class InvestmentAdapter(val deleteListener: (Long) -> Unit, val typeConverter: (
         holder.bind(getItem(position))
     }
 
+    override fun getItemPositionById(itemId: String): Int {
+        return currentList.indexOfFirst { it.name == itemId }
+    }
+
     inner class InvestmentViewHolder(private val binding: ItemRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(investment: InvestmentGetResponse) {
             binding.tvTitle.text = investment.name
-            binding.mcvItemFinance.backgroundTintList = binding.root.context.getColorStateList(
+            binding.mcvItem.backgroundTintList = binding.root.context.getColorStateList(
                 when (investment.type) {
                     InvestmentType.STOCK -> R.color.bg_stocks
                     InvestmentType.FII -> R.color.bg_fiis
                     InvestmentType.FIXED_INCOME -> R.color.bg_fixed_income
                 }
             )
+
+            binding.mcvItem.setOnLongClickListener {
+                showInfoDialog(it, investment)
+                true
+            }
 
             binding.ibMoreOptions.setOnClickListener {
                 showPopupMenu(it, investment)
@@ -59,30 +69,7 @@ class InvestmentAdapter(val deleteListener: (Long) -> Unit, val typeConverter: (
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.view_item_details -> {
-
-
-                        val inflater = LayoutInflater.from(view.context)
-                        val dialogView = DialogInvestmentDetailsCustomBinding.inflate(inflater, null, false)
-
-                        val investmentTypeUiFriendly = typeConverter(investment.type.name)
-
-                        dialogView.tvInvestmentName.text = investment.name
-                        dialogView.tvInvestmentType.text = view.context.getString(R.string.txt_investment_type, investmentTypeUiFriendly)
-                        dialogView.tvInvestmentCost.text = view.context.getString(R.string.txt_investment_cost, investment.price)
-                        dialogView.tvInvestmentQuantity.text = view.context.getString(R.string.txt_investment_quantity, investment.quantity)
-                        dialogView.tvInvestmentStartDate.text = view.context.getString(R.string.txt_finance_start_date, investment.startDate.toLocalDateBrFormat())
-                        investment.endDate?.let {
-                            dialogView.tvInvestmentEndDate.text = view.context.getString(R.string.txt_finance_end_date, it.toLocalDateBrFormat())
-                            dialogView.tvInvestmentEndDate.visibility = View.VISIBLE
-                        }
-
-                        val dialog = MaterialAlertDialogBuilder(view.context)
-                            .setView(dialogView.root)
-                            .setCancelable(true)
-                            .setPositiveButton(android.R.string.ok, null)
-                            .create()
-
-                        dialog.show()
+                        showInfoDialog(view, investment)
                         true
                     }
 
@@ -107,6 +94,31 @@ class InvestmentAdapter(val deleteListener: (Long) -> Unit, val typeConverter: (
                 }
             }
             popupMenu.show()
+        }
+
+        private fun showInfoDialog(view: View, investment: InvestmentGetResponse) {
+            val inflater = LayoutInflater.from(view.context)
+            val dialogView = DialogInvestmentDetailsCustomBinding.inflate(inflater, null, false)
+
+            val investmentTypeUiFriendly = typeConverter(investment.type.name)
+
+            dialogView.tvInvestmentName.text = investment.name
+            dialogView.tvInvestmentType.text = view.context.getString(R.string.txt_investment_type, investmentTypeUiFriendly)
+            dialogView.tvInvestmentCost.text = view.context.getString(R.string.txt_investment_cost, investment.price)
+            dialogView.tvInvestmentQuantity.text = view.context.getString(R.string.txt_investment_quantity, investment.quantity)
+            dialogView.tvInvestmentStartDate.text = view.context.getString(R.string.txt_finance_start_date, investment.startDate.toLocalDateBrFormat())
+            investment.endDate?.let {
+                dialogView.tvInvestmentEndDate.text = view.context.getString(R.string.txt_finance_end_date, it.toLocalDateBrFormat())
+                dialogView.tvInvestmentEndDate.visibility = View.VISIBLE
+            }
+
+            val dialog = MaterialAlertDialogBuilder(view.context)
+                .setView(dialogView.root)
+                .setCancelable(true)
+                .setPositiveButton(android.R.string.ok, null)
+                .create()
+
+            dialog.show()
         }
 
         private fun openInvestmentDetailsFragment(view: View, investment: InvestmentGetResponse) {

@@ -10,7 +10,7 @@ import kotlin.coroutines.resumeWithException
 
 class ApiCallback204Status(private val continuation: CancellableContinuation<Unit>) : Callback<Unit> {
     override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-        if (response.isSuccessful) {
+        if (response.code() == 204) {
             continuation.resume(Unit)
         } else {
             continuation.resumeWithException(HttpException(response))

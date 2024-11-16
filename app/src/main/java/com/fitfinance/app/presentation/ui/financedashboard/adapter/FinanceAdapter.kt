@@ -13,11 +13,12 @@ import com.fitfinance.app.databinding.DialogFinanceDetailsCustomBinding
 import com.fitfinance.app.databinding.ItemRecyclerViewBinding
 import com.fitfinance.app.domain.model.FinanceType
 import com.fitfinance.app.domain.response.FinanceGetResponse
+import com.fitfinance.app.presentation.ui.adapter.ItemPositionProvider
 import com.fitfinance.app.presentation.ui.financedetails.FinanceDetailsFragment
 import com.fitfinance.app.util.toLocalDateBrFormat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGetResponse, FinanceAdapter.FinanceViewHolder>(FinanceAdapter) {
+class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGetResponse, FinanceAdapter.FinanceViewHolder>(FinanceAdapter), ItemPositionProvider {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FinanceViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -29,16 +30,21 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
         holder.bind(getItem(position))
     }
 
-    fun getItemPositionById(itemId: String): Int {
+    override fun getItemPositionById(itemId: String): Int {
         return currentList.indexOfFirst { it.name == itemId }
     }
 
     inner class FinanceViewHolder(private val binding: ItemRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(finance: FinanceGetResponse) {
             binding.tvTitle.text = finance.name
-            binding.mcvItemFinance.backgroundTintList = binding.root.context.getColorStateList(
+            binding.mcvItem.backgroundTintList = binding.root.context.getColorStateList(
                 if (finance.type == FinanceType.INCOME) R.color.income else R.color.expense
             )
+
+            binding.mcvItem.setOnLongClickListener {
+                showInfoDialog(it, finance)
+                true
+            }
 
             binding.ibMoreOptions.setOnClickListener {
                 showPopupMenu(it, finance)
@@ -51,24 +57,7 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.view_item_details -> {
-                        val inflater = LayoutInflater.from(view.context)
-                        val dialogView = DialogFinanceDetailsCustomBinding.inflate(inflater, null, false)
-                        dialogView.tvFinanceEndDate.visibility = if (finance.endDate != null) View.VISIBLE else View.GONE
-
-                        dialogView.tvFinanceName.text = finance.name
-                        dialogView.tvFinanceValue.text = view.context.getString(R.string.txt_finance_value, finance.value)
-                        dialogView.tvFinanceDescription.text = view.context.getString(R.string.txt_finance_description, finance.description)
-                        dialogView.tvFinanceStartDate.text = view.context.getString(R.string.txt_finance_start_date, finance.startDate.toLocalDateBrFormat())
-                        dialogView.tvFinanceEndDate.text = view.context.getString(R.string.txt_finance_end_date, finance.endDate?.toLocalDateBrFormat())
-
-
-                        val dialog = MaterialAlertDialogBuilder(view.context)
-                            .setView(dialogView.root)
-                            .setCancelable(true)
-                            .setPositiveButton(android.R.string.ok, null)
-                            .create()
-
-                        dialog.show()
+                        showInfoDialog(view, finance)
                         true
                     }
 
@@ -93,6 +82,27 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
                 }
             }
             popupMenu.show()
+        }
+
+        private fun showInfoDialog(view: View, finance: FinanceGetResponse) {
+            val inflater = LayoutInflater.from(view.context)
+            val dialogView = DialogFinanceDetailsCustomBinding.inflate(inflater, null, false)
+            dialogView.tvFinanceEndDate.visibility = View.VISIBLE
+
+            dialogView.tvFinanceName.text = finance.name
+            dialogView.tvFinanceValue.text = view.context.getString(R.string.txt_finance_value, finance.value)
+            dialogView.tvFinanceDescription.text = view.context.getString(R.string.txt_finance_description, finance.description)
+            dialogView.tvFinanceStartDate.text = view.context.getString(R.string.txt_finance_start_date, finance.startDate.toLocalDateBrFormat())
+            dialogView.tvFinanceEndDate.text = view.context.getString(R.string.txt_finance_end_date, finance.endDate?.toLocalDateBrFormat())
+
+
+            val dialog = MaterialAlertDialogBuilder(view.context)
+                .setView(dialogView.root)
+                .setCancelable(true)
+                .setPositiveButton(android.R.string.ok, null)
+                .create()
+
+            dialog.show()
         }
 
         private fun openFinanceDetailsFragment(view: View, finance: FinanceGetResponse) {

@@ -2,13 +2,11 @@ package com.fitfinance.app.presentation.ui.financedashboard
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.FragmentFinanceDashboardBinding
 import com.fitfinance.app.presentation.statepattern.State
@@ -18,6 +16,7 @@ import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
 import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
 import com.fitfinance.app.util.getProgressDialog
+import com.fitfinance.app.util.scrollToItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FinanceDashboardFragment : Fragment() {
@@ -52,22 +51,9 @@ class FinanceDashboardFragment : Fragment() {
         }
 
         binding.rvFinanceList.adapter = financeAdapter
-        arguments?.getString("itemId")?.let {
-            Log.i("FinanceDashboardFragment", "itemId came as argument itemId: $it")
-            scrollToFinance(it)
-        }
 
         setupUi()
-
         return root
-    }
-
-    private fun scrollToFinance(itemId: String) {
-        val position = financeAdapter.getItemPositionById(itemId)
-        if (position != RecyclerView.NO_POSITION) {
-            binding.rvFinanceList.scrollToPosition(position)
-            //TODO Feedback when the item is found
-        }
     }
 
     private fun setupUi() {
@@ -88,6 +74,9 @@ class FinanceDashboardFragment : Fragment() {
                 is State.Success -> {
                     progressDialog?.dismiss()
                     financeAdapter.submitList(it.info)
+                    arguments?.getString("itemId")?.let { args ->
+                        binding.rvFinanceList.scrollToItem(args, financeAdapter)
+                    }
                 }
 
                 is State.Error -> {

@@ -8,7 +8,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.RecyclerView
 import com.fitfinance.app.R
+import com.fitfinance.app.presentation.ui.adapter.ItemPositionProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import retrofit2.HttpException
@@ -79,5 +81,16 @@ fun Context.getNoConnectionErrorOrExceptionMessage(throwable: Throwable): String
         getString(R.string.error_no_internet_connection)
     } else {
         throwable.message ?: getString(R.string.error_unknown)
+    }
+}
+
+fun RecyclerView.scrollToItem(itemId: String, itemPositionProvider: ItemPositionProvider) {
+    val position = itemPositionProvider.getItemPositionById(itemId)
+    if (position != RecyclerView.NO_POSITION) {
+        this.scrollToPosition(position)
+        this.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            val viewHolder = findViewHolderForAdapterPosition(position) ?: return@addOnLayoutChangeListener
+            viewHolder.itemView.performLongClick()
+        }
     }
 }

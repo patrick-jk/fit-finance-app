@@ -75,7 +75,6 @@ dependencies {
     //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
-//    implementation("androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.fragment:fragment-ktx:1.8.5")
 

@@ -16,6 +16,7 @@ import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
 import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
 import com.fitfinance.app.util.getProgressDialog
+import com.fitfinance.app.util.scrollToItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class InvestmentDashboardFragment : Fragment() {
@@ -83,6 +84,9 @@ class InvestmentDashboardFragment : Fragment() {
                 is State.Success -> {
                     progressDialog?.dismiss()
                     investmentAdapter.submitList(it.info)
+                    arguments?.getString("itemId")?.let { investmentId ->
+                        binding.rvInvestmentList.scrollToItem(investmentId, investmentAdapter)
+                    }
                 }
 
                 is State.Error -> {

@@ -7,13 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import com.anychart.AnyChart
-import com.anychart.chart.common.dataentry.ValueDataEntry
-import com.anychart.palettes.RangeColors
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.FragmentHomeBinding
-import com.fitfinance.app.domain.response.HomeSummaryResponse
 import com.fitfinance.app.presentation.statepattern.State
+import com.fitfinance.app.presentation.ui.home.chart.HomeChartFragment
 import com.fitfinance.app.presentation.ui.home.homesummary.HomeSummaryFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
@@ -56,8 +53,11 @@ class HomeFragment : Fragment() {
 
                 is State.Success -> {
                     progressDialog?.dismiss()
-                    setupChart(it.info)
-                    HomeSummaryFragment.newInstance(it.info)
+
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_home_chart_container, HomeChartFragment.newInstance(it.info))
+                        .commit()
+
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.fragment_home_summary_container, HomeSummaryFragment.newInstance(it.info))
                         .commit()
@@ -73,27 +73,6 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun setupChart(info: HomeSummaryResponse) {
-        val pieChart = AnyChart.pie3d()
-
-        val data = listOf(
-            ValueDataEntry(resources.getString(R.string.txt_balance), info.balance),
-            ValueDataEntry(resources.getString(R.string.txt_expense), info.totalExpenses)
-        )
-
-        pieChart.palette(RangeColors.instantiate().items("#1EFF00", "#FF2C1C"))
-
-        pieChart.data(data)
-
-        pieChart.title(resources.getString(R.string.txt_balance_vs_expense))
-        pieChart.title().fontSize(22).fontColor("#000000")
-        pieChart.labels().position("outside").fontSize(20)
-        pieChart.labels()
-        pieChart.legend().fontSize(15)
-
-        binding.homeChart.setChart(pieChart)
     }
 
     override fun onDestroyView() {
