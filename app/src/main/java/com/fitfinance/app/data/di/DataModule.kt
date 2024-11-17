@@ -64,6 +64,9 @@ object DataModule {
             single {
                 get<AppDatabase>().investmentDao()
             }
+            single {
+                get<AppDatabase>().homeSummaryDao()
+            }
         }
     }
 
@@ -84,7 +87,7 @@ object DataModule {
                 UserRepository(get(), get())
             }
             single {
-                FinanceRepository(get(), get())
+                FinanceRepository(get(), get(), get())
             }
             single {
                 InvestmentRepository(get(), get())
@@ -94,6 +97,7 @@ object DataModule {
 
     private fun createLocalDatabase(app: Application): AppDatabase {
         return Room.databaseBuilder(app, AppDatabase::class.java, "fit-finance-app.db")
+            .fallbackToDestructiveMigration()
             .build()
     }
 }

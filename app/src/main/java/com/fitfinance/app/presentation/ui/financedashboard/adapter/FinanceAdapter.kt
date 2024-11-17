@@ -93,7 +93,7 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
             dialogView.tvFinanceValue.text = view.context.getString(R.string.txt_finance_value, finance.value)
             dialogView.tvFinanceDescription.text = view.context.getString(R.string.txt_finance_description, finance.description)
             dialogView.tvFinanceStartDate.text = view.context.getString(R.string.txt_finance_start_date, finance.startDate.toLocalDateBrFormat())
-            dialogView.tvFinanceEndDate.text = view.context.getString(R.string.txt_finance_end_date, finance.endDate?.toLocalDateBrFormat())
+            dialogView.tvFinanceEndDate.text = view.context.getString(R.string.txt_finance_end_date, finance.endDate.toLocalDateBrFormat())
 
 
             val dialog = MaterialAlertDialogBuilder(view.context)

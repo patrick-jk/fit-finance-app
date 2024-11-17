@@ -2,6 +2,7 @@ package com.fitfinance.app.data.repo
 
 import android.util.Log
 import com.fitfinance.app.data.local.dao.FinanceDao
+import com.fitfinance.app.data.local.dao.HomeSummaryDao
 import com.fitfinance.app.data.remote.ApiService
 import com.fitfinance.app.domain.request.FinancePostRequest
 import com.fitfinance.app.domain.request.FinancePutRequest
@@ -13,7 +14,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
-class FinanceRepository(private val apiService: ApiService, private val financeDao: FinanceDao) {
+class FinanceRepository(private val apiService: ApiService, private val financeDao: FinanceDao, private val homeSummaryDao: HomeSummaryDao) {
     private var ioDispatcher = Dispatchers.IO
 
     fun getFinancesByUserId(apiToken: String) = flow {
@@ -30,7 +31,6 @@ class FinanceRepository(private val apiService: ApiService, private val financeD
             }
 
             emit(finances)
-
         } catch (e: Exception) {
             Log.i("FinanceRepository", "Error getting finances from API, using local data")
             val localFinances = financeDao.getFinances().map { it.toFinanceGetResponse() }
@@ -44,9 +44,17 @@ class FinanceRepository(private val apiService: ApiService, private val financeD
             val response = suspendCancellableCoroutine {
                 apiService.getUserSummary(apiToken.toBearerToken()).enqueue(ApiCallback(it))
             }
-            emit(response)
-        } catch (e: HttpException) {
-            e.throwRemoteException("Error getting user summary")
+
+            val homeSummary = withContext(ioDispatcher) {
+                homeSummaryDao.deleteHomeSummary()
+                homeSummaryDao.insertHomeSummary(response.toHomeSummaryEntity())
+                homeSummaryDao.getHomeSummary().toHomeSummaryResponse()
+            }
+            emit(homeSummary)
+        } catch (e: Exception) {
+            Log.i("FinanceRepository", "Error getting user summary from API, using local data")
+            val localHomeSummary = homeSummaryDao.getHomeSummary().toHomeSummaryResponse()
+            emit(localHomeSummary)
         }
     }
 
@@ -64,7 +72,7 @@ class FinanceRepository(private val apiService: ApiService, private val financeD
     fun updateFinance(financePutRequest: FinancePutRequest, apiToken: String) = flow {
         try {
             val response = suspendCancellableCoroutine {
-                apiService.updateFinance(financePutRequest, apiToken.toBearerToken()).enqueue(ApiCallback204Status(it))
+                apiService.updateFinance(financePutRequest, apiToken.toBearerToken()).enqueue(ApiCallbackNoContentOrOkStatus(it))
             }
             emit(response)
         } catch (e: HttpException) {
@@ -75,7 +83,7 @@ class FinanceRepository(private val apiService: ApiService, private val financeD
     fun deleteFinance(financeId: Long, apiToken: String) = flow {
         try {
             val response = suspendCancellableCoroutine {
-                apiService.deleteFinance(financeId, apiToken.toBearerToken()).enqueue(ApiCallback204Status(it))
+                apiService.deleteFinance(financeId, apiToken.toBearerToken()).enqueue(ApiCallbackNoContentOrOkStatus(it))
             }
             emit(response)
         } catch (e: HttpException) {

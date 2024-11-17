@@ -4,9 +4,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import com.google.android.material.textfield.TextInputLayout
 import java.text.NumberFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
 import java.util.Locale
 
 fun removeCpfFormatting(cpf: String): String {
@@ -42,22 +39,13 @@ fun formatToCurrency(currency: String): String {
     return NumberFormat.getCurrencyInstance(Locale.US).format(parsed)
 }
 
-fun convertDateFormat(birthdate: String): String? {
-    return try {
-        val inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val date = LocalDate.parse(birthdate, inputFormatter)
-        date.format(outputFormatter)
-    } catch (e: DateTimeParseException) {
-        null
-    }
-}
-
 class CpfTextWatcher(private val textInputLayout: TextInputLayout) : TextWatcher {
     private var isUpdating = false
     private val mask = "###.###.###-##"
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { return }
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        return
+    }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         if (isUpdating) {
@@ -85,13 +73,17 @@ class CpfTextWatcher(private val textInputLayout: TextInputLayout) : TextWatcher
         textInputLayout.editText?.setSelection(formatted.length)
     }
 
-    override fun afterTextChanged(s: Editable?) { return }
+    override fun afterTextChanged(s: Editable?) {
+        return
+    }
 }
 
 class CurrencyTextWatcher(private val textInputLayout: TextInputLayout) : TextWatcher {
     private var current = ""
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { return }
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        return
+    }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         if (s.toString() != current) {
@@ -112,14 +104,18 @@ class CurrencyTextWatcher(private val textInputLayout: TextInputLayout) : TextWa
         }
     }
 
-    override fun afterTextChanged(s: Editable?) { return }
+    override fun afterTextChanged(s: Editable?) {
+        return
+    }
 }
 
 class PhoneTextWatcher(private val textInputLayout: TextInputLayout) : TextWatcher {
     private var isUpdating = false
     private val mask = "(##) #####-####"
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { return }
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        return
+    }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         if (isUpdating) {
@@ -147,5 +143,7 @@ class PhoneTextWatcher(private val textInputLayout: TextInputLayout) : TextWatch
         textInputLayout.editText?.setSelection(formatted.length)
     }
 
-    override fun afterTextChanged(s: Editable?) { return }
+    override fun afterTextChanged(s: Editable?) {
+        return
+    }
 }

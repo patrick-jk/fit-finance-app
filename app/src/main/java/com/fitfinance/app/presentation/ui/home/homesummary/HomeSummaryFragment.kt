@@ -64,6 +64,7 @@ class HomeSummaryFragment : Fragment() {
         val actionNavigation = HomeFragmentDirections.actionNavigationHomeToFinances(itemId)
         findNavController().navigate(actionNavigation)
     }
+
     private fun navigateToInvestments(itemId: String) {
         val actionNavigation = HomeFragmentDirections.actionNavigationHomeToInvestments(itemId)
         findNavController().navigate(actionNavigation)

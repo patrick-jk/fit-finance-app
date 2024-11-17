@@ -18,7 +18,7 @@ class HomeChartFragment : Fragment() {
     private var _binding: FragmentHomeChartBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var chartData : List<ValueDataEntry>
+    private lateinit var chartData: List<ValueDataEntry>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

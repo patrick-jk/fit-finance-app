@@ -95,4 +95,14 @@
     <string name="profile_image">User Profile Image</string>
     <string name="txt_edit_user_info">Edit User Info</string>
     <string name="txt_change_password">Change Password</string>
+    <string name="txt_confirm_changes">Confirm Changes</string>
+    <string name="txt_success">Success</string>
+    <string name="txt_user_updated">User updated successfully!</string>
+    <string name="txt_update_password">Update</string>
+    <string name="txt_hint_new_password">New Password</string>
+    <string name="txt_hint_old_password">Old Password</string>
+    <string name="txt_changing_password">Changing Password…</string>
+    <string name="txt_hint_new_password_confirmation">New Password Confirmation</string>
+    <string name="txt_password_updated">Password updated successfully!</string>
+    <string name="txt_confirm_change_password">Are you sure you want to change password? You will need to do login again.</string>
 </resources>

@@ -8,9 +8,9 @@ import retrofit2.Response
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-class ApiCallback204Status(private val continuation: CancellableContinuation<Unit>) : Callback<Unit> {
+class ApiCallbackNoContentOrOkStatus(private val continuation: CancellableContinuation<Unit>) : Callback<Unit> {
     override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-        if (response.code() == 204) {
+        if (response.code() == 204 || response.code() == 200) {
             continuation.resume(Unit)
         } else {
             continuation.resumeWithException(HttpException(response))

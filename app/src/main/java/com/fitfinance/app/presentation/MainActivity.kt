@@ -18,6 +18,7 @@ import com.fitfinance.app.databinding.ActivityMainBinding
 import com.fitfinance.app.presentation.ui.aboutus.AboutUsActivity
 import com.fitfinance.app.presentation.ui.login.LoginActivity
 import com.fitfinance.app.presentation.ui.profile.ProfileFragment
+import com.fitfinance.app.presentation.ui.profile.changepassword.ChangePasswordFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -42,6 +43,10 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         setupActionBar()
+
+        supportFragmentManager.setFragmentResultListener(ChangePasswordFragment.REQUEST_FINISH_SESSION, this) { _, _ ->
+            finishSession()
+        }
     }
 
     private fun setupActionBar() {
@@ -59,8 +64,7 @@ class MainActivity : AppCompatActivity() {
                             .setTitle(getString(R.string.menu_logout_app))
                             .setMessage(getString(R.string.txt_action_logout))
                             .setPositiveButton(android.R.string.ok) { _, _ ->
-                                getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE).edit().clear().apply()
-                                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                                finishSession()
                                 finish()
                             }
                             .setNegativeButton(android.R.string.cancel) { dialog, _ ->
@@ -79,5 +83,10 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
         })
+    }
+
+    private fun finishSession() {
+        getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE).edit().clear().apply()
+        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
     }
 }

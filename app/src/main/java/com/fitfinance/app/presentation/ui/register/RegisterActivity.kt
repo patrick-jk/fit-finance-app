@@ -19,7 +19,6 @@ import com.fitfinance.app.util.CurrencyTextWatcher
 import com.fitfinance.app.util.DatePickerFragment
 import com.fitfinance.app.util.PhoneTextWatcher
 import com.fitfinance.app.util.ValidateInput
-import com.fitfinance.app.util.convertDateFormat
 import com.fitfinance.app.util.createDialog
 import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
 import com.fitfinance.app.util.getProgressDialog
@@ -28,6 +27,7 @@ import com.fitfinance.app.util.removeCpfFormatting
 import com.fitfinance.app.util.removeCurrencyFormatting
 import com.fitfinance.app.util.removePhoneFormatting
 import com.fitfinance.app.util.text
+import com.fitfinance.app.util.toLocalDateApiFormat
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDate
 
@@ -64,16 +64,7 @@ class RegisterActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 }
 
                 val birthdate = tilRegisterBirthdate.text
-                val formattedBirthdate = convertDateFormat(birthdate)
-
-                if (formattedBirthdate == null) {
-                    createDialog {
-                        setTitle(getString(R.string.txt_error))
-                        setMessage(getString(R.string.txt_invalid_birthdate_format))
-                        setPositiveButton(android.R.string.ok, null)
-                    }
-                    return@setOnClickListener
-                }
+                val formattedBirthdate = birthdate.toLocalDateApiFormat()
 
                 val rawCpf = removeCpfFormatting(tilRegisterCpf.text)
                 val rawPhone = removePhoneFormatting(tilRegisterPhone.text)

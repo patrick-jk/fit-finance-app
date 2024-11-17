@@ -10,12 +10,15 @@ import com.fitfinance.app.R
 import com.fitfinance.app.databinding.FragmentProfileBinding
 import com.fitfinance.app.domain.response.UserGetResponse
 import com.fitfinance.app.presentation.statepattern.State
+import com.fitfinance.app.presentation.ui.profile.changepassword.ChangePasswordFragment
+import com.fitfinance.app.presentation.ui.profile.edituser.EditUserProfileFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
 import com.fitfinance.app.util.formatToCpf
 import com.fitfinance.app.util.formatToCurrency
 import com.fitfinance.app.util.formatToPhone
 import com.fitfinance.app.util.getProgressDialog
+import com.fitfinance.app.util.toLocalDateBrFormat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -35,6 +38,10 @@ class ProfileFragment : BottomSheetDialogFragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root = binding.root
 
+        requireActivity().supportFragmentManager.setFragmentResultListener("updateUserInfo", viewLifecycleOwner) { _, _ ->
+            viewModel.getUserInfo(sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
+        }
+
         viewModel.getUserInfo(sharedPreferences.getString(resources.getString(R.string.pref_user_token), "")!!)
         return root
     }
@@ -45,8 +52,15 @@ class ProfileFragment : BottomSheetDialogFragment() {
             tvUserCpf.text = formatToCpf(info.cpf)
             tvUserEmail.text = info.email
             tvUserPhone.text = formatToPhone(info.phone)
-            tvUserBirthdate.text = info.birthdate
+            tvUserBirthdate.text = info.birthdate.toLocalDateBrFormat()
             tvUserIncome.text = formatToCurrency(info.income.toString())
+
+            btnEditUser.setOnClickListener {
+                EditUserProfileFragment.newInstance(info).show(parentFragmentManager, EditUserProfileFragment::class.java.simpleName)
+            }
+            btnEditPassword.setOnClickListener {
+                ChangePasswordFragment.newInstance().show(parentFragmentManager, ChangePasswordFragment::class.java.simpleName)
+            }
         }
 
     }

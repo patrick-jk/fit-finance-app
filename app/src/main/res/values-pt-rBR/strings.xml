@@ -67,8 +67,8 @@
     <string name="txt_hint_investment_name">Nome do Investimento</string>
     <string name="txt_hint_investment_quantity">Quantidade de Ativos</string>
     <string name="txt_investment_type">Tipo do Investimento: %s</string>
-    <string name="creating_investment">Criando investimento...</string>
-    <string name="updating_investment">Atualizando investimento...</string>
+    <string name="creating_investment">Criando investimento…</string>
+    <string name="updating_investment">Atualizando investimento…</string>
     <string name="txt_edit_investment">Editar Investimento</string>
     <string name="txt_delete_investment">Excluir Investimento</string>
     <string name="error_no_internet_connection">Oops! Parece que você não está conectado a internet, por favor, tente novamente quando a conexão tiver sido reestabelecida.</string>
@@ -80,8 +80,22 @@
     <string name="txt_smallest_expense">Menor Despesa</string>
     <string name="txt_biggest_investment">Maior Investimento</string>
     <string name="txt_smallest_investment">Menor Investimento</string>
-    <string name="txt_loading_home_data">Carregando dados...</string>
+    <string name="txt_loading_home_data">Carregando dados…</string>
     <string name="txt_details">Detalhes</string>
     <string name="txt_expense">Despesas</string>
     <string name="txt_balance_vs_expense">Saldo vs Despesas</string>
+    <string name="menu_photo_gallery">Galeria de Fotos</string>
+    <string name="profile_image">Imagem do Usuário</string>
+    <string name="txt_edit_user_info">Editar Dados</string>
+    <string name="txt_change_password">Alterar Senha</string>
+    <string name="txt_confirm_changes">Confirmar Alterações</string>
+    <string name="txt_success">Sucesso</string>
+    <string name="txt_user_updated">Usuário atualizado com sucesso!</string>
+    <string name="txt_update_password">Atualizar</string>
+    <string name="txt_hint_new_password">Nova Senha</string>
+    <string name="txt_hint_old_password">Senha Antiga</string>
+    <string name="txt_changing_password">Alterando senha…</string>
+    <string name="txt_hint_new_password_confirmation">Confirmação de nova senha</string>
+    <string name="txt_password_updated">Senha alterada com sucesso!</string>
+    <string name="txt_confirm_change_password">Você tem certeza que deseja alterar sua senha? Será necessário realizar o login novamente.</string>
 </resources>
