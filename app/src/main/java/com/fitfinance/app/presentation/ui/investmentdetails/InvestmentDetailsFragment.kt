@@ -83,7 +83,6 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
     }
 
     private fun setupUi() {
-        mockInputs()
         _binding?.tilInvestmentStartDate?.editText?.setOnClickListener {
             it.hideSoftKeyboard()
             try {
@@ -149,13 +148,6 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
         val isTypeValid = ValidateInput.validateInputText(binding.tilInvestmentType)
 
         return isNameValid && isValueValid && isQuantityValid && isStartDateValid && isTypeValid
-    }
-
-    private fun mockInputs() {
-        binding.tilInvestmentName.text = "Teste"
-        binding.tilInvestmentCost.text = "10"
-        binding.tilInvestmentStartDate.text = "01/01/2021"
-        binding.tilInvestmentQuantity.text = "30"
     }
 
     private fun convertInvestmentTypeToUi(investmentType: String): String {
