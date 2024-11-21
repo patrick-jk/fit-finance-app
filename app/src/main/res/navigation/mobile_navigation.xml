@@ -12,10 +12,14 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_finances"
-            app:destination="@id/navigation_finances" />
+            app:destination="@id/navigation_finances"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_navigation_home_to_investments"
-            app:destination="@id/navigation_investments" />
+            app:destination="@id/navigation_investments"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

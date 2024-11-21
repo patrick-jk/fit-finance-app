@@ -98,4 +98,5 @@
     <string name="txt_hint_new_password_confirmation">Confirmação de nova senha</string>
     <string name="txt_password_updated">Senha alterada com sucesso!</string>
     <string name="txt_confirm_change_password">Você tem certeza que deseja alterar sua senha? Será necessário realizar o login novamente.</string>
+    <string name="txt_action_search">Pesquisar</string>
 </resources>

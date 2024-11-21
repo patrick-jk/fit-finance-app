@@ -105,4 +105,5 @@
     <string name="txt_hint_new_password_confirmation">New Password Confirmation</string>
     <string name="txt_password_updated">Password updated successfully!</string>
     <string name="txt_confirm_change_password">Are you sure you want to change password? You will need to do login again.</string>
+    <string name="txt_action_search">Search</string>
 </resources>
