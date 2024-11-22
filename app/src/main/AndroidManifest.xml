@@ -23,6 +23,7 @@
             android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
         <activity
             android:name=".presentation.ui.photogallery.PhotoGalleryActivity"
+            android:label="@string/menu_photo_gallery"
             android:exported="false" />
         <activity
             android:name=".presentation.ui.aboutus.AboutUsActivity"

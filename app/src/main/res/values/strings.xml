@@ -106,4 +106,20 @@
     <string name="txt_password_updated">Password updated successfully!</string>
     <string name="txt_confirm_change_password">Are you sure you want to change password? You will need to do login again.</string>
     <string name="txt_action_search">Search</string>
+    <string name="txt_action_filter">Filter</string>
+    <string name="txt_filter">Filter List</string>
+    <string name="txt_filter_by_name_asc">Sort by name</string>
+    <string name="txt_custom_filter">Custom Filter</string>
+    <string name="txt_filter_by_type_asc">Sort by type</string>
+    <string name="txt_filter_category">Sort</string>
+    <string name="txt_hide_category">Hide Category</string>
+    <string name="txt_hide_stocks">Stocks</string>
+    <string name="txt_hide_fiis" translatable="false">FIIs</string>
+    <string name="txt_hide_fixed_income">Fixed Income</string>
+    <string name="txt_about_us_title">What is Fit Finance?</string>
+    <string name="txt_about_us_objective">Objective</string>
+    <string name="txt_about_us_objective_description">Fit Finance was created to make a significant contribution to society by improving personal financial control, promoting financial education, encouraging transparency and responsibility, expanding financial inclusion and reducing financial waste.</string>
+    <string name="txt_about_us_vision">Project Overview</string>
+    <string name="txt_about_us_vision_description">The \"Fit Finance\" app is a tool designed to transform the way people manage their personal finances. With an intuitive interface and powerful features, this app offers a safe and efficient environment for complete control of finances. In addition, \"Fit Finance\" provides valuable insights through graphs, making it easier to understand individual financial trends. With the goal of promoting a healthy financial life, this app is an essential tool for those who want to avoid debt and achieve their financial goals with confidence and peace of mind.</string>
+    <string name="txt_about_us_description">Fit Finance is a software that helps users understand their finances and investment portfolio more accurately, so that they can understand their financial movements, making it easier to see mistakes and successes, bringing greater control, all by simply adding their finances to the system.</string>
 </resources>

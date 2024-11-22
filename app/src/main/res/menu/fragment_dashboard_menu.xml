@@ -2,9 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/menu_action_search"
         android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/txt_action_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|ifRoom"
-        android:title="@string/txt_action_search" />
+        app:showAsAction="collapseActionView|ifRoom" />
+    <item
+        android:id="@+id/menu_action_filter"
+        android:icon="@drawable/ic_filter_black_24dp"
+        android:title="@string/txt_action_filter"
+        app:showAsAction="collapseActionView|ifRoom" />
 </menu>

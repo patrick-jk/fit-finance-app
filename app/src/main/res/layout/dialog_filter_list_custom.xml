@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/base_margin"
+    android:padding="@dimen/base_margin">
+
+    <TextView
+        android:id="@+id/tvFilterDialogTitleFinances"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/txt_custom_filter"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvFilterFinanceByType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_filter_category"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/base_margin"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/tvFilterDialogTitleFinances" />
+
+    <CheckBox
+        android:id="@+id/cbFilterFinanceByNameAsc"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/base_margin"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_filter_by_name_asc"
+        app:layout_constraintTop_toBottomOf="@id/tvFilterFinanceByType" />
+
+    <CheckBox
+        android:id="@+id/cbFilterFinanceByType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_filter_by_type_asc"
+        app:layout_constraintTop_toBottomOf="@id/cbFilterFinanceByNameAsc" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/cbFilterFinanceByType"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvHideFinanceType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_hide_category"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/base_margin"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
+
+    <CheckBox
+        android:id="@+id/cbHideExpenses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/base_margin"
+        android:text="@string/txt_expense"
+        app:layout_constraintTop_toBottomOf="@id/tvHideFinanceType" />
+
+    <CheckBox
+        android:id="@+id/cbHideIncome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_hint_income"
+        app:layout_constraintTop_toBottomOf="@id/cbHideExpenses" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

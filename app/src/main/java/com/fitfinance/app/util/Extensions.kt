@@ -4,15 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.fitfinance.app.R
 import com.fitfinance.app.presentation.ui.adapter.ItemPositionProvider
@@ -62,21 +57,6 @@ fun Context.getProgressDialog(message: String = ""): AlertDialog {
 
         setPositiveButton(null, null)
         setCancelable(false)
-    }
-}
-
-fun getDashboardMenuProvider(queryListener: SearchView.OnQueryTextListener): MenuProvider {
-    return object : MenuProvider {
-        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-            menuInflater.inflate(R.menu.fragment_dashboard_menu, menu)
-            val searchItem = menu.findItem(R.id.action_search)
-            val searchView = searchItem.actionView as SearchView
-            searchView.setOnQueryTextListener(queryListener)
-        }
-
-        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-            return false
-        }
     }
 }
 

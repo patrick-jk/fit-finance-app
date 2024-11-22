@@ -17,6 +17,7 @@ import com.fitfinance.app.R
 import com.fitfinance.app.databinding.ActivityMainBinding
 import com.fitfinance.app.presentation.ui.aboutus.AboutUsActivity
 import com.fitfinance.app.presentation.ui.login.LoginActivity
+import com.fitfinance.app.presentation.ui.photogallery.PhotoGalleryActivity
 import com.fitfinance.app.presentation.ui.profile.ProfileFragment
 import com.fitfinance.app.presentation.ui.profile.changepassword.ChangePasswordFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
@@ -24,11 +25,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
@@ -78,6 +78,10 @@ class MainActivity : AppCompatActivity() {
 
                     R.id.menu_about_us -> {
                         startActivity(Intent(this@MainActivity, AboutUsActivity::class.java))
+                    }
+
+                    R.id.menu_photo_gallery -> {
+                        startActivity(Intent(this@MainActivity, PhotoGalleryActivity::class.java))
                     }
                 }
                 return true

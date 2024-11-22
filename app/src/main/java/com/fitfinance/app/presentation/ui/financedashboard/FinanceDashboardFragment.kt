@@ -3,6 +3,9 @@ package com.fitfinance.app.presentation.ui.financedashboard
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
@@ -10,14 +13,15 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import com.fitfinance.app.R
+import com.fitfinance.app.databinding.DialogFilterListCustomBinding
 import com.fitfinance.app.databinding.FragmentFinanceDashboardBinding
+import com.fitfinance.app.domain.model.FinanceType
 import com.fitfinance.app.domain.response.FinanceGetResponse
 import com.fitfinance.app.presentation.statepattern.State
 import com.fitfinance.app.presentation.ui.financedashboard.adapter.FinanceAdapter
 import com.fitfinance.app.presentation.ui.financedetails.FinanceDetailsFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getDashboardMenuProvider
 import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
 import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.hideSoftKeyboard
@@ -38,6 +42,11 @@ class FinanceDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
             viewModel.deleteFinance(it, sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
         })
     }
+
+    private var isAscending = false
+    private var isTypeSorted = false
+    private var isExpenseHidden = false
+    private var isIncomeHidden = false
 
     private var progressDialog: AlertDialog? = null
     private lateinit var menuProvider: MenuProvider
@@ -62,7 +71,7 @@ class FinanceDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.rvFinanceList.adapter = financeAdapter
 
         setupUi()
-        setupSearch()
+        setupMenuItems()
         return root
     }
 
@@ -72,9 +81,70 @@ class FinanceDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun setupSearch() {
-        menuProvider = getDashboardMenuProvider(this)
-        requireActivity().addMenuProvider(menuProvider)
+    private fun setupMenuItems() {
+        menuProvider = object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.fragment_dashboard_menu, menu)
+                if (menu.findItem(R.id.menu_action_search) != null) {
+                    val searchItem = menu.findItem(R.id.menu_action_search)
+                    val searchView = searchItem.actionView as SearchView
+                    searchView.setOnQueryTextListener(this@FinanceDashboardFragment)
+                }
+                if (menu.findItem(R.id.menu_action_filter) != null) {
+                    val filterItem = menu.findItem(R.id.menu_action_filter)
+                    filterItem.setOnMenuItemClickListener {
+                        filterFinances()
+                        true
+                    }
+                }
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = true
+        }
+        requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner)
+    }
+
+    fun filterFinances() {
+        val dialogView = DialogFilterListCustomBinding.inflate(LayoutInflater.from(requireContext()), null, false)
+
+        dialogView.cbFilterFinanceByNameAsc.isChecked = isAscending
+        dialogView.cbFilterFinanceByType.isChecked = isTypeSorted
+        dialogView.cbHideExpenses.isChecked = isExpenseHidden
+        dialogView.cbHideIncome.isChecked = isIncomeHidden
+
+        requireContext().createDialog {
+            setView(dialogView.root)
+            setPositiveButton(resources.getString(android.R.string.ok)) { _, _ ->
+                dialogView.apply {
+                    isAscending = cbFilterFinanceByNameAsc.isChecked
+                    isTypeSorted = cbFilterFinanceByType.isChecked
+                    isExpenseHidden = cbHideExpenses.isChecked
+                    isIncomeHidden = cbHideIncome.isChecked
+                }
+
+                sortList()
+            }
+            setNegativeButton(resources.getString(android.R.string.cancel)) { dialog, _ -> dialog.dismiss() }
+        }.show()
+    }
+
+    private fun sortList() {
+        var filteredList = financeList
+
+        if (isAscending) {
+            filteredList = filteredList.sortedBy { it.name }
+        }
+        if (isTypeSorted) {
+            filteredList = filteredList.sortedBy { it.type }
+        }
+        if (isExpenseHidden) {
+            filteredList = filteredList.filter { it.type != FinanceType.EXPENSE }
+        }
+        if (isIncomeHidden) {
+            filteredList = filteredList.filter { it.type != FinanceType.INCOME }
+        }
+
+        financeAdapter.submitList(filteredList)
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {

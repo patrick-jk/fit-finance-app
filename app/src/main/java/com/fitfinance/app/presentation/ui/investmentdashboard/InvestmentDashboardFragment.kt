@@ -3,6 +3,9 @@ package com.fitfinance.app.presentation.ui.investmentdashboard
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
@@ -10,14 +13,15 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import com.fitfinance.app.R
+import com.fitfinance.app.databinding.DialogFilterInvestmentListCustomBinding
 import com.fitfinance.app.databinding.FragmentInvestmentDashboardBinding
+import com.fitfinance.app.domain.model.InvestmentType
 import com.fitfinance.app.domain.response.InvestmentGetResponse
 import com.fitfinance.app.presentation.statepattern.State
 import com.fitfinance.app.presentation.ui.investmentdashboard.adapter.InvestmentAdapter
 import com.fitfinance.app.presentation.ui.investmentdetails.InvestmentDetailsFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getDashboardMenuProvider
 import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
 import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.hideSoftKeyboard
@@ -33,6 +37,11 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
     private val sharedPreferences by lazy { requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE) }
     private var investmentList: List<InvestmentGetResponse> = emptyList()
 
+    private var isAscending = false
+    private var isTypeSorted = false
+    private var isStocksHidden = false
+    private var isFiiHidden = false
+    private var isFixedIncomeHidden = false
 
     private val investmentAdapter by lazy {
         InvestmentAdapter(deleteListener = {
@@ -63,7 +72,7 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
 
         binding.rvInvestmentList.adapter = investmentAdapter
         setupUi()
-        setupSearch()
+        setupMenuItems()
 
         return root
     }
@@ -74,9 +83,75 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun setupSearch() {
-        menuProvider = getDashboardMenuProvider(this)
-        requireActivity().addMenuProvider(menuProvider)
+    private fun setupMenuItems() {
+        menuProvider = object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.fragment_dashboard_menu, menu)
+                if (menu.findItem(R.id.menu_action_search) != null) {
+                    val searchItem = menu.findItem(R.id.menu_action_search)
+                    val searchView = searchItem.actionView as SearchView
+                    searchView.setOnQueryTextListener(this@InvestmentDashboardFragment)
+                }
+                if (menu.findItem(R.id.menu_action_filter) != null) {
+                    val filterItem = menu.findItem(R.id.menu_action_filter)
+                    filterItem.setOnMenuItemClickListener {
+                        filterInvestments()
+                        true
+                    }
+                }
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = true
+        }
+        requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner)
+    }
+
+    fun filterInvestments() {
+        val dialogView = DialogFilterInvestmentListCustomBinding.inflate(LayoutInflater.from(requireContext()), null, false)
+
+        dialogView.cbFilterInvestmentByNameAsc.isChecked = isAscending
+        dialogView.cbFilterInvestmentByType.isChecked = isTypeSorted
+        dialogView.cbHideStocks.isChecked = isStocksHidden
+        dialogView.cbHideFii.isChecked = isFiiHidden
+        dialogView.cbHideFixedIncome.isChecked = isFixedIncomeHidden
+
+        requireContext().createDialog {
+            setView(dialogView.root)
+            setPositiveButton(resources.getString(android.R.string.ok)) { _, _ ->
+                dialogView.apply {
+                    isAscending = cbFilterInvestmentByNameAsc.isChecked
+                    isTypeSorted = cbFilterInvestmentByType.isChecked
+                    isStocksHidden = cbHideStocks.isChecked
+                    isFiiHidden = cbHideFii.isChecked
+                    isFixedIncomeHidden = cbHideFixedIncome.isChecked
+                }
+
+                sortList()
+            }
+            setNegativeButton(resources.getString(android.R.string.cancel)) { dialog, _ -> dialog.dismiss() }
+        }.show()
+    }
+
+    private fun sortList() {
+        var filteredList = investmentList
+
+        if (isAscending) {
+            filteredList = filteredList.sortedBy { it.name }
+        }
+        if (isTypeSorted) {
+            filteredList = filteredList.sortedBy { it.type }
+        }
+        if (isStocksHidden) {
+            filteredList = filteredList.filter { it.type != InvestmentType.STOCK }
+        }
+        if (isFiiHidden) {
+            filteredList = filteredList.filter { it.type != InvestmentType.FII }
+        }
+        if (isFixedIncomeHidden) {
+            filteredList = filteredList.filter { it.type != InvestmentType.FIXED_INCOME }
+        }
+
+        investmentAdapter.submitList(filteredList)
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
