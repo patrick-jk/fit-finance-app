@@ -9,6 +9,8 @@
 
     <color name="bg_geral">#101A32</color>
     <color name="box_color">#1E2D52</color>
+    <color name="text_box">#405792</color>
+    <color name="transparent_card">#E6101A32</color>
     
     <color name="bg_stocks">#00c49a</color>
     <color name="bg_fiis">#FFEA17</color>

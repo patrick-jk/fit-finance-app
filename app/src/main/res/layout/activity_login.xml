@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fit_finance_card_bg"
+    android:background="@drawable/bgimage_70"
     android:fillViewport="true"
     tools:context=".presentation.ui.login.LoginActivity">
 
@@ -16,20 +16,25 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/base_margin"
+            android:layout_margin="25dp"
+            app:cardCornerRadius="14dp"
+            app:strokeColor="@color/bg_geral"
+            app:cardBackgroundColor="@color/transparent_card"
             android:elevation="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="362dp">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/base_margin"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="@color/white"
                     android:text="@string/txt_sign_in"
                     android:textSize="28sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -38,10 +43,10 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_email"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/text_inputwhite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/base_margin"
+                    android:layout_margin="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_title">
@@ -51,14 +56,15 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/txt_hint_email"
                         android:inputType="textEmailAddress" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_password"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/text_inputwhite"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/base_margin"
+                    android:layout_margin="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/til_email"
@@ -75,6 +81,7 @@
                     android:id="@+id/tv_forgot_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
                     android:layout_margin="@dimen/base_margin"
                     android:text="@string/txt_forgot_password"
                     android:textSize="14sp"
@@ -86,21 +93,23 @@
                     android:id="@+id/cb_remember_me"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
                     android:layout_margin="@dimen/base_margin"
                     android:text="@string/txt_remember_me"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/til_password" />
 
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/base_margin"
-                    android:paddingHorizontal="32dp"
-                    android:paddingVertical="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/txt_login"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_register"
+                    app:layout_constraintHorizontalWeight="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cb_remember_me" />
 
@@ -108,17 +117,21 @@
                     android:id="@+id/btn_register"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="@dimen/base_margin"
-                    android:backgroundTint="@color/fit_finance_card_bg"
-                    android:paddingVertical="@dimen/base_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="@color/text_box"
                     android:text="@string/txt_register"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btn_login" />
+                    app:layout_constraintHorizontalWeight="1"
+                    app:layout_constraintStart_toEndOf="@+id/btn_login"
+                    app:layout_constraintTop_toBottomOf="@+id/cb_remember_me" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </com.google.android.material.card.MaterialCardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>

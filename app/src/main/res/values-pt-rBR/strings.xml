@@ -115,5 +115,6 @@
     <string name="txt_about_us_vision_description">O aplicativo \"Fit Finance\" é uma ferramenta criada para transformar a maneira como as pessoas administram suas finanças pessoais. Com uma interface intuitiva e recursos poderosos, este aplicativo oferece um ambiente seguro e eficiente para controle total das finanças. Além disso, o \"Fit Finance\" fornece insights valiosos por meio de gráficos, facilitando o entendimento das tendências financeiras individuais. Com o objetivo de promover uma vida financeira saudável, este aplicativo é uma ferramenta essencial para quem deseja evitar dívidas e atingir seus objetivos financeiros com confiança e tranquilidade.</string>
     <string name="txt_about_us_description">O Fit Finance é um software que auxilia os usuários a entender suas finanças e portfólio de investimentos com mais precisão, para que eles possam entender seus movimentos financeiros, facilitando a visualização de erros e acertos, trazendo maior controle, tudo isso simplesmente adicionando suas finanças ao sistema.</string>
     <string name="txt_about_us_reserved_rights">Todos os direitos reservados a Fit Finance. Este aplicativo e seu conteúdo são protegidos por leis de propriedade intelectual. Uso não autorizado é proibido.</string>
+    <style name="txt_contact">Contato</style>
 
 </resources>
