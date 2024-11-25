@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/bg_geral"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.ui.profile.ProfileFragment">
@@ -11,18 +12,42 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/base_margin"
+        android:layout_marginTop="30dp"
         android:text="@string/txt_about_us_title"
         android:textSize="25sp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="18dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/box_color"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="MissingConstraints">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/base_margin"
+        android:textColor="@color/white"
         android:justificationMode="inter_word"
         android:text="@string/txt_about_us_description"
         android:textAlignment="viewStart"
@@ -43,6 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/base_margin"
+        android:textColor="@color/white"
         android:text="@string/txt_about_us_objective"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,9 +77,10 @@
 
     <TextView
         android:id="@+id/tvObjectiveDescription"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/base_margin"
+        android:textColor="@color/white"
         android:justificationMode="inter_word"
         android:text="@string/txt_about_us_objective_description"
         android:textAlignment="viewStart"
@@ -74,6 +101,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/base_margin"
+        android:textColor="@color/white"
         android:text="@string/txt_about_us_vision"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,9 +110,10 @@
 
     <TextView
         android:id="@+id/tvVisionDescription"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/base_margin"
+        android:textColor="@color/white"
         android:justificationMode="inter_word"
         android:text="@string/txt_about_us_vision_description"
         android:textAlignment="viewStart"
@@ -92,5 +121,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvVision" />
+
+            <TextView
+                android:id="@+id/tvRightsReserved"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/base_margin"
+                android:textColor="@color/white"
+                android:justificationMode="inter_word"
+                android:text="@string/txt_about_us_reserved_rights"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvVisionDescription" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

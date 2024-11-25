@@ -7,6 +7,9 @@
     <color name="income">#1EFF00</color>
     <color name="expense">#FF2C1C</color>
 
+    <color name="bg_geral">#101A32</color>
+    <color name="box_color">#1E2D52</color>
+    
     <color name="bg_stocks">#00c49a</color>
     <color name="bg_fiis">#FFEA17</color>
     <color name="bg_fixed_income">#3e8bff</color>
