@@ -17,16 +17,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
-            app:cardCornerRadius="14dp"
-            app:strokeColor="@color/bg_geral"
-            app:cardBackgroundColor="@color/transparent_card"
             android:elevation="5dp"
+            app:cardBackgroundColor="@color/transparent_card"
+            app:cardCornerRadius="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/bg_geral">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="362dp">
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/base_margin">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_title"
@@ -34,8 +35,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:layout_marginBottom="20dp"
-                    android:textColor="@color/white"
                     android:text="@string/txt_sign_in"
+                    android:textColor="@color/white"
                     android:textSize="28sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -53,9 +54,10 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:hint="@string/txt_hint_email"
-                        android:inputType="textEmailAddress" />
+                        android:inputType="textEmailAddress"
+                        android:textCursorDrawable="@drawable/cursor_color" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,18 +74,20 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:hint="@string/txt_hint_password"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:padding="18dp"
+                        android:textCursorDrawable="@drawable/cursor_color" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:id="@+id/tv_forgot_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
                     android:layout_margin="@dimen/base_margin"
                     android:text="@string/txt_forgot_password"
+                    android:textColor="@color/white"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/cb_remember_me"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -93,9 +97,9 @@
                     android:id="@+id/cb_remember_me"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
                     android:layout_margin="@dimen/base_margin"
                     android:text="@string/txt_remember_me"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/til_password" />
 
@@ -109,7 +113,6 @@
                     android:text="@string/txt_login"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toStartOf="@+id/btn_register"
-                    app:layout_constraintHorizontalWeight="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cb_remember_me" />
 
@@ -123,15 +126,11 @@
                     android:text="@string/txt_register"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontalWeight="1"
                     app:layout_constraintStart_toEndOf="@+id/btn_login"
                     app:layout_constraintTop_toBottomOf="@+id/cb_remember_me" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </com.google.android.material.card.MaterialCardView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>

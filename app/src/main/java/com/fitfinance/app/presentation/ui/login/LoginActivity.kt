@@ -3,6 +3,7 @@ package com.fitfinance.app.presentation.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.fitfinance.app.R
@@ -31,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(binding.root)
         if (intent?.hasExtra(EXTRA_USER_EMAIL) != true) checkUserSession()
         setupUi()

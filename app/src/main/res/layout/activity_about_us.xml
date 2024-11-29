@@ -1,249 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/bg_geral"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".presentation.ui.profile.ProfileFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvWhatIsFitFinance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:text="@string/txt_about_us_title"
+        android:textColor="@color/txt_color"
         android:textSize="25sp"
-        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="18dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="8dp"
-        app:cardBackgroundColor="@color/box_color"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:ignore="MissingConstraints">
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/base_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fillViewport="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvWhatIsFitFinance"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:paddingBottom="20dp"
             android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/base_margin"
-        android:textColor="@color/white"
-        android:justificationMode="inter_word"
-        android:text="@string/txt_about_us_description"
-        android:textAlignment="viewStart"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/base_margin"
-        app:layout_constraintTop_toBottomOf="@id/textView2" />
-
-    <TextView
-        android:id="@+id/tvObjective"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/base_margin"
-        android:textColor="@color/white"
-        android:text="@string/txt_about_us_objective"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider" />
-
-    <TextView
-        android:id="@+id/tvObjectiveDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/base_margin"
-        android:textColor="@color/white"
-        android:justificationMode="inter_word"
-        android:text="@string/txt_about_us_objective_description"
-        android:textAlignment="viewStart"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvObjective" />
-
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/base_margin"
-        app:layout_constraintTop_toBottomOf="@id/tvObjectiveDescription" />
-
-    <TextView
-        android:id="@+id/tvVision"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/base_margin"
-        android:textColor="@color/white"
-        android:text="@string/txt_about_us_vision"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider2" />
-
-    <TextView
-        android:id="@+id/tvVisionDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/base_margin"
-        android:textColor="@color/white"
-        android:justificationMode="inter_word"
-        android:text="@string/txt_about_us_vision_description"
-        android:textAlignment="viewStart"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvVision" />
-
-            <TextView
-                android:id="@+id/tvRightsReserved"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_margin="@dimen/base_margin"
-                android:textColor="@color/white"
-                android:justificationMode="inter_word"
-                android:text="@string/txt_about_us_reserved_rights"
-                android:textAlignment="textEnd"
-                android:textSize="16sp"
+                app:cardBackgroundColor="@color/box_color"
+                android:layout_marginBottom="50dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvVisionDescription" />
+                app:layout_constraintTop_toTopOf="parent">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/base_margin"
+                    android:padding="8dp">
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"
-                android:text="@string/txt_contact"
-                android:textSize="25sp"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        android:justificationMode="inter_word"
+                        android:text="@string/txt_about_us_description"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:drawableLeft="@drawable/ic_mail"
-                android:drawableTint="@color/white"
-                android:drawablePadding="8dp"
-                android:text="@string/txt_mail"
-                android:textColor="@color/white"
-                android:textSize="16sp"/>
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        app:layout_constraintTop_toBottomOf="@id/textView2" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:drawableLeft="@drawable/ic_instagram"
-                android:drawableTint="@color/white"
-                android:drawablePadding="8dp"
-                android:text="@string/txt_instagram"
-                android:textColor="@color/white"
-                android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/tvObjective"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        android:text="@string/txt_about_us_objective"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:drawableTint="@color/white"
-                android:drawablePadding="8dp"
-                android:drawableLeft="@drawable/ic_linkedin"
-                android:text="@string/txt_linkedin"
-                android:textColor="@color/white"
-                android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/tvObjectiveDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        android:justificationMode="inter_word"
+                        android:text="@string/txt_about_us_objective_description"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvObjective" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:drawableTint="@color/white"
-                android:drawablePadding="8dp"
-                android:drawableLeft="@drawable/ic_phone"
-                android:text="@string/txt_phone"
-                android:textColor="@color/white"
-                android:textSize="16sp"/>
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/divider2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        app:layout_constraintTop_toBottomOf="@id/tvObjectiveDescription" />
 
-            <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:drawableLeft="@drawable/ic_mail"
-            android:drawableTint="@color/white"
-            android:drawablePadding="8dp"
-            android:text="@string/txt_mail"
-            android:textColor="@color/white"
-            android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/tvVision"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        android:text="@string/txt_about_us_vision"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider2" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:drawableLeft="@drawable/ic_instagram"
-                android:drawableTint="@color/white"
-                android:drawablePadding="8dp"
-                android:text="@string/txt_instagram"
-                android:textColor="@color/white"
-                android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/tvVisionDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        android:justificationMode="inter_word"
+                        android:text="@string/txt_about_us_vision_description"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvVision" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:drawableTint="@color/white"
-                android:drawablePadding="8dp"
-                android:drawableLeft="@drawable/ic_linkedin"
-                android:text="@string/txt_linkedin"
-                android:textColor="@color/white"
-                android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/tvRightsReserved"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        android:justificationMode="inter_word"
+                        android:text="@string/txt_about_us_reserved_rights"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvVisionDescription" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:drawableTint="@color/white"
-                android:drawablePadding="8dp"
-                android:drawableLeft="@drawable/ic_phone"
-                android:text="@string/txt_phone"
-                android:textColor="@color/white"
-                android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="40dp"
+                        android:text="@string/txt_contact"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvRightsReserved" />
 
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/tvContactMail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:drawablePadding="8dp"
+                        android:text="@string/txt_mail"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:drawableLeftCompat="@drawable/ic_mail"
+                        app:drawableTint="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textView1" />
 
-        </ScrollView>
+                    <TextView
+                        android:id="@+id/tvContactInstagram"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:drawablePadding="8dp"
+                        android:text="@string/txt_instagram"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:drawableLeftCompat="@drawable/ic_instagram"
+                        app:drawableTint="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvContactMail" />
 
-    </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/tvContactLinkedin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:drawablePadding="8dp"
+                        android:text="@string/txt_linkedin"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:drawableStartCompat="@drawable/ic_linkedin"
+                        app:drawableTint="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvContactInstagram" />
 
+                    <TextView
+                        android:id="@+id/tvContactPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:drawablePadding="8dp"
+                        android:text="@string/txt_phone"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:drawableStartCompat="@drawable/ic_phone"
+                        app:drawableTint="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvContactLinkedin" />
 
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

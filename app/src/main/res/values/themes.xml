@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.FitFinance" parent="Theme.Material3.DynamicColors.DayNight">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+       <item name="colorSecondaryContainer">@color/colorSecondary</item>
     </style>
 
     <style name="text_inputwhite" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
