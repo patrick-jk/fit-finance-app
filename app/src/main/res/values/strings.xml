@@ -11,6 +11,7 @@
     </array>
 
     <string name="app_name">Fit Finance</string>
+    <string name="app_nameM" translatable="false">FIT FINANCE</string>
     <string name="title_home" translatable="false">Home</string>
     <string name="title_finances">Finances</string>
     <string name="title_investments">Investments</string>
@@ -127,6 +128,7 @@
     <string name="txt_instagram" translatable="false">www.instagram.com/_fitfinance/</string>
     <string name="txt_phone" translatable="false">+55 11 98932-0292</string>
     <string name="txt_linkedin" translatable="false">www.linkedin.com/in/fit-finance-1533/</string>
-    <style name="txt_contact">Contact</style>
+    <string name="txt_contact">Contact</string>
+    <string name="txt_photo">Photo Gallery</string>
 
 </resources>

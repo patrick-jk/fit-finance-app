@@ -138,10 +138,112 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvVisionDescription" />
 
 
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:text="@string/txt_contact"
+                android:textSize="25sp"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/ic_mail"
+                android:drawableTint="@color/white"
+                android:drawablePadding="8dp"
+                android:text="@string/txt_mail"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/ic_instagram"
+                android:drawableTint="@color/white"
+                android:drawablePadding="8dp"
+                android:text="@string/txt_instagram"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableTint="@color/white"
+                android:drawablePadding="8dp"
+                android:drawableLeft="@drawable/ic_linkedin"
+                android:text="@string/txt_linkedin"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableTint="@color/white"
+                android:drawablePadding="8dp"
+                android:drawableLeft="@drawable/ic_phone"
+                android:text="@string/txt_phone"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:drawableLeft="@drawable/ic_mail"
+            android:drawableTint="@color/white"
+            android:drawablePadding="8dp"
+            android:text="@string/txt_mail"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/ic_instagram"
+                android:drawableTint="@color/white"
+                android:drawablePadding="8dp"
+                android:text="@string/txt_instagram"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableTint="@color/white"
+                android:drawablePadding="8dp"
+                android:drawableLeft="@drawable/ic_linkedin"
+                android:text="@string/txt_linkedin"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableTint="@color/white"
+                android:drawablePadding="8dp"
+                android:drawableLeft="@drawable/ic_phone"
+                android:text="@string/txt_phone"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
         </LinearLayout>
 
-    </ScrollView>
+        </ScrollView>
 
     </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
