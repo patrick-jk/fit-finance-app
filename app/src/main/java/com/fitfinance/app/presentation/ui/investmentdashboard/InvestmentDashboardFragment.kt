@@ -22,7 +22,7 @@ import com.fitfinance.app.presentation.ui.investmentdashboard.adapter.Investment
 import com.fitfinance.app.presentation.ui.investmentdetails.InvestmentDetailsFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
+import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.scrollToItem
@@ -233,7 +233,7 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
                     progressDialog?.dismiss()
                     requireContext().createDialog {
                         setTitle(resources.getString(R.string.txt_error))
-                        setMessage(requireContext().getNoConnectionErrorOrExceptionMessage(it.error))
+                        setMessage(requireContext().getUserFriendlyErrorMessage(it.error))
                         setPositiveButton("OK", null)
                     }.show()
                 }

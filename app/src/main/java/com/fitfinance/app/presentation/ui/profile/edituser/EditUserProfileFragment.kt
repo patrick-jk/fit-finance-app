@@ -108,12 +108,13 @@ class EditUserProfileFragment : BottomSheetDialogFragment(), DatePickerDialog.On
     }
 
     private fun validateFields(): Boolean {
-        val isNameValid = ValidateInput.validateInputText(binding.tilName)
-        val isCpfValid = ValidateInput.validateInputText(binding.tilCpf) && ValidateInput.validateCpf(binding.tilCpf)
-        val isEmailValid = ValidateInput.validateInputText(binding.tilEmail) && ValidateInput.validateEmail(binding.tilEmail)
-        val isPhoneValid = ValidateInput.validateInputText(binding.tilPhone) && ValidateInput.validatePhone(binding.tilPhone)
-        val isBirthdateValid = ValidateInput.validateInputText(binding.tilBirthdate)
-        val isIncomeValid = ValidateInput.validateInputText(binding.tilIncome)
+        val inputValidator = ValidateInput(requireContext())
+        val isNameValid = inputValidator.validateInputText(binding.tilName)
+        val isCpfValid = inputValidator.validateInputText(binding.tilCpf) && inputValidator.validateCpf(binding.tilCpf)
+        val isEmailValid = inputValidator.validateInputText(binding.tilEmail) && inputValidator.validateEmail(binding.tilEmail)
+        val isPhoneValid = inputValidator.validateInputText(binding.tilPhone) && inputValidator.validatePhone(binding.tilPhone)
+        val isBirthdateValid = inputValidator.validateInputText(binding.tilBirthdate)
+        val isIncomeValid = inputValidator.validateInputText(binding.tilIncome)
 
         return isNameValid && isCpfValid && isEmailValid && isPhoneValid && isBirthdateValid && isIncomeValid
     }

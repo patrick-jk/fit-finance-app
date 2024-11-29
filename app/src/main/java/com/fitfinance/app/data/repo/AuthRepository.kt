@@ -10,7 +10,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.HttpException
 
 class AuthRepository(private val apiService: ApiService) {
-    suspend fun registerUser(registerRequest: RegisterRequest) = flow {
+    fun registerUser(registerRequest: RegisterRequest) = flow {
         try {
             val response = suspendCancellableCoroutine {
                 apiService.registerUser(registerRequest).enqueue(ApiCallback(it))
@@ -22,7 +22,7 @@ class AuthRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun authenticateUser(authenticationRequest: AuthenticationRequest) = flow {
+    fun authenticateUser(authenticationRequest: AuthenticationRequest) = flow {
         try {
             val response = suspendCancellableCoroutine {
                 apiService.authenticateUser(authenticationRequest).enqueue(ApiCallback(it))
@@ -33,7 +33,7 @@ class AuthRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun refreshToken(token: String) = flow {
+    fun refreshToken(token: String) = flow {
         try {
             val response = suspendCancellableCoroutine {
                 apiService.refreshToken(token.toBearerToken()).enqueue(ApiCallback(it))

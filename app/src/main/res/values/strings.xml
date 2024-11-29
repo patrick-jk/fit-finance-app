@@ -130,5 +130,11 @@
     <string name="txt_linkedin" translatable="false">www.linkedin.com/in/fit-finance-1533</string>
     <string name="txt_contact">Contact</string>
     <string name="txt_photo_gallery">Photo Gallery</string>
+    <string name="txt_invalid_credentials">Invalid credentials. Please, review the data provided.</string>
+    <string name="error_service_unavailable">At moment, the service is unavailable. Please, try again later.</string>
+    <string name="txt_required">cannot be empty!</string>
+    <string name="txt_password_required">must be at least 8 characters, include uppercase, lowercase, and number</string>
+    <string name="txt_cpf_required">Invalid %1$s format (e.g., 123.456.789–00)</string>
+    <string name="txt_phone_required">Invalid %1$s format (e.g., (12) 91234–5978)</string>
 
 </resources>

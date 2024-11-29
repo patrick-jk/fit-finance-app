@@ -76,12 +76,17 @@ fun HttpException.throwRemoteException(errorMessage: String) {
     throw RemoteException(this.message ?: errorMessage)
 }
 
-fun Context.getNoConnectionErrorOrExceptionMessage(throwable: Throwable): String {
-    return if (!isInternetAvailable()) {
-        getString(R.string.error_no_internet_connection)
-    } else {
-        throwable.message ?: getString(R.string.error_unknown)
+fun Context.getUserFriendlyErrorMessage(throwable: Throwable): String {
+    if (!isInternetAvailable()) {
+        return getString(R.string.error_no_internet_connection)
+    } else if (throwable is RemoteException) {
+        if (throwable.message.contains("403")) {
+            return getString(R.string.txt_invalid_credentials)
+        } else if (throwable.message.contains("503") || throwable.message.contains("timeout")) {
+            return getString(R.string.error_service_unavailable)
+        }
     }
+    return getString(R.string.error_unknown)
 }
 
 fun RecyclerView.scrollToItem(itemId: String, itemPositionProvider: ItemPositionProvider) {

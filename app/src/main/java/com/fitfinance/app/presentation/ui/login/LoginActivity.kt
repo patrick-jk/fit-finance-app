@@ -15,7 +15,7 @@ import com.fitfinance.app.presentation.ui.register.RegisterActivity.Companion.EX
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.ValidateInput
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
+import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.isInternetAvailable
 import com.fitfinance.app.util.text
@@ -60,9 +60,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun validateFields(): Boolean {
-        val isEmailValid = ValidateInput.validateInputText(binding.tilEmail) && ValidateInput.validateEmail(binding.tilEmail)
+        val inputValidator = ValidateInput(this)
+        val isEmailValid = inputValidator.validateInputText(binding.tilEmail) && inputValidator.validateEmail(binding.tilEmail)
+        val isPasswordValid = inputValidator.validateInputText(binding.tilPassword) && inputValidator.validatePassword(binding.tilPassword)
 
-        return isEmailValid
+        return isEmailValid && isPasswordValid
     }
 
     private fun checkUserSession() {
@@ -123,8 +125,11 @@ class LoginActivity : AppCompatActivity() {
 
                     createDialog {
                         setTitle(getString(R.string.txt_error))
-                        setMessage(getNoConnectionErrorOrExceptionMessage(state.error))
-                        setPositiveButton(android.R.string.ok, null)
+                        setMessage(getUserFriendlyErrorMessage(state.error))
+                        setPositiveButton(android.R.string.ok) { _, _ ->
+                            progressDialog?.dismiss()
+                            binding.tilPassword.text = ""
+                        }
                     }.show()
                 }
             }
@@ -154,7 +159,7 @@ class LoginActivity : AppCompatActivity() {
 
                     createDialog {
                         setTitle(getString(R.string.txt_error))
-                        setMessage(getNoConnectionErrorOrExceptionMessage(state.error))
+                        setMessage(getUserFriendlyErrorMessage(state.error))
                         setPositiveButton(android.R.string.ok, null)
                     }.show()
                 }

@@ -23,7 +23,7 @@ import com.fitfinance.app.util.DatePickerFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.ValidateInput
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
+import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.removeCurrencyFormatting
@@ -141,12 +141,13 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
     }
 
     private fun validateFields(): Boolean {
-        val isNameValid = ValidateInput.validateInputText(binding.tilFinanceName)
-        val isValueValid = ValidateInput.validateInputText(binding.tilFinanceValue)
-        val isDescriptionValid = ValidateInput.validateInputText(binding.tilFinanceDescription)
-        val isStartDateValid = ValidateInput.validateInputText(binding.tilFinanceStartDate)
-        val isEndDateValid = ValidateInput.validateInputText(binding.tilFinanceEndDate)
-        val isTypeValid = ValidateInput.validateInputText(binding.tilFinanceType)
+        val inputValidator = ValidateInput(requireContext())
+        val isNameValid = inputValidator.validateInputText(binding.tilFinanceName)
+        val isValueValid = inputValidator.validateInputText(binding.tilFinanceValue)
+        val isDescriptionValid = inputValidator.validateInputText(binding.tilFinanceDescription)
+        val isStartDateValid = inputValidator.validateInputText(binding.tilFinanceStartDate)
+        val isEndDateValid = inputValidator.validateInputText(binding.tilFinanceEndDate)
+        val isTypeValid = inputValidator.validateInputText(binding.tilFinanceType)
 
         return isNameValid && isValueValid && isDescriptionValid && isStartDateValid && isEndDateValid && isTypeValid
     }
@@ -186,7 +187,7 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
                     progressDialog?.dismiss()
                     requireContext().createDialog {
                         setTitle(resources.getString(R.string.txt_error))
-                        setMessage(requireContext().getNoConnectionErrorOrExceptionMessage(it.error))
+                        setMessage(requireContext().getUserFriendlyErrorMessage(it.error))
                         setPositiveButton("OK", null)
                     }.show()
                 }
@@ -211,7 +212,7 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
                     progressDialog?.dismiss()
                     requireContext().createDialog {
                         setTitle(resources.getString(R.string.txt_error))
-                        setMessage(requireContext().getNoConnectionErrorOrExceptionMessage(it.error))
+                        setMessage(requireContext().getUserFriendlyErrorMessage(it.error))
                         setPositiveButton("OK", null)
                     }.show()
                 }

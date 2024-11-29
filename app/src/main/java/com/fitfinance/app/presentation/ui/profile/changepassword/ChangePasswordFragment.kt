@@ -66,9 +66,10 @@ class ChangePasswordFragment : BottomSheetDialogFragment() {
     }
 
     private fun validateFields(): Boolean {
-        val isNewPasswordValid = ValidateInput.validateInputText(binding.tilNewPassword) && ValidateInput.validatePassword(binding.tilNewPassword)
+        val inputValidator = ValidateInput(requireContext())
+        val isNewPasswordValid = inputValidator.validateInputText(binding.tilNewPassword) && inputValidator.validatePassword(binding.tilNewPassword)
         val isNewPasswordConfirmationValid =
-            ValidateInput.validateInputText(binding.tilNewPasswordConfirmation) && ValidateInput.validatePassword(binding.tilNewPasswordConfirmation)
+            inputValidator.validateInputText(binding.tilNewPasswordConfirmation) && inputValidator.validatePassword(binding.tilNewPasswordConfirmation)
 
         return isNewPasswordValid && isNewPasswordConfirmationValid && (binding.tilNewPassword.text == binding.tilNewPasswordConfirmation.text)
     }

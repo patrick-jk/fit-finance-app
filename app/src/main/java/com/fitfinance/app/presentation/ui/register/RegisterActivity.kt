@@ -21,7 +21,7 @@ import com.fitfinance.app.util.DatePickerFragment
 import com.fitfinance.app.util.PhoneTextWatcher
 import com.fitfinance.app.util.ValidateInput
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
+import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.removeCpfFormatting
@@ -88,27 +88,16 @@ class RegisterActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     }
 
     private fun validateFields(): Boolean {
-        val isNameValid = ValidateInput.validateInputText(binding.tilRegisterName)
-        val isCpfValid = ValidateInput.validateInputText(binding.tilRegisterCpf) && ValidateInput.validateCpf(binding.tilRegisterCpf)
-        val isEmailValid = ValidateInput.validateInputText(binding.tilRegisterEmail) && ValidateInput.validateEmail(binding.tilRegisterEmail)
-        val isPasswordValid = ValidateInput.validateInputText(binding.tilRegisterPassword) && ValidateInput.validatePassword(binding.tilRegisterPassword)
-        val isPhoneValid = ValidateInput.validateInputText(binding.tilRegisterPhone) && ValidateInput.validatePhone(binding.tilRegisterPhone)
-        val isBirthdateValid = ValidateInput.validateInputText(binding.tilRegisterBirthdate)
-        val isIncomeValid = ValidateInput.validateInputText(binding.tilRegisterIncome)
+        val inputValidator = ValidateInput(this)
+        val isNameValid = inputValidator.validateInputText(binding.tilRegisterName)
+        val isCpfValid = inputValidator.validateInputText(binding.tilRegisterCpf) && inputValidator.validateCpf(binding.tilRegisterCpf)
+        val isEmailValid = inputValidator.validateInputText(binding.tilRegisterEmail) && inputValidator.validateEmail(binding.tilRegisterEmail)
+        val isPasswordValid = inputValidator.validateInputText(binding.tilRegisterPassword) && inputValidator.validatePassword(binding.tilRegisterPassword)
+        val isPhoneValid = inputValidator.validateInputText(binding.tilRegisterPhone) && inputValidator.validatePhone(binding.tilRegisterPhone)
+        val isBirthdateValid = inputValidator.validateInputText(binding.tilRegisterBirthdate)
+        val isIncomeValid = inputValidator.validateInputText(binding.tilRegisterIncome)
 
         return isNameValid && isCpfValid && isEmailValid && isPasswordValid && isPhoneValid && isBirthdateValid && isIncomeValid
-    }
-
-    private fun mockRegister() {
-        binding.apply {
-            tilRegisterName.text = "John Doe"
-            tilRegisterCpf.text = "123.456.789-00"
-            tilRegisterEmail.text = "johndoe@gmail.com"
-            tilRegisterPassword.text = "123456"
-            tilRegisterPhone.text = "(11) 99999-9999"
-            tilRegisterBirthdate.text = "01/01/2000"
-            tilRegisterIncome.text = "1000"
-        }
     }
 
     private fun showDatePickerDialog(tag: String, actualDate: LocalDate = LocalDate.now()) {
@@ -143,7 +132,7 @@ class RegisterActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                     progressDialog?.dismiss()
                     createDialog {
                         setTitle(getString(R.string.txt_error))
-                        setMessage(getNoConnectionErrorOrExceptionMessage(it.error))
+                        setMessage(getUserFriendlyErrorMessage(it.error))
                         setPositiveButton(android.R.string.ok, null)
                     }
                 }

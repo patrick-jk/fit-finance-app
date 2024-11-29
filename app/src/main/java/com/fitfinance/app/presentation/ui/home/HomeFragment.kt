@@ -14,7 +14,7 @@ import com.fitfinance.app.presentation.ui.home.chart.HomeChartFragment
 import com.fitfinance.app.presentation.ui.home.homesummary.HomeSummaryFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getNoConnectionErrorOrExceptionMessage
+import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.getProgressDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
                     progressDialog?.dismiss()
                     requireContext().createDialog {
                         setTitle(resources.getString(R.string.txt_error))
-                        setMessage(requireContext().getNoConnectionErrorOrExceptionMessage(it.error))
+                        setMessage(requireContext().getUserFriendlyErrorMessage(it.error))
                         setPositiveButton("OK", null)
                     }.show()
                 }
