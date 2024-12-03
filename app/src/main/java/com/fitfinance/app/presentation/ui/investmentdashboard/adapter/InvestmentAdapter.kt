@@ -40,9 +40,18 @@ class InvestmentAdapter(val deleteListener: (Long) -> Unit, val typeConverter: (
             binding.tvTitle.text = investment.name
             binding.mcvItem.backgroundTintList = binding.root.context.getColorStateList(
                 when (investment.type) {
-                    InvestmentType.STOCK -> R.color.bg_stocks
-                    InvestmentType.FII -> R.color.bg_fiis
-                    InvestmentType.FIXED_INCOME -> R.color.bg_fixed_income
+                    InvestmentType.STOCK -> R.color.bg_stockstest
+                    InvestmentType.FII -> R.color.bg_fiistest
+                    InvestmentType.FIXED_INCOME -> R.color.bg_fixed_incometest
+                }
+            )
+
+            binding.ivInvestmentType.setImageResource(
+                when (investment.type) {
+                    InvestmentType.STOCK -> R.drawable.ic_bars_graphic_24dp
+                    InvestmentType.FII -> R.drawable.ic_house_24dp
+                    InvestmentType.FIXED_INCOME -> R.drawable.ic_coin_send_24dp
+                    else -> R.drawable.ic_default_24dp
                 }
             )
 

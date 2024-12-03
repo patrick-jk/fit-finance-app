@@ -38,7 +38,7 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
         fun bind(finance: FinanceGetResponse) {
             binding.tvTitle.text = finance.name
             binding.mcvItem.backgroundTintList = binding.root.context.getColorStateList(
-                if (finance.type == FinanceType.INCOME) R.color.income else R.color.expense
+                if (finance.type == FinanceType.INCOME) R.color.incometest else R.color.expensetest
             )
 
             binding.mcvItem.setOnLongClickListener {
