@@ -13,18 +13,6 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/base_margin">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/txt_photo_gallery"
-            android:textColor="@color/txt_color"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
@@ -33,7 +21,7 @@
             app:cardBackgroundColor="@color/box_color"
             app:cardCornerRadius="12dp"
             app:cardElevation="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

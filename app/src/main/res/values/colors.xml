@@ -25,4 +25,5 @@
 
     <color name="colorSecondary">#6B6B6B</color>
     <color name="colorBackground">#F5F5F5</color>
+    <color name="bg_navbar">#101A32</color>
 </resources>

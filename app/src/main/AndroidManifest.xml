@@ -24,13 +24,11 @@
         <activity
             android:name=".presentation.ui.photogallery.PhotoGalleryActivity"
             android:exported="false"
-            android:label="@string/menu_photo_gallery"
-            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+            android:label="@string/menu_photo_gallery" />
         <activity
             android:name=".presentation.ui.aboutus.AboutUsActivity"
             android:exported="false"
-            android:label="@string/menu_about_us"
-            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+            android:label="@string/menu_about_us" />
         <activity
             android:name=".presentation.ui.login.LoginActivity"
             android:exported="true"

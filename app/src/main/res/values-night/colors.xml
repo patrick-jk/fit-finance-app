@@ -2,5 +2,5 @@
 <resources>
     <color name="fit_finance_card_bg">#FF1E2D52</color>
     <color name="txt_color">#F2F2F2</color>
-    <color name="colorBackground">@color/fit_finance_card_bg</color>
+    <color name="colorBackground">@color/bg_navbar</color>
 </resources>
