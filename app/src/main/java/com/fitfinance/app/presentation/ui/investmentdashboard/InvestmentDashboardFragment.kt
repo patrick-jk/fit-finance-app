@@ -18,12 +18,13 @@ import com.fitfinance.app.databinding.FragmentInvestmentDashboardBinding
 import com.fitfinance.app.domain.model.InvestmentType
 import com.fitfinance.app.domain.response.InvestmentGetResponse
 import com.fitfinance.app.presentation.statepattern.State
+import com.fitfinance.app.presentation.ui.financedashboard.FinanceDashboardFragment
 import com.fitfinance.app.presentation.ui.investmentdashboard.adapter.InvestmentAdapter
 import com.fitfinance.app.presentation.ui.investmentdetails.InvestmentDetailsFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.getProgressDialog
+import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.scrollToItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -61,7 +62,7 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
         _binding = FragmentInvestmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        requireActivity().supportFragmentManager.setFragmentResultListener("updateInvestmentList", viewLifecycleOwner) { _, _ ->
+        requireActivity().supportFragmentManager.setFragmentResultListener(UPDATE_INVESTMENT_LIST, viewLifecycleOwner) { _, _ ->
             viewModel.getInvestmentsByUserId(sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
         }
 
@@ -73,6 +74,12 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.rvInvestmentList.adapter = investmentAdapter
         setupUi()
         setupMenuItems()
+
+        requireActivity().supportFragmentManager.setFragmentResultListener(EXECUTE_ITEM_CLICK, this) { _, _ ->
+            arguments?.getString("itemId")?.let { args ->
+                binding.rvInvestmentList.scrollToItem(args, investmentAdapter)
+            }
+        }
 
         return root
     }
@@ -202,9 +209,7 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
                     progressDialog?.dismiss()
                     investmentList = it.info
                     investmentAdapter.submitList(investmentList)
-                    arguments?.getString("itemId")?.let { investmentId ->
-                        binding.rvInvestmentList.scrollToItem(investmentId, investmentAdapter)
-                    }
+                    requireActivity().supportFragmentManager.setFragmentResult(FinanceDashboardFragment.EXECUTE_ITEM_CLICK, Bundle())
                 }
 
                 is State.Error -> {
@@ -226,7 +231,7 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 is State.Success -> {
                     progressDialog?.dismiss()
-                    viewModel.getInvestmentsByUserId(sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
+                    requireActivity().supportFragmentManager.setFragmentResult(UPDATE_INVESTMENT_LIST, Bundle())
                 }
 
                 is State.Error -> {
@@ -241,9 +246,21 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        arguments?.clear()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         requireActivity().removeMenuProvider(menuProvider)
         _binding = null
+    }
+
+    companion object {
+        const val UPDATE_INVESTMENT_LIST = "updateInvestmentList"
+        const val EXECUTE_ITEM_CLICK = "executeClick"
+
+        fun newInstance() = FinanceDashboardFragment()
     }
 }

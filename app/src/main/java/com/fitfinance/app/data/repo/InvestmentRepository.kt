@@ -5,7 +5,6 @@ import com.fitfinance.app.data.local.dao.InvestmentDao
 import com.fitfinance.app.data.remote.ApiService
 import com.fitfinance.app.domain.request.InvestmentPostRequest
 import com.fitfinance.app.domain.request.InvestmentPutRequest
-import com.fitfinance.app.util.throwRemoteException
 import com.fitfinance.app.util.toBearerToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -45,7 +44,7 @@ class InvestmentRepository(private val apiService: ApiService, private val inves
 
             emit(response)
         } catch (e: HttpException) {
-            e.throwRemoteException("Failed to get investment summary")
+            throw e
         }
     }
 
@@ -57,7 +56,7 @@ class InvestmentRepository(private val apiService: ApiService, private val inves
 
             emit(response)
         } catch (e: HttpException) {
-            e.throwRemoteException("Failed to create investment")
+            throw e
         }
     }
 
@@ -68,7 +67,7 @@ class InvestmentRepository(private val apiService: ApiService, private val inves
             }
             emit(response)
         } catch (e: HttpException) {
-            e.throwRemoteException("Failed to update investment")
+            throw e
         }
     }
 
@@ -80,7 +79,7 @@ class InvestmentRepository(private val apiService: ApiService, private val inves
 
             emit(response)
         } catch (e: HttpException) {
-            e.throwRemoteException("Failed to delete investment")
+            throw e
         }
     }
 }

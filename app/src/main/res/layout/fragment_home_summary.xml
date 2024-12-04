@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_overview_card"
     android:paddingBottom="@dimen/base_margin"
-    tools:context=".presentation.ui.home.HomeFragment">
+    tools:context=".presentation.ui.home.homesummary.HomeSummaryFragment">
 
     <TextView
         android:id="@+id/tv_balance"

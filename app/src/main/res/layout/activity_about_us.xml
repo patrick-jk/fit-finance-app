@@ -11,7 +11,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/base_margin"
         app:layout_constraintEnd_toEndOf="parent"
         android:fillViewport="true"
         app:layout_constraintStart_toStartOf="parent"

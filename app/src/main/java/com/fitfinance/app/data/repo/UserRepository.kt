@@ -5,7 +5,6 @@ import com.fitfinance.app.data.local.dao.UserDao
 import com.fitfinance.app.data.remote.ApiService
 import com.fitfinance.app.domain.request.ChangePasswordRequest
 import com.fitfinance.app.domain.request.UserPutRequest
-import com.fitfinance.app.util.throwRemoteException
 import com.fitfinance.app.util.toBearerToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -42,7 +41,7 @@ class UserRepository(private val apiService: ApiService, private val userDao: Us
             }
             emit(response)
         } catch (e: HttpException) {
-            e.throwRemoteException("Error updating user")
+            throw e
         }
     }
 
@@ -53,7 +52,7 @@ class UserRepository(private val apiService: ApiService, private val userDao: Us
             }
             emit(response)
         } catch (e: HttpException) {
-            e.throwRemoteException("Error updating password")
+            throw e
         }
     }
 }

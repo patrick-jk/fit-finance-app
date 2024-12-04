@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
-        if (intent?.hasExtra(EXTRA_USER_EMAIL) != true) checkUserSession()
+        if (sharedPreferences.contains(getString(R.string.pref_user_token))) checkUserSession()
         setupUi()
     }
 

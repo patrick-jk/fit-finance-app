@@ -18,9 +18,10 @@
 
         <ImageView
             android:id="@+id/ivInvestmentType"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginEnd="8dp"
+            android:contentDescription="@string/txt_item_image"
             android:src="@drawable/ic_default_24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -35,10 +36,10 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:elevation="@dimen/base_margin"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="12dp"
             app:layout_constraintStart_toEndOf="@+id/ivInvestmentType"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivInvestmentType"
+            app:layout_constraintBottom_toBottomOf="@id/ivInvestmentType"
             tools:text="Title" />
 
         <ImageButton

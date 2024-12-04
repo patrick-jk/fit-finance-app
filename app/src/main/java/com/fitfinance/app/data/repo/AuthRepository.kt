@@ -3,7 +3,6 @@ package com.fitfinance.app.data.repo
 import com.fitfinance.app.data.remote.ApiService
 import com.fitfinance.app.domain.request.AuthenticationRequest
 import com.fitfinance.app.domain.request.RegisterRequest
-import com.fitfinance.app.util.throwRemoteException
 import com.fitfinance.app.util.toBearerToken
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -18,7 +17,7 @@ class AuthRepository(private val apiService: ApiService) {
 
             emit(response)
         } catch (e: HttpException) {
-            e.throwRemoteException("Error registering user")
+            throw e
         }
     }
 
@@ -29,7 +28,7 @@ class AuthRepository(private val apiService: ApiService) {
             }
             emit(response)
         } catch (e: HttpException) {
-            e.throwRemoteException("Error authenticating user")
+            throw e
         }
     }
 
@@ -40,7 +39,7 @@ class AuthRepository(private val apiService: ApiService) {
             }
             emit(response)
         } catch (e: HttpException) {
-            e.throwRemoteException("Error refreshing token")
+            throw e
         }
     }
 }

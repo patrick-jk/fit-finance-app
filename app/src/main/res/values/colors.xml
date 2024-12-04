@@ -9,7 +9,6 @@
     <color name="expense">#FF392B</color>
     <color name="expensetest">#F44336</color>
 
-
     <color name="bg_geral">#101A32</color>
     <color name="box_color">#1E2D52</color>
     <color name="text_box">#405792</color>
@@ -26,4 +25,5 @@
     <color name="colorSecondary">#6B6B6B</color>
     <color name="colorBackground">#F5F5F5</color>
     <color name="bg_navbar">#101A32</color>
+    <color name="bg_navbar_variant">#122A54</color>
 </resources>

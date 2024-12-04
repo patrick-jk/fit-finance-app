@@ -92,7 +92,7 @@ class ChangePasswordFragment : BottomSheetDialogFragment() {
                         setTitle(resources.getString(R.string.txt_success))
                         setMessage(resources.getString(R.string.txt_password_updated))
                         setPositiveButton(resources.getString(android.R.string.ok)) { _, _ ->
-                            requireActivity().supportFragmentManager.setFragmentResult("finishUserSession", Bundle())
+                            requireActivity().supportFragmentManager.setFragmentResult(REQUEST_FINISH_SESSION, Bundle())
                             dismiss()
                         }
                     }.show()

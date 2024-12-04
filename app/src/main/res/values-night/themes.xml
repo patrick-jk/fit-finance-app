@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.FitFinance" parent="Theme.Material3.DynamicColors.DayNight">
         <!-- Customize your dark theme here. -->
-        <item name="colorSurfaceContainer">@color/bg_navbar</item>
-        <item name="colorPrimary">@color/bg_navbar</item>
-        <item name="colorOnPrimarySurface">@color/bg_navbar</item>
+        <item name="colorSurfaceContainer">@color/fit_finance_card_bg</item>
+        <item name="popupMenuBackground">@drawable/bg_menu</item>
+        <item name="colorPrimaryDark">@color/bg_navbar</item>
     </style>
 </resources>

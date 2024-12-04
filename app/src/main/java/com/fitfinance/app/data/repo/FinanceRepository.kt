@@ -6,7 +6,6 @@ import com.fitfinance.app.data.local.dao.HomeSummaryDao
 import com.fitfinance.app.data.remote.ApiService
 import com.fitfinance.app.domain.request.FinancePostRequest
 import com.fitfinance.app.domain.request.FinancePutRequest
-import com.fitfinance.app.util.throwRemoteException
 import com.fitfinance.app.util.toBearerToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -38,7 +37,6 @@ class FinanceRepository(private val apiService: ApiService, private val financeD
         }
     }
 
-
     fun getUserSummary(apiToken: String) = flow {
         try {
             val response = suspendCancellableCoroutine {
@@ -65,7 +63,7 @@ class FinanceRepository(private val apiService: ApiService, private val financeD
             }
             emit(response)
         } catch (e: HttpException) {
-            e.throwRemoteException("Error creating finance")
+            throw e
         }
     }
 
@@ -76,7 +74,7 @@ class FinanceRepository(private val apiService: ApiService, private val financeD
             }
             emit(response)
         } catch (e: HttpException) {
-            e.throwRemoteException("Error updating finance")
+            throw e
         }
     }
 
@@ -87,7 +85,7 @@ class FinanceRepository(private val apiService: ApiService, private val financeD
             }
             emit(response)
         } catch (e: HttpException) {
-            e.throwRemoteException("Error deleting finance")
+            throw e
         }
     }
 }

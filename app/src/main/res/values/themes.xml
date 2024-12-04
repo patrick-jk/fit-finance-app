@@ -3,6 +3,7 @@
     <style name="Base.Theme.FitFinance" parent="Theme.Material3.DynamicColors.DayNight">
         <!-- Customize your light theme here. -->
         <item name="colorSecondaryContainer">@color/colorSecondary</item>
+        <item name="colorPrimary">@color/bg_navbar</item>
     </style>
 
     <style name="text_inputwhite" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

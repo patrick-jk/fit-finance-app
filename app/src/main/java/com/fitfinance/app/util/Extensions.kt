@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
@@ -72,18 +73,14 @@ fun Context.isInternetAvailable(): Boolean {
     }
 }
 
-fun HttpException.throwRemoteException(errorMessage: String) {
-    throw RemoteException(this.message ?: errorMessage)
-}
-
 fun Context.getUserFriendlyErrorMessage(throwable: Throwable): String {
+    Log.e("Exception", throwable.message ?: "Unknown error")
     if (!isInternetAvailable()) {
         return getString(R.string.error_no_internet_connection)
-    } else if (throwable is RemoteException) {
-        if (throwable.message.contains("403")) {
-            return getString(R.string.txt_invalid_credentials)
-        } else if (throwable.message.contains("503") || throwable.message.contains("timeout")) {
-            return getString(R.string.error_service_unavailable)
+    } else if (throwable is HttpException) {
+        when (throwable.code()) {
+            403 -> return getString(R.string.txt_invalid_credentials)
+            503 -> return getString(R.string.error_service_unavailable)
         }
     }
     return getString(R.string.error_unknown)

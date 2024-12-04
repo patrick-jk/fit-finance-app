@@ -99,7 +99,7 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
             val dialog = MaterialAlertDialogBuilder(view.context)
                 .setView(dialogView.root)
                 .setCancelable(true)
-                .setPositiveButton(android.R.string.ok, null)
+                .setPositiveButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
                 .create()
 
             dialog.show()

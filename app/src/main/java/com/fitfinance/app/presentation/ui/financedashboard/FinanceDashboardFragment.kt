@@ -22,8 +22,8 @@ import com.fitfinance.app.presentation.ui.financedashboard.adapter.FinanceAdapte
 import com.fitfinance.app.presentation.ui.financedetails.FinanceDetailsFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.getProgressDialog
+import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.scrollToItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -59,8 +59,14 @@ class FinanceDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
         _binding = FragmentFinanceDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        requireActivity().supportFragmentManager.setFragmentResultListener("updateFinanceList", viewLifecycleOwner) { _, _ ->
+        requireActivity().supportFragmentManager.setFragmentResultListener(UPDATE_FINANCE_LIST, viewLifecycleOwner) { _, _ ->
             viewModel.getFinancesByUserId(sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
+        }
+
+        requireActivity().supportFragmentManager.setFragmentResultListener(EXECUTE_ITEM_CLICK, this) { _, _ ->
+            arguments?.getString("itemId")?.let { args ->
+                binding.rvFinanceList.scrollToItem(args, financeAdapter)
+            }
         }
 
         val sharedPreferences = requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
@@ -185,9 +191,7 @@ class FinanceDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
                     progressDialog?.dismiss()
                     financeList = it.info
                     financeAdapter.submitList(financeList)
-                    arguments?.getString("itemId")?.let { args ->
-                        binding.rvFinanceList.scrollToItem(args, financeAdapter)
-                    }
+                    requireActivity().supportFragmentManager.setFragmentResult(EXECUTE_ITEM_CLICK, Bundle())
                 }
 
                 is State.Error -> {
@@ -210,7 +214,7 @@ class FinanceDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 is State.Success -> {
                     progressDialog?.dismiss()
-                    requireActivity().supportFragmentManager.setFragmentResult("updateFinanceList", Bundle())
+                    requireActivity().supportFragmentManager.setFragmentResult(UPDATE_FINANCE_LIST, Bundle())
                 }
 
                 is State.Error -> {
@@ -225,9 +229,21 @@ class FinanceDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        arguments?.clear()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         requireActivity().removeMenuProvider(menuProvider)
         _binding = null
+    }
+
+    companion object {
+        const val EXECUTE_ITEM_CLICK = "executeClick"
+        const val UPDATE_FINANCE_LIST = "updateFinanceList"
+
+        fun newInstance() = FinanceDashboardFragment()
     }
 }
