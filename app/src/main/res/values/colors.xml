@@ -4,9 +4,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="fit_finance_card_bg">#FF1E2D52</color>
+
     <color name="income">#3AFF24</color>
-    <color name="incometest">#4CAF50</color>
     <color name="expense">#FF392B</color>
+
+    <color name="incometest">#4CAF50</color>
     <color name="expensetest">#F44336</color>
 
     <color name="bg_geral">#101A32</color>
@@ -18,9 +20,13 @@
     <color name="bg_fiis">#FFEA17</color>
     <color name="bg_fixed_income">#3e8bff</color>
 
-    <color name="bg_stockstest">#FFC107</color>
-    <color name="bg_fiistest">#512DA8</color>
-    <color name="bg_fixed_incometest">#00897B</color>
+    <color name="bg_stocks2">#FFC107</color>
+    <color name="bg_fiis2">#512DA8</color>
+    <color name="bg_fixed_income2">#00897B</color>
+
+    <color name="bg_stocks3">#FF7043</color>
+    <color name="bg_fiis3">#9575CD</color>
+    <color name="bg_fixed_income3">#CCCCCC</color>
 
     <color name="colorSecondary">#6B6B6B</color>
     <color name="colorBackground">#F5F5F5</color>

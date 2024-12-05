@@ -41,6 +41,11 @@ class FinanceAdapter(val deleteListener: (Long) -> Unit) : ListAdapter<FinanceGe
                 if (finance.type == FinanceType.INCOME) R.color.incometest else R.color.expensetest
             )
 
+            binding.ivInvestmentType.setImageResource(
+                if(finance.type == FinanceType.INCOME) R.drawable.ic_money_income_24dp
+                else R.drawable.ic_money_expense_24dp
+            )
+
             binding.mcvItem.setOnLongClickListener {
                 showInfoDialog(it, finance)
                 true

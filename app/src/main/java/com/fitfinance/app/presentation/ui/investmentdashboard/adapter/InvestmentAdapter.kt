@@ -40,9 +40,9 @@ class InvestmentAdapter(val deleteListener: (Long) -> Unit, val typeConverter: (
             binding.tvTitle.text = investment.name
             binding.mcvItem.backgroundTintList = binding.root.context.getColorStateList(
                 when (investment.type) {
-                    InvestmentType.STOCK -> R.color.bg_stockstest
-                    InvestmentType.FII -> R.color.bg_fiistest
-                    InvestmentType.FIXED_INCOME -> R.color.bg_fixed_incometest
+                    InvestmentType.STOCK -> R.color.bg_stocks3
+                    InvestmentType.FII -> R.color.bg_fiis3
+                    InvestmentType.FIXED_INCOME -> R.color.bg_fixed_income3
                 }
             )
 
