@@ -187,9 +187,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:drawablePadding="8dp"
                         android:text="@string/txt_mail"
                         android:textColor="@color/white"
                         android:textSize="16sp"
+                        app:drawableStartCompat="@drawable/ic_mail"
                         app:layout_constraintTop_toBottomOf="@id/tvContactTitle"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -198,9 +200,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:drawablePadding="8dp"
                         android:text="@string/txt_phone"
                         android:textColor="@color/white"
                         android:textSize="16sp"
+                        app:drawableStartCompat="@drawable/ic_phone"
                         app:layout_constraintTop_toBottomOf="@id/tvContactMail"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -212,6 +216,8 @@
                         android:text="@string/txt_instagram"
                         android:textColor="@color/white"
                         android:textSize="16sp"
+                        app:drawableStartCompat="@drawable/ic_instagram"
+                        android:drawablePadding="8dp"
                         app:layout_constraintTop_toBottomOf="@id/tvContactPhone"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -224,6 +230,8 @@
                         android:text="@string/txt_linkedin"
                         android:textColor="@color/white"
                         android:textSize="16sp"
+                        android:drawablePadding="8dp"
+                        app:drawableStartCompat="@drawable/ic_linkedin"
                         app:layout_constraintTop_toBottomOf="@id/tvContactInstagram"
                         app:layout_constraintStart_toStartOf="parent" />
 
