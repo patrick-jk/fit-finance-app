@@ -15,14 +15,15 @@ import com.fitfinance.app.databinding.ActivityRegisterBinding
 import com.fitfinance.app.domain.request.RegisterRequest
 import com.fitfinance.app.presentation.statepattern.State
 import com.fitfinance.app.presentation.ui.login.LoginActivity
+import com.fitfinance.app.util.ClearErrorTextWatcher
 import com.fitfinance.app.util.CpfTextWatcher
 import com.fitfinance.app.util.CurrencyTextWatcher
 import com.fitfinance.app.util.DatePickerFragment
 import com.fitfinance.app.util.PhoneTextWatcher
 import com.fitfinance.app.util.ValidateInput
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.getProgressDialog
+import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.removeCpfFormatting
 import com.fitfinance.app.util.removeCurrencyFormatting
@@ -42,7 +43,6 @@ class RegisterActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         enableEdgeToEdge()
         setContentView(binding.root)
         setupUi()
-//        mockRegister()
     }
 
     private fun setupUi() {
@@ -56,8 +56,12 @@ class RegisterActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 showDatePickerDialog("Birthdate")
             }
 
+            tilRegisterName.editText?.addTextChangedListener(ClearErrorTextWatcher(tilRegisterName))
             tilRegisterCpf.editText?.addTextChangedListener(CpfTextWatcher(tilRegisterCpf))
+            tilRegisterEmail.editText?.addTextChangedListener(ClearErrorTextWatcher(tilRegisterEmail))
+            tilRegisterPassword.editText?.addTextChangedListener(ClearErrorTextWatcher(tilRegisterPassword))
             tilRegisterPhone.editText?.addTextChangedListener(PhoneTextWatcher(tilRegisterPhone))
+            tilRegisterBirthdate.editText?.addTextChangedListener(ClearErrorTextWatcher(tilRegisterBirthdate))
             tilRegisterIncome.editText?.addTextChangedListener(CurrencyTextWatcher(tilRegisterIncome))
 
             btnRegister.setOnClickListener {

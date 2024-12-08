@@ -15,6 +15,7 @@ import com.fitfinance.app.databinding.FragmentEditUserProfileBinding
 import com.fitfinance.app.domain.request.UserPutRequest
 import com.fitfinance.app.domain.response.UserGetResponse
 import com.fitfinance.app.presentation.statepattern.State
+import com.fitfinance.app.util.ClearErrorTextWatcher
 import com.fitfinance.app.util.CpfTextWatcher
 import com.fitfinance.app.util.CurrencyTextWatcher
 import com.fitfinance.app.util.DatePickerFragment
@@ -76,8 +77,11 @@ class EditUserProfileFragment : BottomSheetDialogFragment(), DatePickerDialog.On
                 showDatePickerDialog("Birthdate")
             }
 
+            tilName.editText?.addTextChangedListener(ClearErrorTextWatcher(tilName))
             tilCpf.editText?.addTextChangedListener(CpfTextWatcher(tilCpf))
+            tilEmail.editText?.addTextChangedListener(ClearErrorTextWatcher(tilEmail))
             tilPhone.editText?.addTextChangedListener(PhoneTextWatcher(tilPhone))
+            tilBirthdate.editText?.addTextChangedListener(ClearErrorTextWatcher(tilBirthdate))
             tilIncome.editText?.addTextChangedListener(CurrencyTextWatcher(tilIncome))
 
             btnUpdateUser.setOnClickListener {

@@ -136,5 +136,7 @@
     <string name="txt_password_required">must be at least 8 characters, include uppercase, lowercase, and number</string>
     <string name="txt_cpf_required">Invalid %1$s format (e.g., 123.456.789–00)</string>
     <string name="txt_phone_required">Invalid %1$s format (e.g., (12) 91234–5978)</string>
+    <string name="txt_item_image">Item Image</string>
+    <string name="txt_loading">Loading…</string>
 
 </resources>

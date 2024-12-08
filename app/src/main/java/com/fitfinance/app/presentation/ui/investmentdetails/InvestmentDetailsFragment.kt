@@ -17,13 +17,14 @@ import com.fitfinance.app.domain.request.InvestmentPostRequest
 import com.fitfinance.app.domain.request.InvestmentPutRequest
 import com.fitfinance.app.domain.response.InvestmentGetResponse
 import com.fitfinance.app.presentation.statepattern.State
+import com.fitfinance.app.util.ClearErrorTextWatcher
 import com.fitfinance.app.util.CurrencyTextWatcher
 import com.fitfinance.app.util.DatePickerFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.ValidateInput
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.getProgressDialog
+import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.removeCurrencyFormatting
 import com.fitfinance.app.util.text
@@ -83,52 +84,59 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
     }
 
     private fun setupUi() {
-        _binding?.tilInvestmentStartDate?.editText?.setOnClickListener {
-            it.hideSoftKeyboard()
-            try {
-                val date = LocalDate.parse(binding.tilInvestmentStartDate.text, dateTimeFormatterBrFormat)
-                showDatePickerDialog("StartDate", date)
-            } catch (e: DateTimeParseException) {
-                showDatePickerDialog("StartDate")
+        binding.apply {
+            tilInvestmentStartDate.editText?.setOnClickListener {
+                it.hideSoftKeyboard()
+                try {
+                    val date = LocalDate.parse(binding.tilInvestmentStartDate.text, dateTimeFormatterBrFormat)
+                    showDatePickerDialog("StartDate", date)
+                } catch (e: DateTimeParseException) {
+                    showDatePickerDialog("StartDate")
+                }
             }
-        }
-        _binding?.tilInvestmentEndDate?.editText?.setOnClickListener {
-            it.hideSoftKeyboard()
-            try {
-                val date = LocalDate.parse(binding.tilInvestmentEndDate.text, dateTimeFormatterBrFormat)
-                showDatePickerDialog("EndDate", date)
-            } catch (e: DateTimeParseException) {
-                showDatePickerDialog("EndDate")
+            tilInvestmentEndDate.editText?.setOnClickListener {
+                it.hideSoftKeyboard()
+                try {
+                    val date = LocalDate.parse(binding.tilInvestmentEndDate.text, dateTimeFormatterBrFormat)
+                    showDatePickerDialog("EndDate", date)
+                } catch (e: DateTimeParseException) {
+                    showDatePickerDialog("EndDate")
+                }
             }
-        }
 
-        binding.tilInvestmentCost.editText?.addTextChangedListener(CurrencyTextWatcher(binding.tilInvestmentCost))
+            tilInvestmentName.editText?.addTextChangedListener(ClearErrorTextWatcher(tilInvestmentName))
+            tilInvestmentQuantity.editText?.addTextChangedListener(ClearErrorTextWatcher(tilInvestmentQuantity))
+            tilInvestmentCost.editText?.addTextChangedListener(CurrencyTextWatcher(tilInvestmentCost))
+            tilInvestmentType.editText?.addTextChangedListener(ClearErrorTextWatcher(tilInvestmentType))
+            tilInvestmentStartDate.editText?.addTextChangedListener(ClearErrorTextWatcher(tilInvestmentStartDate))
+            tilInvestmentEndDate.editText?.addTextChangedListener(ClearErrorTextWatcher(tilInvestmentEndDate))
 
-        binding.btnSaveInvestment.setOnClickListener {
-            if (!validateFields()) {
-                return@setOnClickListener
+            btnSaveInvestment.setOnClickListener {
+                if (!validateFields()) {
+                    return@setOnClickListener
+                }
+                val investmentRequest: Any = if (arguments == null) {
+                    InvestmentPostRequest(
+                        name = binding.tilInvestmentName.text,
+                        price = removeCurrencyFormatting(binding.tilInvestmentCost.text).toDouble(),
+                        startDate = binding.tilInvestmentStartDate.text.toLocalDateApiFormat(),
+                        endDate = binding.tilInvestmentEndDate.text.toLocalDateApiFormat(),
+                        quantity = binding.tilInvestmentQuantity.text.toInt(),
+                        type = convertInvestmentTypeToData(binding.actInvestmentType.text.toString())
+                    )
+                } else {
+                    InvestmentPutRequest(
+                        id = investment.id,
+                        name = binding.tilInvestmentName.text,
+                        price = removeCurrencyFormatting(binding.tilInvestmentCost.text).toDouble(),
+                        startDate = binding.tilInvestmentStartDate.text.toLocalDateApiFormat(),
+                        endDate = binding.tilInvestmentEndDate.text.toLocalDateApiFormat(),
+                        quantity = binding.tilInvestmentQuantity.text.toInt(),
+                        type = convertInvestmentTypeToData(binding.actInvestmentType.text.toString()),
+                    )
+                }
+                createOrUpdateInvestment(investmentRequest, sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
             }
-            val investmentRequest: Any = if (arguments == null) {
-                InvestmentPostRequest(
-                    name = binding.tilInvestmentName.text,
-                    price = removeCurrencyFormatting(binding.tilInvestmentCost.text).toDouble(),
-                    startDate = binding.tilInvestmentStartDate.text.toLocalDateApiFormat(),
-                    endDate = binding.tilInvestmentEndDate.text.toLocalDateApiFormat(),
-                    quantity = binding.tilInvestmentQuantity.text.toInt(),
-                    type = convertInvestmentTypeToData(binding.actInvestmentType.text.toString())
-                )
-            } else {
-                InvestmentPutRequest(
-                    id = investment.id,
-                    name = binding.tilInvestmentName.text,
-                    price = removeCurrencyFormatting(binding.tilInvestmentCost.text).toDouble(),
-                    startDate = binding.tilInvestmentStartDate.text.toLocalDateApiFormat(),
-                    endDate = binding.tilInvestmentEndDate.text.toLocalDateApiFormat(),
-                    quantity = binding.tilInvestmentQuantity.text.toInt(),
-                    type = convertInvestmentTypeToData(binding.actInvestmentType.text.toString()),
-                )
-            }
-            createOrUpdateInvestment(investmentRequest, sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
         }
     }
 

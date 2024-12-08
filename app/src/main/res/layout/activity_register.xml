@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:fillViewport="true"
-    android:background="@color/fit_finance_card_bg"
-    tools:context=".presentation.ui.register.RegisterActivity">
+    android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,10 +15,12 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="@dimen/base_margin"
-            android:elevation="8dp">
+            android:backgroundTint="@color/fit_finance_card_bg"
+            android:elevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/fit_finance_card_bg">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -31,6 +32,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/base_margin"
                     android:text="@string/txt_register_user"
+                    android:textColor="@color/white"
                     android:textSize="28sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -38,15 +40,16 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_register_name"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Theme.FitFinance.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/base_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_register_title">
+                    app:layout_constraintTop_toBottomOf="@+id/tv_register_title">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        style="@style/Theme.FitFinance.TextInputLayout.EditText.Register"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/txt_hint_name"
@@ -55,15 +58,16 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_register_cpf"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Theme.FitFinance.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/base_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/til_register_name">
+                    app:layout_constraintTop_toBottomOf="@+id/til_register_name">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        style="@style/Theme.FitFinance.TextInputLayout.EditText.Register"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/txt_hint_cpf"
@@ -72,15 +76,16 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_register_email"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Theme.FitFinance.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/base_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/til_register_cpf">
+                    app:layout_constraintTop_toBottomOf="@+id/til_register_cpf">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        style="@style/Theme.FitFinance.TextInputLayout.EditText.Register"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/txt_hint_email"
@@ -89,16 +94,17 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_register_password"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Theme.FitFinance.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/base_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/til_register_email"
+                    app:layout_constraintTop_toBottomOf="@+id/til_register_email"
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        style="@style/Theme.FitFinance.TextInputLayout.EditText.Register"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/txt_hint_password"
@@ -107,15 +113,16 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_register_phone"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Theme.FitFinance.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/base_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/til_register_password">
+                    app:layout_constraintTop_toBottomOf="@+id/til_register_password">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        style="@style/Theme.FitFinance.TextInputLayout.EditText.Register"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/txt_hint_phone"
@@ -124,7 +131,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_register_birthdate"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    style="@style/Theme.FitFinance.TextInputLayout.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/base_margin"
@@ -132,31 +139,33 @@
                     app:endIconMode="none"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/til_register_phone">
+                    app:layout_constraintTop_toBottomOf="@+id/til_register_phone">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:layout_width="match_parent"
-                        android:focusable="false"
-                        android:clickable="true"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="false"
                         android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_register_income"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Theme.FitFinance.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/base_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/til_register_birthdate">
+                    app:layout_constraintTop_toBottomOf="@+id/til_register_birthdate">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        style="@style/Theme.FitFinance.TextInputLayout.EditText.Register"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/txt_hint_income"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/white" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
@@ -164,21 +173,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/base_margin"
-                    android:backgroundTint="@color/fit_finance_card_bg"
+                    android:backgroundTint="@color/gray"
                     android:text="@string/txt_register"
-                    app:layout_constraintBottom_toTopOf="@id/tv_already_have_account"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_already_have_account"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/til_register_income" />
+                    app:layout_constraintTop_toBottomOf="@+id/til_register_income" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_already_have_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/txt_already_have_an_account"
-                    android:textSize="16sp"
                     android:layout_marginBottom="16dp"
-                    app:layout_constraintBottom_toTopOf="@id/btn_go_to_login"
+                    android:text="@string/txt_already_have_an_account"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_go_to_login"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -187,11 +198,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/base_margin"
+                    android:backgroundTint="@color/black"
                     android:text="@string/txt_login"
+                    android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
-
+                    app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

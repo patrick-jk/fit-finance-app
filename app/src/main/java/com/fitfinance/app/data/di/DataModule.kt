@@ -17,7 +17,6 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.time.Duration
 
 object DataModule {
     private const val OK_HTTP = "OkHttp"
@@ -39,8 +38,6 @@ object DataModule {
 
                 OkHttpClient.Builder()
                     .addInterceptor(interceptor)
-                    .callTimeout(Duration.ofSeconds(10))
-                    .connectTimeout(Duration.ofSeconds(10))
                     .build()
             }
             single {

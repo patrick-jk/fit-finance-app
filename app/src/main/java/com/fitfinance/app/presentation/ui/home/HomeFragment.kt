@@ -14,8 +14,8 @@ import com.fitfinance.app.presentation.ui.home.chart.HomeChartFragment
 import com.fitfinance.app.presentation.ui.home.homesummary.HomeSummaryFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.getProgressDialog
+import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {

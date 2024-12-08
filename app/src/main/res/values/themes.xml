@@ -4,19 +4,54 @@
         <!-- Customize your light theme here. -->
         <item name="colorSecondaryContainer">@color/colorSecondary</item>
         <item name="colorPrimary">@color/bg_navbar</item>
+        <item name="android:navigationBarColor">@color/bg_navbar</item>
     </style>
 
     <style name="text_inputwhite" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxBackgroundMode">outline</item>
-        <item name="boxCornerRadiusTopStart">16dp</item>
-        <item name="boxCornerRadiusTopEnd">16dp</item>
-        <item name="boxCornerRadiusBottomStart">16dp</item>
-        <item name="boxCornerRadiusBottomEnd">16dp</item>
+        <item name="android:textColorHint">@color/gray</item>
         <item name="boxBackgroundColor">@color/white</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxCornerRadiusBottomEnd">16dp</item>
+        <item name="boxCornerRadiusBottomStart">16dp</item>
+        <item name="boxCornerRadiusTopEnd">16dp</item>
+        <item name="boxCornerRadiusTopStart">16dp</item>
         <item name="boxStrokeColor">@color/white</item>
+        <item name="errorIconTint">@color/expense</item>
+        <item name="errorTextColor">@color/expense</item>
+        <item name="hintTextColor">@color/gray</item>
+        <item name="passwordToggleTint">@color/gray</item>
+        <item name="cursorColor">@color/gray</item>
     </style>
 
-    <style name="Theme.FitFinance" parent="Base.Theme.FitFinance" />
+    <style name="Theme.FitFinance.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">@color/white</item>
+        <item name="boxStrokeColor">@color/til_stroke_color</item>
+        <item name="boxStrokeErrorColor">@color/expense</item>
+        <item name="cursorColor">@color/white</item>
+        <item name="errorIconTint">@color/expense</item>
+        <item name="hintTextColor">@color/white</item>
+        <item name="passwordToggleTint">@color/white</item>
+    </style>
+
+    <style name="Theme.FitFinance.TextInputLayout.EditText" />
+    <style name="Theme.FitFinance" />
+    <style name="Theme" />
+
+    <style name="Theme.FitFinance.TextInputLayout.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="android:textColorHint">@color/white</item>
+        <item name="boxStrokeColor">@color/til_stroke_color</item>
+        <item name="boxStrokeErrorColor">@color/expense</item>
+        <item name="errorIconTint">@color/expense</item>
+        <item name="hintTextColor">@color/white</item>
+    </style>
+
+    <style name="Theme.FitFinance.TextInputLayout.EditText.Login">
+        <item name="android:textColor">@color/gray</item>
+    </style>
+
+    <style name="Theme.FitFinance.TextInputLayout.EditText.Register">
+        <item name="android:textColor">@color/white</item>
+    </style>
 
     <style name="Home.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="android:background">@drawable/bg_overview_card</item>

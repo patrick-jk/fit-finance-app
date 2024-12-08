@@ -3,24 +3,19 @@ package com.fitfinance.app.presentation.ui.investmentdashboard
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuProvider
-import androidx.fragment.app.Fragment
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.DialogFilterInvestmentListCustomBinding
 import com.fitfinance.app.databinding.FragmentInvestmentDashboardBinding
 import com.fitfinance.app.domain.model.InvestmentType
 import com.fitfinance.app.domain.response.InvestmentGetResponse
 import com.fitfinance.app.presentation.statepattern.State
+import com.fitfinance.app.presentation.ui.adapter.investment.InvestmentAdapter
 import com.fitfinance.app.presentation.ui.financedashboard.FinanceDashboardFragment
-import com.fitfinance.app.presentation.ui.investmentdashboard.adapter.InvestmentAdapter
 import com.fitfinance.app.presentation.ui.investmentdetails.InvestmentDetailsFragment
+import com.fitfinance.app.util.BaseDashboardFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
 import com.fitfinance.app.util.getProgressDialog
@@ -29,7 +24,7 @@ import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.scrollToItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
+class InvestmentDashboardFragment : BaseDashboardFragment() {
     private var _binding: FragmentInvestmentDashboardBinding? = null
     private val binding get() = _binding!!
 
@@ -51,8 +46,7 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private var progressDialog: AlertDialog? = null
-    private lateinit var menuProvider: MenuProvider
-
+    override val filterListFunction: () -> Unit = { filterInvestments() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,12 +56,13 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
         _binding = FragmentInvestmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        val userToken = sharedPreferences.getString(getString(R.string.pref_user_token), "")!!
+
         requireActivity().supportFragmentManager.setFragmentResultListener(UPDATE_INVESTMENT_LIST, viewLifecycleOwner) { _, _ ->
-            viewModel.getInvestmentsByUserId(sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
+            viewModel.getInvestmentsByUserId(userToken)
         }
 
-        val sharedPreferences = requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-        sharedPreferences.getString(getString(R.string.pref_user_token), "")?.let {
+        userToken.let {
             viewModel.getInvestmentsByUserId(it)
         }
 
@@ -90,30 +85,7 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun setupMenuItems() {
-        menuProvider = object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.fragment_dashboard_menu, menu)
-                if (menu.findItem(R.id.menu_action_search) != null) {
-                    val searchItem = menu.findItem(R.id.menu_action_search)
-                    val searchView = searchItem.actionView as SearchView
-                    searchView.setOnQueryTextListener(this@InvestmentDashboardFragment)
-                }
-                if (menu.findItem(R.id.menu_action_filter) != null) {
-                    val filterItem = menu.findItem(R.id.menu_action_filter)
-                    filterItem.setOnMenuItemClickListener {
-                        filterInvestments()
-                        true
-                    }
-                }
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = true
-        }
-        requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner)
-    }
-
-    fun filterInvestments() {
+    private fun filterInvestments() {
         val dialogView = DialogFilterInvestmentListCustomBinding.inflate(LayoutInflater.from(requireContext()), null, false)
 
         dialogView.cbFilterInvestmentByNameAsc.isChecked = isAscending
@@ -253,7 +225,7 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        requireActivity().removeMenuProvider(menuProvider)
+        requireActivity().removeMenuProvider(super.menuProvider)
         _binding = null
     }
 
@@ -261,6 +233,6 @@ class InvestmentDashboardFragment : Fragment(), SearchView.OnQueryTextListener {
         const val UPDATE_INVESTMENT_LIST = "updateInvestmentList"
         const val EXECUTE_ITEM_CLICK = "executeClick"
 
-        fun newInstance() = FinanceDashboardFragment()
+        fun newInstance() = InvestmentDashboardFragment()
     }
 }

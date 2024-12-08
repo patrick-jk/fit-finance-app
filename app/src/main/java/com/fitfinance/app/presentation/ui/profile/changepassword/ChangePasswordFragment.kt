@@ -10,6 +10,7 @@ import com.fitfinance.app.R
 import com.fitfinance.app.databinding.FragmentChangePasswordBinding
 import com.fitfinance.app.domain.request.ChangePasswordRequest
 import com.fitfinance.app.presentation.statepattern.State
+import com.fitfinance.app.util.ClearErrorTextWatcher
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.ValidateInput
 import com.fitfinance.app.util.createDialog
@@ -38,6 +39,10 @@ class ChangePasswordFragment : BottomSheetDialogFragment() {
 
     private fun setupUi() {
         binding.apply {
+            tilCurrentPassword.editText?.addTextChangedListener(ClearErrorTextWatcher(tilCurrentPassword))
+            tilNewPassword.editText?.addTextChangedListener(ClearErrorTextWatcher(tilNewPassword))
+            tilNewPasswordConfirmation.editText?.addTextChangedListener(ClearErrorTextWatcher(tilNewPasswordConfirmation))
+
             btnChangePassword.setOnClickListener {
                 if (!validateFields()) {
                     return@setOnClickListener
@@ -67,11 +72,12 @@ class ChangePasswordFragment : BottomSheetDialogFragment() {
 
     private fun validateFields(): Boolean {
         val inputValidator = ValidateInput(requireContext())
+        val isCurrentPasswordValid = inputValidator.validateInputText(binding.tilCurrentPassword) && inputValidator.validatePassword(binding.tilCurrentPassword)
         val isNewPasswordValid = inputValidator.validateInputText(binding.tilNewPassword) && inputValidator.validatePassword(binding.tilNewPassword)
         val isNewPasswordConfirmationValid =
             inputValidator.validateInputText(binding.tilNewPasswordConfirmation) && inputValidator.validatePassword(binding.tilNewPasswordConfirmation)
 
-        return isNewPasswordValid && isNewPasswordConfirmationValid && (binding.tilNewPassword.text == binding.tilNewPasswordConfirmation.text)
+        return isCurrentPasswordValid && isNewPasswordValid && isNewPasswordConfirmationValid && (binding.tilNewPassword.text == binding.tilNewPasswordConfirmation.text)
     }
 
     override fun onStart() {

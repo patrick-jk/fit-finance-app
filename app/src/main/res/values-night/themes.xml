@@ -4,6 +4,16 @@
         <!-- Customize your dark theme here. -->
         <item name="colorSurfaceContainer">@color/fit_finance_card_bg</item>
         <item name="popupMenuBackground">@drawable/bg_menu</item>
-        <item name="colorPrimaryDark">@color/bg_navbar</item>
+        <item name="colorPrimaryDark">@color/fit_finance_card_bg</item>
+        <item name="android:navigationBarColor">@color/bg_navbar</item>
+    </style>
+
+    <style name="Theme.FitFinance.TextInputLayout">
+        <item name="android:textColorHint">@color/white</item>
+        <item name="boxStrokeColor">@color/til_stroke_color</item>
+        <item name="boxStrokeErrorColor">@color/expense</item>
+        <item name="cursorColor">@color/white</item>
+        <item name="errorIconTint">@color/expense</item>
+        <item name="hintTextColor">@color/white</item>
     </style>
 </resources>

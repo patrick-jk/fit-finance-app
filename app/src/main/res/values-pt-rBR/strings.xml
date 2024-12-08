@@ -123,5 +123,7 @@
     <string name="txt_password_required">deve ter no minímo 8 caracteres, incluir letras maiúsculas, minúsculas, e números</string>
     <string name="txt_cpf_required">Formato de %1$s inválido (exemplo, 123.456.789–00)</string>
     <string name="txt_phone_required">Formato de %1$s inválido (exemplo, (12) 91234–5978)</string>
+    <string name="txt_item_image">Imagem do item</string>
+    <string name="txt_loading">Carregando…</string>
 
 </resources>

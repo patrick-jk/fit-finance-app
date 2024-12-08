@@ -12,11 +12,12 @@ import com.fitfinance.app.presentation.MainActivity
 import com.fitfinance.app.presentation.statepattern.State
 import com.fitfinance.app.presentation.ui.register.RegisterActivity
 import com.fitfinance.app.presentation.ui.register.RegisterActivity.Companion.EXTRA_USER_EMAIL
+import com.fitfinance.app.util.ClearErrorTextWatcher
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.ValidateInput
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.getProgressDialog
+import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.isInternetAvailable
 import com.fitfinance.app.util.text
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -40,6 +41,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupUi() {
         binding.apply {
+            tilEmail.editText?.addTextChangedListener(ClearErrorTextWatcher(tilEmail))
+            tilPassword.editText?.addTextChangedListener(ClearErrorTextWatcher(tilPassword))
+
             if (intent?.hasExtra(EXTRA_USER_EMAIL) == true) {
                 tilEmail.text = intent?.getStringExtra(EXTRA_USER_EMAIL).toString()
             }

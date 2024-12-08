@@ -18,13 +18,14 @@ import com.fitfinance.app.domain.request.FinancePostRequest
 import com.fitfinance.app.domain.request.FinancePutRequest
 import com.fitfinance.app.domain.response.FinanceGetResponse
 import com.fitfinance.app.presentation.statepattern.State
+import com.fitfinance.app.util.ClearErrorTextWatcher
 import com.fitfinance.app.util.CurrencyTextWatcher
 import com.fitfinance.app.util.DatePickerFragment
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.ValidateInput
 import com.fitfinance.app.util.createDialog
-import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.getProgressDialog
+import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.removeCurrencyFormatting
 import com.fitfinance.app.util.text
@@ -83,26 +84,32 @@ class FinanceDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnD
     }
 
     private fun setupUi() {
-        _binding?.tilFinanceStartDate?.editText?.setOnClickListener {
-            it.hideSoftKeyboard()
-            try {
-                val date = LocalDate.parse(binding.tilFinanceStartDate.text, dateTimeFormatterBrFormat)
-                showDatePickerDialog("StartDate", date)
-            } catch (e: DateTimeParseException) {
-                showDatePickerDialog("StartDate")
+        binding.apply {
+            tilFinanceStartDate.editText?.setOnClickListener {
+                it.hideSoftKeyboard()
+                try {
+                    val date = LocalDate.parse(binding.tilFinanceStartDate.text, dateTimeFormatterBrFormat)
+                    showDatePickerDialog("StartDate", date)
+                } catch (e: DateTimeParseException) {
+                    showDatePickerDialog("StartDate")
+                }
             }
-        }
-        _binding?.tilFinanceEndDate?.editText?.setOnClickListener {
-            it.hideSoftKeyboard()
-            try {
-                val date = LocalDate.parse(binding.tilFinanceEndDate.text, dateTimeFormatterBrFormat)
-                showDatePickerDialog("EndDate", date)
-            } catch (e: DateTimeParseException) {
-                showDatePickerDialog("EndDate")
+            tilFinanceEndDate.editText?.setOnClickListener {
+                it.hideSoftKeyboard()
+                try {
+                    val date = LocalDate.parse(binding.tilFinanceEndDate.text, dateTimeFormatterBrFormat)
+                    showDatePickerDialog("EndDate", date)
+                } catch (e: DateTimeParseException) {
+                    showDatePickerDialog("EndDate")
+                }
             }
-        }
 
-        binding.tilFinanceValue.editText?.addTextChangedListener(CurrencyTextWatcher(binding.tilFinanceValue))
+            tilFinanceName.editText?.addTextChangedListener(ClearErrorTextWatcher(tilFinanceName))
+            tilFinanceDescription.editText?.addTextChangedListener(ClearErrorTextWatcher(tilFinanceDescription))
+            tilFinanceStartDate.editText?.addTextChangedListener(ClearErrorTextWatcher(tilFinanceStartDate))
+            tilFinanceEndDate.editText?.addTextChangedListener(ClearErrorTextWatcher(tilFinanceEndDate))
+            tilFinanceValue.editText?.addTextChangedListener(CurrencyTextWatcher(binding.tilFinanceValue))
+        }
 
         if (arguments == null) {
             binding.btnSaveFinance.setOnClickListener {

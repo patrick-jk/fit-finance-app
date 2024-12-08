@@ -53,11 +53,11 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_title">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        style="@style/Theme.FitFinance.TextInputLayout.EditText.Login"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/txt_hint_email"
-                        android:inputType="textEmailAddress"
-                        android:textCursorDrawable="@drawable/cursor_color" />
+                        android:inputType="textEmailAddress" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,12 +73,12 @@
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        style="@style/Theme.FitFinance.TextInputLayout.EditText.Login"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/txt_hint_password"
                         android:inputType="textPassword"
-                        android:padding="18dp"
-                        android:textCursorDrawable="@drawable/cursor_color" />
+                        android:padding="18dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -100,9 +100,10 @@
                     android:layout_margin="@dimen/base_margin"
                     android:text="@string/txt_remember_me"
                     android:textColor="@color/white"
+                    app:buttonTint="@color/fit_finance_card_bg"
+                    app:buttonIconTint="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/til_password" />
-
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_login"
@@ -110,7 +111,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="16dp"
+                    android:backgroundTint="@color/fit_finance_card_bg"
                     android:text="@string/txt_login"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toStartOf="@+id/btn_register"
                     app:layout_constraintStart_toStartOf="parent"
@@ -124,12 +127,11 @@
                     android:layout_marginBottom="16dp"
                     android:backgroundTint="@color/text_box"
                     android:text="@string/txt_register"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/btn_login"
                     app:layout_constraintTop_toBottomOf="@+id/cb_remember_me" />
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
