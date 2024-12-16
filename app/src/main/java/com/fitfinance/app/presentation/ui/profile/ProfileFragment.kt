@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.FragmentProfileBinding
 import com.fitfinance.app.domain.response.UserGetResponse
@@ -20,13 +21,13 @@ import com.fitfinance.app.util.formatToPhone
 import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.toLocalDateBrFormat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : BottomSheetDialogFragment() {
-    private var _binding: FragmentProfileBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var _binding: FragmentProfileBinding
 
-    private val viewModel by viewModel<ProfileViewModel>()
+    private val viewModel: ProfileViewModel by viewModels()
 
     private val sharedPreferences by lazy {
         requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
@@ -36,7 +37,7 @@ class ProfileFragment : BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        val root = binding.root
+        val root = _binding.root
 
         requireActivity().supportFragmentManager.setFragmentResultListener("updateUserInfo", viewLifecycleOwner) { _, _ ->
             viewModel.getUserInfo(sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
@@ -47,7 +48,7 @@ class ProfileFragment : BottomSheetDialogFragment() {
     }
 
     private fun setupUi(info: UserGetResponse) {
-        binding.apply {
+        _binding.apply {
             tvUserName.text = info.name
             tvUserCpf.text = formatToCpf(info.cpf)
             tvUserEmail.text = info.email
@@ -93,7 +94,7 @@ class ProfileFragment : BottomSheetDialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        _binding.root.removeAllViews()
     }
 
     companion object {

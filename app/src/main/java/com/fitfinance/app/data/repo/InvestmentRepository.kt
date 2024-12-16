@@ -11,8 +11,11 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class InvestmentRepository(private val apiService: ApiService, private val investmentDao: InvestmentDao) {
+class InvestmentRepository @Inject constructor(
+    private val apiService: ApiService, private val investmentDao: InvestmentDao
+) {
     private var ioDispatcher = Dispatchers.IO
 
     fun getInvestmentsByUserId(apiToken: String) = flow {

@@ -7,8 +7,9 @@ import com.fitfinance.app.util.toBearerToken
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class AuthRepository(private val apiService: ApiService) {
+class AuthRepository @Inject constructor(private val apiService: ApiService) {
     fun registerUser(registerRequest: RegisterRequest) = flow {
         try {
             val response = suspendCancellableCoroutine {

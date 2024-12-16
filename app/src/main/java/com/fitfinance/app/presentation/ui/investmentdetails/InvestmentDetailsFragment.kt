@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
+import androidx.fragment.app.viewModels
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.FragmentInvestmentDetailsBinding
 import com.fitfinance.app.domain.model.InvestmentType
@@ -30,19 +31,19 @@ import com.fitfinance.app.util.removeCurrencyFormatting
 import com.fitfinance.app.util.text
 import com.fitfinance.app.util.toLocalDateApiFormat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.Locale
 
+@AndroidEntryPoint
 class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetListener {
     private val brazilianDateFormat = "dd/MM/yyyy"
 
-    private var _binding: FragmentInvestmentDetailsBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var _binding: FragmentInvestmentDetailsBinding
 
-    private val viewModel by viewModel<InvestmentDetailsViewModel>()
+    private val viewModel: InvestmentDetailsViewModel by viewModels()
 
     private lateinit var investment: InvestmentGetResponse
     private lateinit var lastDatePickerTag: String
@@ -65,30 +66,32 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentInvestmentDetailsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val root: View = _binding.root
 
         setupDropDown()
         setupUi()
 
         arguments?.let {
-            binding.tilInvestmentName.text = investment.name
-            binding.tilInvestmentCost.text = String.format(Locale.US, "%.2f", investment.price)
-            binding.tilInvestmentQuantity.text = investment.quantity.toString()
-            binding.tilInvestmentStartDate.text = DateTimeFormatter.ofPattern(brazilianDateFormat).format(dateTimeFormatterApiFormat.parse(investment.startDate))
-            if (investment.endDate != null) binding.tilInvestmentEndDate.text =
-                DateTimeFormatter.ofPattern(brazilianDateFormat).format(dateTimeFormatterApiFormat.parse(investment.endDate))
-            binding.actInvestmentType.setText(convertInvestmentTypeToUi(investment.type.name), false)
+            _binding.apply {
+                tilInvestmentName.text = investment.name
+                tilInvestmentCost.text = String.format(Locale.US, "%.2f", investment.price)
+                tilInvestmentQuantity.text = investment.quantity.toString()
+                tilInvestmentStartDate.text = DateTimeFormatter.ofPattern(brazilianDateFormat).format(dateTimeFormatterApiFormat.parse(investment.startDate))
+                if (investment.endDate != null) tilInvestmentEndDate.text =
+                    DateTimeFormatter.ofPattern(brazilianDateFormat).format(dateTimeFormatterApiFormat.parse(investment.endDate))
+                actInvestmentType.setText(convertInvestmentTypeToUi(investment.type.name), false)
+            }
         }
 
         return root
     }
 
     private fun setupUi() {
-        binding.apply {
+        _binding.apply {
             tilInvestmentStartDate.editText?.setOnClickListener {
                 it.hideSoftKeyboard()
                 try {
-                    val date = LocalDate.parse(binding.tilInvestmentStartDate.text, dateTimeFormatterBrFormat)
+                    val date = LocalDate.parse(tilInvestmentStartDate.text, dateTimeFormatterBrFormat)
                     showDatePickerDialog("StartDate", date)
                 } catch (e: DateTimeParseException) {
                     showDatePickerDialog("StartDate")
@@ -97,7 +100,7 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
             tilInvestmentEndDate.editText?.setOnClickListener {
                 it.hideSoftKeyboard()
                 try {
-                    val date = LocalDate.parse(binding.tilInvestmentEndDate.text, dateTimeFormatterBrFormat)
+                    val date = LocalDate.parse(tilInvestmentEndDate.text, dateTimeFormatterBrFormat)
                     showDatePickerDialog("EndDate", date)
                 } catch (e: DateTimeParseException) {
                     showDatePickerDialog("EndDate")
@@ -117,22 +120,22 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
                 }
                 val investmentRequest: Any = if (arguments == null) {
                     InvestmentPostRequest(
-                        name = binding.tilInvestmentName.text,
-                        price = removeCurrencyFormatting(binding.tilInvestmentCost.text).toDouble(),
-                        startDate = binding.tilInvestmentStartDate.text.toLocalDateApiFormat(),
-                        endDate = binding.tilInvestmentEndDate.text.toLocalDateApiFormat(),
-                        quantity = binding.tilInvestmentQuantity.text.toInt(),
-                        type = convertInvestmentTypeToData(binding.actInvestmentType.text.toString())
+                        name = tilInvestmentName.text,
+                        price = removeCurrencyFormatting(tilInvestmentCost.text).toDouble(),
+                        startDate = tilInvestmentStartDate.text.toLocalDateApiFormat(),
+                        endDate = tilInvestmentEndDate.text.toLocalDateApiFormat(),
+                        quantity = tilInvestmentQuantity.text.toInt(),
+                        type = convertInvestmentTypeToData(actInvestmentType.text.toString())
                     )
                 } else {
                     InvestmentPutRequest(
                         id = investment.id,
-                        name = binding.tilInvestmentName.text,
-                        price = removeCurrencyFormatting(binding.tilInvestmentCost.text).toDouble(),
-                        startDate = binding.tilInvestmentStartDate.text.toLocalDateApiFormat(),
-                        endDate = binding.tilInvestmentEndDate.text.toLocalDateApiFormat(),
-                        quantity = binding.tilInvestmentQuantity.text.toInt(),
-                        type = convertInvestmentTypeToData(binding.actInvestmentType.text.toString()),
+                        name = tilInvestmentName.text,
+                        price = removeCurrencyFormatting(tilInvestmentCost.text).toDouble(),
+                        startDate = tilInvestmentStartDate.text.toLocalDateApiFormat(),
+                        endDate = tilInvestmentEndDate.text.toLocalDateApiFormat(),
+                        quantity = tilInvestmentQuantity.text.toInt(),
+                        type = convertInvestmentTypeToData(actInvestmentType.text.toString()),
                     )
                 }
                 createOrUpdateInvestment(investmentRequest, sharedPreferences.getString(getString(R.string.pref_user_token), "")!!)
@@ -150,11 +153,11 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
 
     private fun validateFields(): Boolean {
         val inputValidator = ValidateInput(requireContext())
-        val isNameValid = inputValidator.validateInputText(binding.tilInvestmentName)
-        val isValueValid = inputValidator.validateInputText(binding.tilInvestmentCost)
-        val isQuantityValid = inputValidator.validateInputText(binding.tilInvestmentQuantity)
-        val isStartDateValid = inputValidator.validateInputText(binding.tilInvestmentStartDate)
-        val isTypeValid = inputValidator.validateInputText(binding.tilInvestmentType)
+        val isNameValid = inputValidator.validateInputText(_binding.tilInvestmentName)
+        val isValueValid = inputValidator.validateInputText(_binding.tilInvestmentCost)
+        val isQuantityValid = inputValidator.validateInputText(_binding.tilInvestmentQuantity)
+        val isStartDateValid = inputValidator.validateInputText(_binding.tilInvestmentStartDate)
+        val isTypeValid = inputValidator.validateInputText(_binding.tilInvestmentType)
 
         return isNameValid && isValueValid && isQuantityValid && isStartDateValid && isTypeValid
     }
@@ -229,21 +232,21 @@ class InvestmentDetailsFragment : BottomSheetDialogFragment(), DatePickerDialog.
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        _binding.root.removeAllViews()
     }
 
     private fun setupDropDown() {
         val financeTypes = resources.getStringArray(R.array.investment_types)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, financeTypes)
-        _binding?.actInvestmentType?.setAdapter(arrayAdapter)
+        _binding.actInvestmentType.setAdapter(arrayAdapter)
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         val monthString = if (month < 9) "0${month + 1}" else "${month + 1}"
         val dayString = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
         val selectedDate = "$dayString/$monthString/$year"
-        if (lastDatePickerTag == "StartDate") binding.tilInvestmentStartDate.text = selectedDate
-        else binding.tilInvestmentEndDate.text = selectedDate
+        if (lastDatePickerTag == "StartDate") _binding.tilInvestmentStartDate.text = selectedDate
+        else _binding.tilInvestmentEndDate.text = selectedDate
     }
 
     private fun showDatePickerDialog(tag: String, actualDate: LocalDate = LocalDate.now()) {

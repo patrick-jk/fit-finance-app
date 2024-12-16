@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.fitfinance.app.R
@@ -30,12 +31,13 @@ import com.fitfinance.app.util.removeCurrencyFormatting
 import com.fitfinance.app.util.removePhoneFormatting
 import com.fitfinance.app.util.text
 import com.fitfinance.app.util.toLocalDateApiFormat
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
+@AndroidEntryPoint
 class RegisterActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     private val binding by lazy { ActivityRegisterBinding.inflate(LayoutInflater.from(this)) }
-    private val viewModel by viewModel<RegisterViewModel>()
+    private val viewModel: RegisterViewModel by viewModels()
     private var progressDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -8,11 +8,14 @@ import com.fitfinance.app.domain.request.RegisterRequest
 import com.fitfinance.app.domain.response.UserPostResponse
 import com.fitfinance.app.domain.usecase.auth.RegisterUserUseCase
 import com.fitfinance.app.presentation.statepattern.State
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RegisterViewModel(private val registerUserUseCase: RegisterUserUseCase) : ViewModel() {
+@HiltViewModel
+class RegisterViewModel @Inject constructor(private val registerUserUseCase: RegisterUserUseCase) : ViewModel() {
     private val _registerState = MutableLiveData<State<UserPostResponse>>()
     val registerState: LiveData<State<UserPostResponse>> = _registerState
 

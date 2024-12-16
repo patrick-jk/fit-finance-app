@@ -10,11 +10,14 @@ import com.fitfinance.app.domain.response.InvestmentPostResponse
 import com.fitfinance.app.domain.usecase.investments.CreateInvestmentUseCase
 import com.fitfinance.app.domain.usecase.investments.UpdateInvestmentUseCase
 import com.fitfinance.app.presentation.statepattern.State
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class InvestmentDetailsViewModel(
+@HiltViewModel
+class InvestmentDetailsViewModel @Inject constructor(
     private val createInvestmentUseCase: CreateInvestmentUseCase,
     private val updateInvestmentUseCase: UpdateInvestmentUseCase
 ) : ViewModel() {

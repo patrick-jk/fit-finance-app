@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.fitfinance.app.databinding.ActivityPhotoGalleryBinding
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PhotoGalleryActivity : AppCompatActivity() {
     private val binding by lazy { ActivityPhotoGalleryBinding.inflate(layoutInflater) }
 

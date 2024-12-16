@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.DatePicker
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
+import androidx.fragment.app.viewModels
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.FragmentEditUserProfileBinding
 import com.fitfinance.app.domain.request.UserPutRequest
@@ -34,14 +35,14 @@ import com.fitfinance.app.util.text
 import com.fitfinance.app.util.toLocalDateApiFormat
 import com.fitfinance.app.util.toLocalDateBrFormat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
+@AndroidEntryPoint
 class EditUserProfileFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetListener {
-    private var _binding: FragmentEditUserProfileBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var _binding: FragmentEditUserProfileBinding
 
-    private val viewModel by viewModel<EditUserProfileViewModel>()
+    private val viewModel: EditUserProfileViewModel by viewModels()
 
     private val user by lazy {
         arguments?.let {
@@ -55,14 +56,14 @@ class EditUserProfileFragment : BottomSheetDialogFragment(), DatePickerDialog.On
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentEditUserProfileBinding.inflate(inflater, container, false)
-        val root = binding.root
+        val root = _binding.root
 
         setupUi()
         return root
     }
 
     private fun setupUi() {
-        binding.apply {
+        _binding.apply {
             user?.let {
                 tilName.text = it.name
                 tilCpf.text = formatToCpf(it.cpf)
@@ -113,12 +114,12 @@ class EditUserProfileFragment : BottomSheetDialogFragment(), DatePickerDialog.On
 
     private fun validateFields(): Boolean {
         val inputValidator = ValidateInput(requireContext())
-        val isNameValid = inputValidator.validateInputText(binding.tilName)
-        val isCpfValid = inputValidator.validateInputText(binding.tilCpf) && inputValidator.validateCpf(binding.tilCpf)
-        val isEmailValid = inputValidator.validateInputText(binding.tilEmail) && inputValidator.validateEmail(binding.tilEmail)
-        val isPhoneValid = inputValidator.validateInputText(binding.tilPhone) && inputValidator.validatePhone(binding.tilPhone)
-        val isBirthdateValid = inputValidator.validateInputText(binding.tilBirthdate)
-        val isIncomeValid = inputValidator.validateInputText(binding.tilIncome)
+        val isNameValid = inputValidator.validateInputText(_binding.tilName)
+        val isCpfValid = inputValidator.validateInputText(_binding.tilCpf) && inputValidator.validateCpf(_binding.tilCpf)
+        val isEmailValid = inputValidator.validateInputText(_binding.tilEmail) && inputValidator.validateEmail(_binding.tilEmail)
+        val isPhoneValid = inputValidator.validateInputText(_binding.tilPhone) && inputValidator.validatePhone(_binding.tilPhone)
+        val isBirthdateValid = inputValidator.validateInputText(_binding.tilBirthdate)
+        val isIncomeValid = inputValidator.validateInputText(_binding.tilIncome)
 
         return isNameValid && isCpfValid && isEmailValid && isPhoneValid && isBirthdateValid && isIncomeValid
     }
@@ -133,7 +134,7 @@ class EditUserProfileFragment : BottomSheetDialogFragment(), DatePickerDialog.On
         val monthString = if (month < 9) "0${month + 1}" else "${month + 1}"
         val dayString = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
         val selectedDate = "$dayString/$monthString/$year"
-        binding.tilBirthdate.text = selectedDate
+        _binding.tilBirthdate.text = selectedDate
     }
 
     override fun onStart() {

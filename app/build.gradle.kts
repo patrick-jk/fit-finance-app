@@ -4,6 +4,7 @@ plugins {
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -39,15 +40,16 @@ android {
 }
 
 dependencies {
-    implementation("androidx.activity:activity:1.9.3")
     val retrofitVersion = "2.9.0"
     val lifecycleVersion = "2.8.7"
     val roomVersion = "2.6.1"
-    val navigationVersion = "2.8.4"
+    val navigationVersion = "2.8.5"
     val anyChartVersion = "1.1.5"
     val picassoVersion = "2.8"
+    val daggerHiltVersion = "2.53.1"
 
     //Core
+    implementation("androidx.activity:activity-ktx:1.9.3")
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
@@ -56,9 +58,9 @@ dependencies {
     //AnyChart
     implementation("com.github.AnyChart:AnyChart-Android:$anyChartVersion")
 
-    //Koin
-    implementation(platform("io.insert-koin:koin-bom:3.5.6"))
-    implementation("io.insert-koin:koin-android")
+    //Dagger Hilt
+    implementation("com.google.dagger:hilt-android:$daggerHiltVersion")
+    ksp("com.google.dagger:hilt-android-compiler:$daggerHiltVersion")
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")

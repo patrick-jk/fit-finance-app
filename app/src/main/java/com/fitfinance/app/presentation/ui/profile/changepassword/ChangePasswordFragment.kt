@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.FragmentChangePasswordBinding
 import com.fitfinance.app.domain.request.ChangePasswordRequest
@@ -16,13 +17,13 @@ import com.fitfinance.app.util.ValidateInput
 import com.fitfinance.app.util.createDialog
 import com.fitfinance.app.util.text
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChangePasswordFragment : BottomSheetDialogFragment() {
-    private var _binding: FragmentChangePasswordBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var _binding: FragmentChangePasswordBinding
 
-    private val viewModel by viewModel<ChangePasswordViewModel>()
+    private val viewModel: ChangePasswordViewModel by viewModels()
 
     private val sharedPreferences by lazy {
         requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
@@ -31,14 +32,14 @@ class ChangePasswordFragment : BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentChangePasswordBinding.inflate(inflater, container, false)
-        val root = binding.root
+        val root = _binding.root
 
         setupUi()
         return root
     }
 
     private fun setupUi() {
-        binding.apply {
+        _binding.apply {
             tilCurrentPassword.editText?.addTextChangedListener(ClearErrorTextWatcher(tilCurrentPassword))
             tilNewPassword.editText?.addTextChangedListener(ClearErrorTextWatcher(tilNewPassword))
             tilNewPasswordConfirmation.editText?.addTextChangedListener(ClearErrorTextWatcher(tilNewPasswordConfirmation))
@@ -55,9 +56,9 @@ class ChangePasswordFragment : BottomSheetDialogFragment() {
                         viewModel.updatePassword(
                             sharedPreferences.getString(resources.getString(R.string.pref_user_token), "")!!,
                             ChangePasswordRequest(
-                                binding.tilCurrentPassword.text,
-                                binding.tilNewPassword.text,
-                                binding.tilNewPasswordConfirmation.text
+                                tilCurrentPassword.text,
+                                tilNewPassword.text,
+                                tilNewPasswordConfirmation.text
                             )
                         )
                     }
@@ -72,12 +73,12 @@ class ChangePasswordFragment : BottomSheetDialogFragment() {
 
     private fun validateFields(): Boolean {
         val inputValidator = ValidateInput(requireContext())
-        val isCurrentPasswordValid = inputValidator.validateInputText(binding.tilCurrentPassword) && inputValidator.validatePassword(binding.tilCurrentPassword)
-        val isNewPasswordValid = inputValidator.validateInputText(binding.tilNewPassword) && inputValidator.validatePassword(binding.tilNewPassword)
+        val isCurrentPasswordValid = inputValidator.validateInputText(_binding.tilCurrentPassword) && inputValidator.validatePassword(_binding.tilCurrentPassword)
+        val isNewPasswordValid = inputValidator.validateInputText(_binding.tilNewPassword) && inputValidator.validatePassword(_binding.tilNewPassword)
         val isNewPasswordConfirmationValid =
-            inputValidator.validateInputText(binding.tilNewPasswordConfirmation) && inputValidator.validatePassword(binding.tilNewPasswordConfirmation)
+            inputValidator.validateInputText(_binding.tilNewPasswordConfirmation) && inputValidator.validatePassword(_binding.tilNewPasswordConfirmation)
 
-        return isCurrentPasswordValid && isNewPasswordValid && isNewPasswordConfirmationValid && (binding.tilNewPassword.text == binding.tilNewPasswordConfirmation.text)
+        return isCurrentPasswordValid && isNewPasswordValid && isNewPasswordConfirmationValid && (_binding.tilNewPassword.text == _binding.tilNewPasswordConfirmation.text)
     }
 
     override fun onStart() {

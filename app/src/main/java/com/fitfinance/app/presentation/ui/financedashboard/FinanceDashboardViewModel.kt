@@ -8,11 +8,14 @@ import com.fitfinance.app.domain.response.FinanceGetResponse
 import com.fitfinance.app.domain.usecase.finances.DeleteFinanceUseCase
 import com.fitfinance.app.domain.usecase.finances.GetFinancesByUserIdUseCase
 import com.fitfinance.app.presentation.statepattern.State
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FinanceDashboardViewModel(
+@HiltViewModel
+class FinanceDashboardViewModel @Inject constructor(
     private val getFinancesByUserIdUseCase: GetFinancesByUserIdUseCase,
     private val deleteFinanceUseCase: DeleteFinanceUseCase
 ) : ViewModel() {

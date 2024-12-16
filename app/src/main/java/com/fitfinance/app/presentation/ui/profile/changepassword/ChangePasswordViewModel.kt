@@ -7,11 +7,16 @@ import androidx.lifecycle.viewModelScope
 import com.fitfinance.app.domain.request.ChangePasswordRequest
 import com.fitfinance.app.domain.usecase.user.UpdatePasswordUseCase
 import com.fitfinance.app.presentation.statepattern.State
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ChangePasswordViewModel(private val updatePasswordUseCase: UpdatePasswordUseCase) : ViewModel() {
+@HiltViewModel
+class ChangePasswordViewModel @Inject constructor(
+    private val updatePasswordUseCase: UpdatePasswordUseCase
+) : ViewModel() {
     private val _changePasswordState = MutableLiveData<State<Boolean>>()
     val changePasswordState: LiveData<State<Boolean>> = _changePasswordState
 

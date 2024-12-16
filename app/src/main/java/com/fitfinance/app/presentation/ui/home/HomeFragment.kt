@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.FragmentHomeBinding
 import com.fitfinance.app.presentation.statepattern.State
@@ -16,14 +17,14 @@ import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.fitfinance.app.util.createDialog
 import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.getUserFriendlyErrorMessage
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var _binding: FragmentHomeBinding
 
-    private val viewModel by viewModel<HomeViewModel>()
+    private val viewModel: HomeViewModel by viewModels()
 
     private val sharedPreferences by lazy {
         requireActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
@@ -36,7 +37,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val root: View = _binding.root
 
         viewModel.getHomeData(sharedPreferences.getString(resources.getString(R.string.pref_user_token), "")!!)
         return root
@@ -77,6 +78,6 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        _binding.root.removeAllViews()
     }
 }

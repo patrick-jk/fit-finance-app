@@ -10,11 +10,14 @@ import com.fitfinance.app.domain.response.AuthenticationResponse
 import com.fitfinance.app.domain.usecase.auth.AuthenticateUserUseCase
 import com.fitfinance.app.domain.usecase.auth.RefreshTokenUseCase
 import com.fitfinance.app.presentation.statepattern.State
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val authenticateUserUseCase: AuthenticateUserUseCase,
     private val refreshTokenUseCase: RefreshTokenUseCase
 ) : ViewModel() {

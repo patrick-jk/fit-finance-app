@@ -15,6 +15,7 @@ import com.fitfinance.app.presentation.ui.adapter.ItemPositionProvider
 import com.fitfinance.app.presentation.ui.investmentdetails.InvestmentDetailsFragment
 import com.fitfinance.app.util.toLocalDateBrFormat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.internal.managers.ViewComponentManager.FragmentContextWrapper
 
 class InvestmentAdapter(
     deleteListener: (Long) -> Unit,
@@ -122,7 +123,7 @@ class InvestmentAdapter(
 
         private fun openInvestmentDetailsFragment(view: View, investment: InvestmentGetResponse) {
             val fragment = InvestmentDetailsFragment.newInstance(investment)
-            val fragmentManager = (view.context as AppCompatActivity).supportFragmentManager
+            val fragmentManager = ((view.context as FragmentContextWrapper).baseContext as AppCompatActivity).supportFragmentManager
             fragment.show(fragmentManager, "InvestmentDetailsFragment")
         }
     }

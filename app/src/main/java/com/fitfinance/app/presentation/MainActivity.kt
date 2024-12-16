@@ -23,7 +23,9 @@ import com.fitfinance.app.presentation.ui.profile.changepassword.ChangePasswordF
 import com.fitfinance.app.util.SHARED_PREF_NAME
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 

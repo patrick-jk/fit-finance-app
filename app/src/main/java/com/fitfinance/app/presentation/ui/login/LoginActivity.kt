@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.fitfinance.app.R
@@ -20,13 +21,14 @@ import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.isInternetAvailable
 import com.fitfinance.app.util.text
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
-    private val viewModel by viewModel<LoginViewModel>()
+    private val viewModel: LoginViewModel by viewModels()
     private val sharedPreferences by lazy { getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE) }
     private val dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
     private var progressDialog: AlertDialog? = null

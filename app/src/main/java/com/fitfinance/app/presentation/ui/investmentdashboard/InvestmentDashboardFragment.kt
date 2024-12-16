@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.DialogFilterInvestmentListCustomBinding
 import com.fitfinance.app.databinding.FragmentInvestmentDashboardBinding
@@ -22,13 +23,13 @@ import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.scrollToItem
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class InvestmentDashboardFragment : BaseDashboardFragment() {
-    private var _binding: FragmentInvestmentDashboardBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var _binding: FragmentInvestmentDashboardBinding
 
-    private val viewModel by viewModel<InvestmentDashboardViewModel>()
+    private val viewModel: InvestmentDashboardViewModel by viewModels()
 
     private val sharedPreferences by lazy { requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE) }
     private var investmentList: List<InvestmentGetResponse> = emptyList()
@@ -54,7 +55,7 @@ class InvestmentDashboardFragment : BaseDashboardFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentInvestmentDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val root: View = _binding.root
 
         val userToken = sharedPreferences.getString(getString(R.string.pref_user_token), "")!!
 
@@ -66,13 +67,13 @@ class InvestmentDashboardFragment : BaseDashboardFragment() {
             viewModel.getInvestmentsByUserId(it)
         }
 
-        binding.rvInvestmentList.adapter = investmentAdapter
+        _binding.rvInvestmentList.adapter = investmentAdapter
         setupUi()
         setupMenuItems()
 
         requireActivity().supportFragmentManager.setFragmentResultListener(EXECUTE_ITEM_CLICK, this) { _, _ ->
             arguments?.getString("itemId")?.let { args ->
-                binding.rvInvestmentList.scrollToItem(args, investmentAdapter)
+                _binding.rvInvestmentList.scrollToItem(args, investmentAdapter)
             }
         }
 
@@ -80,7 +81,7 @@ class InvestmentDashboardFragment : BaseDashboardFragment() {
     }
 
     private fun setupUi() {
-        binding.fabAddInvestment.setOnClickListener {
+        _binding.fabAddInvestment.setOnClickListener {
             InvestmentDetailsFragment.newInstance().show(parentFragmentManager, "InvestmentDetailsFragment")
         }
     }
@@ -142,7 +143,7 @@ class InvestmentDashboardFragment : BaseDashboardFragment() {
             }
         }
         investmentAdapter.submitList(filteredList)
-        binding.root.hideSoftKeyboard()
+        _binding.root.hideSoftKeyboard()
         return true
     }
 
@@ -226,7 +227,7 @@ class InvestmentDashboardFragment : BaseDashboardFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         requireActivity().removeMenuProvider(super.menuProvider)
-        _binding = null
+        _binding.root.removeAllViews()
     }
 
     companion object {

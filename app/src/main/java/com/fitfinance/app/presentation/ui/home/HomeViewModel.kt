@@ -7,11 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.fitfinance.app.domain.response.HomeSummaryResponse
 import com.fitfinance.app.domain.usecase.finances.GetUserSummaryUseCase
 import com.fitfinance.app.presentation.statepattern.State
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val homeSummaryUseCase: GetUserSummaryUseCase
 ) : ViewModel() {
     private val _homeSummary = MutableLiveData<State<HomeSummaryResponse>>()

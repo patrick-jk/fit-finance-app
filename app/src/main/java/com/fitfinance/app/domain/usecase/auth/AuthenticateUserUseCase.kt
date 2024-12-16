@@ -5,9 +5,12 @@ import com.fitfinance.app.domain.request.AuthenticationRequest
 import com.fitfinance.app.domain.response.AuthenticationResponse
 import com.fitfinance.app.util.UseCase
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class AuthenticateUserUseCase(private val authRepository: AuthRepository) : UseCase<AuthenticationRequest, AuthenticationResponse>() {
-    override suspend fun execute(param: AuthenticationRequest): Flow<AuthenticationResponse> {
+class AuthenticateUserUseCase @Inject constructor(
+    private val authRepository: AuthRepository
+) : UseCase<AuthenticationRequest, AuthenticationResponse>() {
+    override fun execute(param: AuthenticationRequest): Flow<AuthenticationResponse> {
         return authRepository.authenticateUser(param)
     }
 }

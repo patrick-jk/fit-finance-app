@@ -7,11 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.fitfinance.app.domain.request.UserPutRequest
 import com.fitfinance.app.domain.usecase.user.UpdateUserUseCase
 import com.fitfinance.app.presentation.statepattern.State
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditUserProfileViewModel(private val updateUserUseCase: UpdateUserUseCase) : ViewModel() {
+@HiltViewModel
+class EditUserProfileViewModel @Inject constructor(private val updateUserUseCase: UpdateUserUseCase) : ViewModel() {
     private val _editUserProfileState = MutableLiveData<State<Boolean>>()
     val editUserProfileState: LiveData<State<Boolean>> = _editUserProfileState
 

@@ -14,8 +14,7 @@ import com.fitfinance.app.presentation.ui.home.HomeFragmentDirections
 
 class HomeSummaryFragment : Fragment() {
 
-    private var _binding: FragmentHomeSummaryBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var _binding: FragmentHomeSummaryBinding
 
     private lateinit var homeSummaryResponse: HomeSummaryResponse
 
@@ -32,14 +31,14 @@ class HomeSummaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeSummaryBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val root: View = _binding.root
 
         setupUi(homeSummaryResponse)
         return root
     }
 
     private fun setupUi(homeSummaryResponse: HomeSummaryResponse) {
-        binding.apply {
+        _binding.apply {
             tvOverviewBiggestExpenseValue.text = resources.getString(R.string.txt_generic_decimal, homeSummaryResponse.biggestExpense.value)
             tvOverviewSmallestExpenseValue.text = resources.getString(R.string.txt_generic_decimal, homeSummaryResponse.smallestExpense.value)
             tvOverviewBiggestInvestmentValue.text = resources.getString(R.string.txt_generic_decimal, homeSummaryResponse.biggestInvestment.price)
@@ -72,7 +71,7 @@ class HomeSummaryFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        _binding.root.removeAllViews()
     }
 
     companion object {

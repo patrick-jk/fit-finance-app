@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
 import com.fitfinance.app.R
 import com.fitfinance.app.databinding.DialogFilterListCustomBinding
 import com.fitfinance.app.databinding.FragmentFinanceDashboardBinding
@@ -21,13 +22,13 @@ import com.fitfinance.app.util.getProgressDialog
 import com.fitfinance.app.util.getUserFriendlyErrorMessage
 import com.fitfinance.app.util.hideSoftKeyboard
 import com.fitfinance.app.util.scrollToItem
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FinanceDashboardFragment : BaseDashboardFragment() {
-    private var _binding: FragmentFinanceDashboardBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var _binding: FragmentFinanceDashboardBinding
 
-    private val viewModel by viewModel<FinanceDashboardViewModel>()
+    private val viewModel: FinanceDashboardViewModel by viewModels()
 
     private val sharedPreferences by lazy { requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE) }
     private lateinit var userToken: String
@@ -54,7 +55,7 @@ class FinanceDashboardFragment : BaseDashboardFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFinanceDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val root: View = _binding.root
 
         userToken = sharedPreferences.getString(getString(R.string.pref_user_token), "")!!
 
@@ -64,7 +65,7 @@ class FinanceDashboardFragment : BaseDashboardFragment() {
 
         requireActivity().supportFragmentManager.setFragmentResultListener(EXECUTE_ITEM_CLICK, this) { _, _ ->
             arguments?.getString("itemId")?.let { args ->
-                binding.rvFinanceList.scrollToItem(args, financeAdapter)
+                _binding.rvFinanceList.scrollToItem(args, financeAdapter)
             }
         }
 
@@ -72,7 +73,7 @@ class FinanceDashboardFragment : BaseDashboardFragment() {
             viewModel.getFinancesByUserId(it)
         }
 
-        binding.rvFinanceList.adapter = financeAdapter
+        _binding.rvFinanceList.adapter = financeAdapter
 
         setupUi()
         super.setupMenuItems()
@@ -80,7 +81,7 @@ class FinanceDashboardFragment : BaseDashboardFragment() {
     }
 
     private fun setupUi() {
-        binding.fabAddFinance.setOnClickListener {
+        _binding.fabAddFinance.setOnClickListener {
             FinanceDetailsFragment.newInstance().show(parentFragmentManager, "FinanceDetailsFragment")
         }
     }
@@ -137,7 +138,7 @@ class FinanceDashboardFragment : BaseDashboardFragment() {
             }
         }
         financeAdapter.submitList(filteredList)
-        binding.root.hideSoftKeyboard()
+        _binding.root.hideSoftKeyboard()
         return true
     }
 
@@ -212,7 +213,7 @@ class FinanceDashboardFragment : BaseDashboardFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         requireActivity().removeMenuProvider(super.menuProvider)
-        _binding = null
+        _binding.root.removeAllViews()
     }
 
     companion object {

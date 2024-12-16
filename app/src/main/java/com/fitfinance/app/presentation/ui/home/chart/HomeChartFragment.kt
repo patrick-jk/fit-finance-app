@@ -17,8 +17,7 @@ import com.fitfinance.app.domain.response.HomeSummaryResponse
 
 class HomeChartFragment : Fragment() {
 
-    private var _binding: FragmentHomeChartBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var _binding: FragmentHomeChartBinding
 
     private lateinit var chartData: List<ValueDataEntry>
 
@@ -39,7 +38,7 @@ class HomeChartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeChartBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val root: View = _binding.root
 
         setupChart()
         return root
@@ -65,7 +64,7 @@ class HomeChartFragment : Fragment() {
         pieChart.labels().fontColor(getFormattedColor(ContextCompat.getColor(requireContext(), R.color.txt_color)))
         pieChart.legend().fontSize(15).fontColor(getFormattedColor(ContextCompat.getColor(requireContext(), R.color.txt_color)))
 
-        binding.homeChart.setChart(pieChart)
+        _binding.homeChart.setChart(pieChart)
     }
 
     private fun getFormattedColor(color: Int): String {
@@ -74,7 +73,7 @@ class HomeChartFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        _binding.root.removeAllViews()
     }
 
     companion object {
